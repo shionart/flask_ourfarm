@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- url_for nama folder harus 'static' -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='file_name.css') }}">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Landing page</title>
+  </head>
+  <body style="background-color: grey;">
+    <div class="container" >
+      <h1>Index</h1>
+      <h2> {{isi}} </h2>
+      <!-- logika jinja -->
+      <!-- untuk variabel gaperlu {} -->
+      {% if isi  %}
+      <h2>Isi ada {{isi}}</h2>
+      {% elif not isi %}
+      <h2>Isi tak ada</h2>
+      {% endif %}
+      <hr>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert {{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+              <span aria-hidden="true">&times;</span>
+            </div>
+
+          {% endfor %}
+
+        {% endif %}
+      {% endwith %}
+
+      <form action="{{url_for('kuki')}}" method="POST">
+
+        <input type="email" name="email" id="email">
+        <div class="custom-control custom-switch">
+
+          <input type="checkbox" class="custom-control-input" id="switch" name="theme" 
+          {% if request.cookies.get('theme') == "gelap" %}
+            checked
+          {% endif %}
+          value="gelap" >
+          <label class="custom-control-label" for="switch"  >Test</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <br>
+      <a href="{{url_for('login')}}" class="button btn btn-primary">Login</a>
+      <a href="{{url_for('logout')}}" class="button btn btn-primary">logout</a>
+      <a href="{{url_for('dinamis', variabel=isi)}}" class="button btn btn-primary">Fungsi dengan parameter
+        <!-- url dengan variable rules -->
+      </a>
+
+  </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+      $('.alert').alert()
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
