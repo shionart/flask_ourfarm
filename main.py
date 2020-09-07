@@ -14,7 +14,11 @@ def hello_world():
     return render_template('index.html')
     
     # return render_template('laman di dalam folder template', variabeldikirim=isi)
+@main.route('/sbadmin')
+def template():
+    return render_template('template.html')
 
+    
 @main.route('/parsing/<isi>')
 def parsing(isi):
     return render_template('index.html',isi=isi)
