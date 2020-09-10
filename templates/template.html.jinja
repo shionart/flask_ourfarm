@@ -1,0 +1,153 @@
+{% extends "base/master.html.jinja" %}
+
+      <!-- Main Content -->
+     
+
+        <!-- Begin Page Content -->
+        <div>
+        {% block content %}
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Arduino 001</h1>
+          
+          <!-- Conten -->
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <div class="card shadow mb-4">
+                <!-- <div class="card-header py-3"> -->
+                  <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Kelembapan</h6> -->
+                  <a href="#collapseCardExample1" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                    <h6 class="m-0 font-weight-bold text-dark">Kelembapan Udara <i class="fas fa-wind"></i></h6> 
+                  </a>
+                <!-- </div> -->
+                <div class="card-body collapse"  id="collapseCardExample1">
+                  <div class="chart-bar "><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="myBarChartPersen" style="display: block; width: 80px; height: 40px;"  class="chartjs-render-monitor "></canvas>
+                </div>
+                </div>
+                <div class="card-footer">
+                  {{curr_kelembapan}} <p class="text-center">90 %</p>
+                  <div class="progress progress-sm mb-2" >
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  {{curr_selisih}} <p class="text-center">15% dari kemaren</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <div class="card shadow mb-4">
+                <!-- <div class="card-header py-3"> -->
+                  <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Kelembapan</h6> -->
+                  <a href="#collapseCardExample2" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                    <h6 class="m-0 font-weight-bold text-dark">Suhu <i class="fas fa-thermometer-half"></i></h6>
+                  </a>
+                <!-- </div> -->
+                <div class="card-body collapse" id="collapseCardExample2">
+                  <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas class="myBarChartPersen" style="display: block; width: 80px; height: 40px;" class="chartjs-render-monitor"></canvas>
+                </div>
+                </div>
+                <div class="card-footer">
+                  {{curr_suhu}} <p class="text-center">36&#8451;</p>
+                  <div class="progress progress-sm mb-2" >
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 36%" aria-valuenow="36" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  {{curr_selisih}} <p class="text-center">2&#8451; dari kemaren</p>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <div class="card shadow mb-4">
+                <!-- <div class="card-header py-3"> -->
+                  <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Kelembapan</h6> -->
+                  <a href="#collapseCardExample3" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                    <h6 class="m-0 font-weight-bold text-dark">Kelembapan Tanah <i class="fas fa-water"></i></h6>
+                  </a>
+                <!-- </div> -->
+                <div class="card-body collapse " id="collapseCardExample3">
+                  <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="myBarChartPersen2" style="display: block; width: 80px; height: 40px;" class="chartjs-render-monitor"></canvas>
+                </div>
+                </div>
+                <div class="card-footer">
+                  {{curr_kelembapan}} <p class="text-center">45 %</p>
+                  <div class="progress progress-sm mb-2" >
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  {{curr_selisih}} <p class="text-center">2% dari kemaren</p>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- tabel -->
+          <div class="row">
+            <div class="col-12">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-dark">Data Sensor</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Tanggal</th>
+                          <th>Jam</th>
+                          <th>Tingkat Kelembapan</th>
+                          <th>Itensitas Suhu</th>
+                          <th>Kelembapan Tanah</th>
+                          <th>Pompa Air</th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                        <tr>
+                          <th>Tanggal</th>
+                          <th>Jam</th>
+                          <th>Tingkat Kelembapan</th>
+                          <th>Itensitas Suhu</th>
+                          <th>Kelembapan Tanah</th>
+                          <th>Pompa Air</th>
+                        </tr>
+                      </tfoot>
+                      <tbody>
+                        <tr>
+                          <td>13/12/2019</td>
+                          <td>15:44:44</td>
+                          <td>95</td>
+                          <td>23.6</td>
+                          <td>81</td>
+                          <td>Mati</td>
+                        </tr>
+                        <tr>
+                          <td>13/12/2019</td>
+                          <td>15:44:44</td>
+                          <td>95</td>
+                          <td>23.6</td>
+                          <td>81</td>
+                          <td>Mati</td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+      </div>
+      
+      <!-- End of Main Content -->
+
+  {% block scripts %}
+  <!-- Page level plugins -->
+  <script src="{{url_for('static', filename='vendor/chart.js/Chart.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  
+
+  <!-- Page level custom scripts -->
+  <script src="{{url_for('static', filename='js/demo/chart-bar-demo.js')}}"></script>
+  <script src="{{url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+  {% endblock scripts %}

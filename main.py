@@ -5,7 +5,7 @@ main = Flask(__name__)
 main.secret_key="081213342244"
 #routine statis
 @main.route('/')
-def hello_world():
+def index():
     # mengambil data dari methode GET
     get = request.args.get('get')
     if get:
@@ -16,7 +16,7 @@ def hello_world():
     # return render_template('laman di dalam folder template', variabeldikirim=isi)
 @main.route('/sbadmin')
 def template():
-    return render_template('template.html')
+    return render_template('template.html.jinja')
 
     
 @main.route('/parsing/<isi>')

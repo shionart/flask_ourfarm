@@ -1,0 +1,16 @@
+.bg-primary {
+    background-color: #1cc88a !important;
+  }
+  
+  a.bg-primary:hover, a.bg-primary:focus,
+  button.bg-primary:hover,
+  button.bg-primary:focus {
+    background-color: #169b6b !important;
+}
+  
+.bg-gradient-primary {
+    background-color: #1cc88a;
+  background-image: linear-gradient(180deg, #1cc88a 10%, #13855c 100%);
+  background-size: cover;
+  }
+  
