@@ -14,9 +14,13 @@ def index():
     return render_template('index.html')
     
     # return render_template('laman di dalam folder template', variabeldikirim=isi)
-@main.route('/sbadmin')
-def template():
-    return render_template('template.html.jinja')
+@main.route('/dashboard/<id>')
+def dashboard(id):
+    return render_template('dashboard.html', id=id )
+
+@main.route('/control/<id>')
+def control(id):
+    return render_template('control.html', id=id )
 
     
 @main.route('/parsing/<isi>')
@@ -29,7 +33,7 @@ def login():
     # Sudah login
     if 'email_user' in session:
         isi="Kamu telah login sebagai :"+ session['email_user']
-        return redirect(url_for('hello_world', get=isi))   
+        return redirect(url_for('index', get=isi))   
         # Untuk redirect, value ke 2 bukan yg di dalem html, tapi metode get.
         # Jadi kalo render_html itu isi=xxx karena di html variabel nya isi
         # Tapi kalo redirect itu parameter_get = xxxx karena munculnya bakalan /?parameter_get=xxxx
@@ -38,7 +42,7 @@ def login():
         isi="Kamu telah login sebagai :"+ request.form['email']
         session['email_user'] = request.form['email']
         flash("Logged in!", 'alert-success')
-        return redirect(url_for('hello_world', isi=isi))   
+        return redirect(url_for('index', get=isi))   
     # belum login
     return render_template('login.html')
 
@@ -46,7 +50,7 @@ def login():
 def logout():
     session.pop('email_user', None)
     flash("Logged Out!", 'alert-success')
-    return redirect(url_for('hello_world', get="Telah logout"))
+    return redirect(url_for('index', get="Telah logout"))
 
 @main.route('/halo')
 def halo():

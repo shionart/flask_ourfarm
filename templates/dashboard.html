@@ -1,5 +1,5 @@
-{% extends "base/master.html.jinja" %}
-
+{% extends "base/master.html" %}
+  {% block title %} Dashboard {% endblock title %}
       <!-- Main Content -->
      
 
@@ -7,7 +7,7 @@
         <div>
         {% block content %}
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Arduino 001</h1>
+          <h1 class="h3 mb-4 text-gray-800">Arduino {{id}}</h1>
           
           <!-- Conten -->
           <div class="row">
