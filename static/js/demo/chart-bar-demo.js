@@ -27,253 +27,305 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+var data_suhu = [];
+var data_lembap = [];
+var data_sm = [];
+function re_suhu(){
+  return data_suhu;
+}
+function re_sm(){
+  return data_sm;
+}
 // Bar Chart Data persen
-var ctx = document.getElementById("myBarChartPersen");
-var myBarChartPersen = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels:["","","","","current"], //["January", "February", "March", "April", "May", "June"],
-    datasets: [{
-      label: "Kelembapan",
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: [50, 40, 30, 70, 45],
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      
-      padding: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'month'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 6
-        },
-        maxBarThickness: 25,
+// function chartLembap(){
+  // await getData();
+  var ctx1 = document.getElementById("myBarLembapUdara");
+  var myBarLembapUdara = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels:["","","","","","","","","",""], //["January", "February", "March", "April", "May", "June"],
+      datasets: [{
+        label: "Kelembapan",
+        backgroundColor: "#4e73df",
+        hoverBackgroundColor: "#2e59d9",
+        borderColor: "#4e73df",
+        data: data_lembap,
       }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 100,
-          maxTicksLimit: 6,
-          padding: 5,
-          // Include a dollar sign in the ticks sumbu Y
-          callback: function(value, index, values) {
-            return number_format(value) + '%';
+    },
+    options: {
+      maintainAspectRatio: false,
+      layout: {
+        
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
+        }
+      },
+      scales: {
+        xAxes: [{
+          time: {
+            unit: 'month'
+          },
+          gridLines: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            maxTicksLimit: 6
+          },
+          maxBarThickness: 25,
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: 100,
+            maxTicksLimit: 6,
+            padding: 5,
+            // Include a dollar sign in the ticks sumbu Y
+            callback: function(value, index, values) {
+              return number_format(value) + '%';
+            }
+          },
+          gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
           }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
+        }],
+      },
+      legend: {
+        display: false
+      },
+      tooltips: {
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+        callbacks: {
+          label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + '%';
+          }
         }
+      },
+    }
+  });
+//   return myBarLembapUdara;
+// }
+// function chartSuhu(){
+  var ctx2 = document.getElementById("myBarSuhu");
+  var myBarSuhu = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels:["","","","","","","","","",""], //["January", "February", "March", "April", "May", "June"],
+      datasets: [{
+        label: "Suhu Udara",
+        backgroundColor: "#4e73df",
+        hoverBackgroundColor: "#2e59d9",
+        borderColor: "#4e73df",
+        data: data_suhu,
       }],
     },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + '%';
+    options: {
+      maintainAspectRatio: false,
+      layout: {
+        
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
         }
-      }
+      },
+      scales: {
+        xAxes: [{
+          time: {
+            unit: 'month'
+          },
+          gridLines: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            maxTicksLimit: 6
+          },
+          maxBarThickness: 25,
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: 50,
+            maxTicksLimit: 6,
+            padding: 5,
+            // Include a dollar sign in the ticks sumbu Y
+            callback: function(value, index, values) {
+              return number_format(value) + '%';
+            }
+          },
+          gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
+          }
+        }],
+      },
+      legend: {
+        display: false
+      },
+      tooltips: {
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+        callbacks: {
+          label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + ': ' + number_format(tooltipItem.yLabel,2) + '%';
+          }
+        }
+      },
+    }
+  });
+// }
+// function chartSm(){
+  var ctx3 = document.getElementById("myBarLembapTanah");
+  var myBarLembapTanah = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+      labels:["","","","","","","","","",""], //["January", "February", "March", "April", "May", "June"],
+      datasets: [{
+        label: "Kelembapan",
+        backgroundColor: "#4e73df",
+        hoverBackgroundColor: "#2e59d9",
+        borderColor: "#4e73df",
+        data: data_sm,
+      }],
     },
-  }
-});
+    options: {
+      maintainAspectRatio: false,
+      layout: {
+        
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
+        }
+      },
+      scales: {
+        xAxes: [{
+          time: {
+            unit: 'month'
+          },
+          gridLines: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            maxTicksLimit: 6
+          },
+          maxBarThickness: 25,
+        }],
+        yAxes: [{
+          ticks: {
+            // min: 0,
+            // max: 100,
+            maxTicksLimit: 6,
+            padding: 5,
+            // Include a dollar sign in the ticks sumbu Y
+            callback: function(value, index, values) {
+              return number_format(value) + '%';
+            }
+          },
+          gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
+          }
+        }],
+      },
+      legend: {
+        display: false
+      },
+      tooltips: {
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+        callbacks: {
+          label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + '%';
+          }
+        }
+      },
+    }
+  });
+// }
 //bar chart pake class
-var ctx = document.getElementsByClassName("myBarChartPersen");
-var myBarChartPersen2 = new Chart(ctx[0], {
-  type: 'bar',
-  data: {
-    labels:["","","","","current"], //["January", "February", "March", "April", "May", "June"],
-    datasets: [{
-      label: "Revenue",
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: [36, 30, 32, 34, 38],
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'month'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 6
-        },
-        maxBarThickness: 25,
-      }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 50,
-          maxTicksLimit: 6,
-          padding: 5,
-          // Include a dollar sign in the ticks sumbu Y
-          callback: function(value, index, values) {
-            return number_format(value) + 'C';
-          }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
-        }
-      }],
-    },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-        }
-      }
-    },
-  }
-});
-//bar chart id data persen 2
-var ctx = document.getElementById("myBarChartPersen2");
-var myBarChartPersen3 = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels:["","","","","current"], //["January", "February", "March", "April", "May", "June"],
-    datasets: [{
-      label: "Revenue",
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: [50, 40, 30, 70, 45],
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'month'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 6
-        },
-        maxBarThickness: 25,
-      }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 100,
-          maxTicksLimit: 6,
-          padding: 5,
-          // Include a dollar sign in the ticks sumbu Y
-          callback: function(value, index, values) {
-            return number_format(value) + '%';
-          }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
-        }
-      }],
-    },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-        }
-      }
-    },
-  }
-});
+function updateChart() {
+  myBarLembapUdara.data.datasets[0].data = data_lembap;
+  myBarSuhu.data.datasets[0].data = data_suhu;
+  myBarLembapTanah.data.datasets[0].data = data_sm;
+  myBarLembapUdara.update();
+  myBarSuhu.update();
+  myBarLembapTanah.update();
+}
+// chartSuhu();
+// chartLembap();
+// chartSm();
+
+function getData(){
+  $.get("http://127.0.0.1:5000/get", function(data){
+    setTimeout(getData,1000*10);
+    console.log(data['bar_data']);
+    $('#curr_lembap_udara').html(data['curr_data']['lembap']);
+    $('#curr_suhu').html(data['curr_data']['suhu']);
+    $('#curr_lembap_tanah').html(data['curr_data']['sm']);
+    $('#prog_lembap_udara').css("width",data['curr_data']['lembap']+"%");
+    $('#prog_lembap_udara').attr("aria-valuenow",data['curr_data']['lembap']+"");
+    $('#prog_suhu').css("width",data['curr_data']['suhu']+"%");
+    $('#prog_suhu').attr("aria-valuenow",data['curr_data']['suhu']+"");
+    $('#prog_lembap_tanah').css("width",data['curr_data']['sm']+"%");
+    $('#prog_lembap_tanah').attr("aria-valuenow",data['curr_data']['sm']+"");
+    data_suhu=data['bar_data']['suhu'];
+    data_lembap=data['bar_data']['lembap'];
+    data_sm=data['bar_data']['sm'];
+    updateChart();
+  });
+}
+
+getData();
+
 //contoh
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
