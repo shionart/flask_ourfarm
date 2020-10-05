@@ -2,10 +2,7 @@
 
 from function import *
 
-main = Flask(__name__)
-cors = CORS(main)
 
-main.secret_key="081213342244"
 
 
 # Routing
@@ -32,7 +29,8 @@ def dashboard(id):
 @main.route('/control/<id>')
 @login_required
 def control(id):
-    return render_template('control.html', id=id )
+    perintah = read_perintah(id)
+    return render_template('control.html', data=perintah )
 
 # Api ambil data dari db
 @main.route('/get',methods=["GET"])
@@ -58,6 +56,20 @@ def input_data():
             rel = int(request.form["relay"])
         insert_to_table(suhu,lembap,sm,rel)
         return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}".format(suhu ,lembap, sm, rel)
+    except Exception as e:
+        return "error {}".format(e)
+
+@main.route('/control',methods=["POST"])
+def input_control():
+    perintah = 0
+    id_arduino = 0
+# perintah arduino
+    try:
+        if request.method == "POST":
+            perintah = int(request.form["perintah"])
+            id_arduino = int(request.form["id_arduino"])
+        insert_to_control(perintah,id_arduino)
+        return "perintah : {}, id_arduino : {}".format(perintah, id_arduino)
     except Exception as e:
         return "error {}".format(e)
 

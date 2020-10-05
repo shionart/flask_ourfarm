@@ -2,7 +2,13 @@
   {% block title %} Dashboard {% endblock title %}
       <!-- Main Content -->
      
+<style>
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+  background: none;
+  color: black!important;
+} 
 
+</style>
         <!-- Begin Page Content -->
         <div>
         {% block content %}
@@ -122,23 +128,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
-                </div>
-                <div class="card-body">
-                  <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <canvas id="myAreaChart" style="display: block; width: 377px; height: 320px;" width="377" height="320" class="chartjs-render-monitor"></canvas>
-                  </div>
-                  <hr>
-                  Styling for the area chart can be found in the <code>/js/demo/chart-area-demo.js</code> file.
-                </div>
-              </div>
-            </div>
-          </div>
-
+          
           <!-- tabel -->
           <div class="row">
             <div class="col-12">
@@ -200,7 +190,7 @@
   
 
   <!-- Page level custom scripts -->
-  <script src="{{url_for('static', filename='js/demo/chart-bar-demo.js')}}"></script>
+  <!-- <script src="{{url_for('static', filename='js/demo/chart-bar-demo.js')}}"></script> -->
   <script src="{{url_for('static', filename='js/demo/chart-area-demo.js')}}"></script>
   <script src="{{url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
   {% endblock scripts %}

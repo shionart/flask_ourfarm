@@ -9,6 +9,10 @@ from MySQLdb import cursors, connect
 import mysql.connector
 from flask_cors import CORS, cross_origin
 
+main = Flask(__name__)
+cors = CORS(main)
+
+main.secret_key="081213342244"
 # non-route function
 
 # DB_connect
@@ -32,10 +36,8 @@ def login_required(f):
 def insert_to_table(suhu,lembap,sm,rel):
     conn = connect_db()
     try:
-        
         cursor = conn.cursor()
         query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay) VALUES (%s, %s, %s, %s)"
-
         tuple = (suhu, lembap, sm, rel)
         try:
             cursor.execute(query,tuple)
@@ -45,16 +47,51 @@ def insert_to_table(suhu,lembap,sm,rel):
         print("Data berhasil dimasukkan")
     except Error as error:
         print("Gagal memasukkan data {}".format(error))
-
     finally:
         if (conn):
             cursor.close()
             conn.close()
             print("MySql ditutup")
-    # return "selesai"
+    return "selesai"
 
+@main.route('/insertperintah/<perintah>/<id_arduino>')
+def insert_to_control(perintah,id_arduino):
+    """
+    docstring
+    Function insert control, Jika belum pernah ada node = tambah node & insert perintah 'initiate'
+    jika sudah ada node maka update perintah
+    """
+    conn=connect_db()
+    cur=conn.cursor()
+    cur.execute("SELECT id_arduino from control where id_arduino=%s",[id_arduino])
+    data = cur.fetchone()
+    try:
+        if data == None :
+            cur.execute("INSERT INTO control (perintah, id_arduino) VALUES(%s,%s)",[perintah,id_arduino])
+        else :
+            cur.execute("UPDATE control SET perintah=%s WHERE id_arduino=%s",[perintah,id_arduino])
+        conn.commit()
+        print("Data control berhasil diupdate!")
+    except Error as error:
+        conn.rollback()
+        print("gagal update data {}".format(error))
+    finally:
+        if (conn):
+            cur.close()
+            conn.close()
+            print("MySql ditutup")
+    return "selesai"
 
 #baca tabel general
+def read_perintah(id_arduino):
+    conn = connect_db()
+    cur= conn.cursor()
+    cur.execute("SELECT * from control where id_arduino=%s",[id_arduino])
+    data_perintah= cur.fetchone()
+    # isi = data_perintah['perintah']
+    return data_perintah
+    
+
 def read_table():
     conn = connect_db()
     cur = conn.cursor()
