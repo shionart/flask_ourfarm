@@ -172,7 +172,7 @@ var data_sm2 = [];
             padding: 10,
             // Include a dollar sign in the ticks
             callback: function(value, index, values) {
-              return number_format(value) + '°C';
+              return number_format(value,2) + '°C';
             }
           },
           gridLines: {
@@ -204,7 +204,7 @@ var data_sm2 = [];
         callbacks: {
           label: function(tooltipItem, chart) {
             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-            return datasetLabel + ': ' + number_format(tooltipItem.yLabel)+'°C';
+            return datasetLabel + ': ' + number_format(tooltipItem.yLabel,2)+'°C';
           }
         }
       }
@@ -308,10 +308,14 @@ function updateChart2() {
   myBarSuhu.update();
   myBarLembapTanah.update();
 }
+var pathArray = window.location.pathname.split('/');
+var url_baru2 = window.location.origin;
 
+url_baru2 += "/get/";
+url_baru2 += pathArray[2];
 function getData2(){
-  $.get("http://127.0.0.1:5000/get", function(data){
-    setTimeout(getData2,1000*10);
+  $.get(url_baru2, function(data){
+    setTimeout(getData2,1000);
     console.log(data['bar_data']);
     $('#curr_lembap_udara').html(data['curr_data']['lembap']);
     $('#curr_suhu').html(data['curr_data']['suhu']);

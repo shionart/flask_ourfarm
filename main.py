@@ -29,16 +29,22 @@ def dashboard(id):
 @main.route('/control/<id>')
 @login_required
 def control(id):
-    perintah = read_perintah(id)
+    perintah = read_control(id)
     return render_template('control.html', data=perintah )
 
 # Api ambil data dari db
-@main.route('/get',methods=["GET"])
-def get_data_api():
-    sensor, curr_data, bar_data = read_table()
-    yesterday = read_yesterday()
+@main.route('/get/<id>',methods=["GET"])
+def get_data_api(id):
+    sensor, curr_data, bar_data = read_sensor(id)
+    yesterday = read_yesterday(id)
     # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
     return jsonify({'sensor':sensor,'curr_data':curr_data,'bar_data':bar_data, 'yesterday':yesterday})
+
+@main.route('/get_control',methods=["GET"])
+def get_data_control():
+    nodes = read_nodes()
+    # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
+    return jsonify({'nodes':nodes})
 
 # Api input data dari arduino
 @main.route('/input',methods=["POST"])
@@ -47,6 +53,7 @@ def input_data():
     lembap = 0.0
     sm = 0.0
     rel = 0
+    id_arduino =0
 # perintah arduino
     try:
         if request.method == "POST":
@@ -54,12 +61,14 @@ def input_data():
             lembap = float(request.form["lembap"])
             sm = float(request.form["sm"])
             rel = int(request.form["relay"])
-        insert_to_table(suhu,lembap,sm,rel)
-        return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}".format(suhu ,lembap, sm, rel)
+            id_arduino = int(request.form["id_arduino"])
+        insert_to_table(suhu,lembap,sm,rel,id_arduino)
+        return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(suhu ,lembap, sm, rel, id_arduino)
     except Exception as e:
         return "error {}".format(e)
 
 @main.route('/control',methods=["POST"])
+@login_required
 def input_control():
     perintah = 0
     id_arduino = 0

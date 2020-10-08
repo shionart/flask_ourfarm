@@ -18,13 +18,19 @@
                   <i class="fas fa-leaf"></i>
                   <h1 class="h4 text-gray-900 mb-4">Control Arduino ke-{{data.id_arduino}}</h1>
                 </div>
-                <form class="user" action="{{url_for('input_control')}}" method="POST">
-                  <div class="form-group">
-                    <input name="perintah" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
+                <form class="user" action="http://www.bwcr.rizaldiariif.com/public/sensor/add/7120VHoT7pT1wE8ClO7zE1ZUFTk2/5a4678ee9f014c758661/" method="GET">
+                  <!-- <div class="form-group">
+                    <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
                   </div>
                   <div class="form-group">
                     <input name="id" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
-                  </div>
+                  </div> -->
+                  <input type="time" name="jam" value="15:00:00">
+                  <input type="text" name="lembap" value="90">
+                  <input type="text" name="relay" value="0">
+                  <input type="text" name="sm" value="88">
+                  <input type="text" name="suhu" value="20">
+                  <input type="date" name="tanggal">
                   <!-- <div class="form-group">
                     <div class="custom-control custom-checkbox small">
                       <input type="checkbox" class="custom-control-input" id="customCheck">

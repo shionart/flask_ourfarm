@@ -10803,9 +10803,10 @@ a:focus {
 }
 
 .bg-login-image {
-  background-image: url("/static/img/mobile-app.png");
+  background-image: url("/static/img/login.svg");
   background-position: center;
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .bg-register-image {

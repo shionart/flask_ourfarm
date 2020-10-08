@@ -3,7 +3,7 @@ import json
 import time
 from datetime import datetime
 from statistics import mean
-
+import math
 from functools import wraps
 from MySQLdb import cursors, connect
 import mysql.connector
@@ -31,20 +31,33 @@ def login_required(f):
             return redirect(url_for('login'))
     return login_handler
 
-# inset to table
+#  ======= CRUD TABLE SENSOR =========
+# ------insert to table sensor------
 # @main.route('/inserttabel/<suhu>/<lembap>/<sm>/<rel>')
-def insert_to_table(suhu,lembap,sm,rel):
+def insert_to_table(suhu,lembap,sm,rel,id_arduino):
     conn = connect_db()
+    baca_suhu=suhu
+    baca_lembap=lembap
     try:
+        if math.isnan(suhu) or math.isnan(lembap) :
+            suhu=100
+            lembap=100
+        cek = conn.cursor()
         cursor = conn.cursor()
-        query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay) VALUES (%s, %s, %s, %s)"
-        tuple = (suhu, lembap, sm, rel)
+        query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_node) VALUES (%s, %s, %s, %s, %s)"
+        tuple = (suhu, lembap, sm, rel, id_arduino)
         try:
             cursor.execute(query,tuple)
+            # Auto Add Arduino
+            cek_control = read_control(id_arduino)
+            if cek_control == None :
+                cek.execute("INSERT INTO control (id_arduino) VALUES(%s)",[id_arduino])
+            # Auto Add selesai
             conn.commit()
         except:
             conn.rollback()
         print("Data berhasil dimasukkan")
+        print("Data DHT: {}, {}".format(baca_suhu,baca_lembap))
     except Error as error:
         print("Gagal memasukkan data {}".format(error))
     finally:
@@ -54,56 +67,19 @@ def insert_to_table(suhu,lembap,sm,rel):
             print("MySql ditutup")
     return "selesai"
 
-@main.route('/insertperintah/<perintah>/<id_arduino>')
-def insert_to_control(perintah,id_arduino):
-    """
-    docstring
-    Function insert control, Jika belum pernah ada node = tambah node & insert perintah 'initiate'
-    jika sudah ada node maka update perintah
-    """
-    conn=connect_db()
-    cur=conn.cursor()
-    cur.execute("SELECT id_arduino from control where id_arduino=%s",[id_arduino])
-    data = cur.fetchone()
-    try:
-        if data == None :
-            cur.execute("INSERT INTO control (perintah, id_arduino) VALUES(%s,%s)",[perintah,id_arduino])
-        else :
-            cur.execute("UPDATE control SET perintah=%s WHERE id_arduino=%s",[perintah,id_arduino])
-        conn.commit()
-        print("Data control berhasil diupdate!")
-    except Error as error:
-        conn.rollback()
-        print("gagal update data {}".format(error))
-    finally:
-        if (conn):
-            cur.close()
-            conn.close()
-            print("MySql ditutup")
-    return "selesai"
-
-#baca tabel general
-def read_perintah(id_arduino):
-    conn = connect_db()
-    cur= conn.cursor()
-    cur.execute("SELECT * from control where id_arduino=%s",[id_arduino])
-    data_perintah= cur.fetchone()
-    # isi = data_perintah['perintah']
-    return data_perintah
-    
-
-def read_table():
+# -----baca tabel Sensor-----
+def read_sensor(id_arduino):
     conn = connect_db()
     cur = conn.cursor()
-    cur.execute("SELECT * from sensor order by id desc")
+    cur.execute("SELECT * FROM sensor WHERE id_arduino=%s ORDER BY id DESC",[id_arduino])
     data = cur.fetchall()
-    sensor = get_data(data)
+    sensor = get_sensor(data)
     top_data = read_top(sensor)
     curr_data = sensor[0]
     return sensor, curr_data, top_data
 
 # Fungsi biar ga mentahan dari db
-def get_data(data):
+def get_sensor(data):
     li = []
     for dat in data:
         di = {}
@@ -122,21 +98,21 @@ def get_data(data):
 
 # fungsi untuk ngambil data perbandingan
 #@main.route('/yesterday',methods=["GET"])
-def read_yesterday():
+def read_yesterday(id_arduino):
     conn = connect_db()
     cur = conn.cursor()
     #ini tambahan
     try:
         cur.execute("SELECT * FROM sensor WHERE DATE(time) = DATE(NOW() - INTERVAL 3 DAY) order by id desc")
         data = cur.fetchall()
-        sensor = get_data(data)
+        sensor = get_sensor(data)
         y_suhu, y_lembap, y_sm = mean_yesterday(sensor)
     except:
         y_suhu = 0
         y_lembap = 0
         y_sm = 0
     #tambah end
-    sensor,curr_data,bar = read_table()
+    sensor,curr_data,bar = read_sensor(id_arduino)
     #tambahan - edit
     if y_suhu != 0:
         suhu_yes=((curr_data['suhu']-y_suhu)/y_suhu)
@@ -196,4 +172,51 @@ def read_top(data):
            'relay':li_relay
           }
     return ret
+
+
+# ========CRUD TABLE CONTROL===========
+# --------Insert to table control------
+# @main.route('/insertperintah/<perintah>/<id_arduino>')
+def insert_to_control(perintah,id_arduino):
+    """
+    docstring
+    Function update control
+    """
+    conn=connect_db()
+    cur=conn.cursor()
+    try:
+        cur.execute("UPDATE control SET perintah=%s WHERE id_arduino=%s",[perintah,id_arduino])
+        conn.commit()
+        print("Data control berhasil diupdate!")
+    except Error as error:
+        conn.rollback()
+        print("gagal update data {}".format(error))
+    finally:
+        if (conn):
+            cur.close()
+            conn.close()
+            print("MySql ditutup")
+    return "selesai"
+
+# -----cek perintah node x-----
+def read_control(id_arduino):
+    conn = connect_db()
+    cur= conn.cursor()
+    cur.execute("SELECT * FROM control WHERE id_arduino=%s",[id_arduino])
+    data_perintah= cur.fetchone()
+    # isi = data_perintah['perintah']
+    return data_perintah
+
+# ------baca semua nodes-------
+def read_nodes():
+    """
+    docstring
+    Baca udah berapa node yang connect
+    """
+    conn = connect_db()    
+    cur = conn.cursor()
+    cur.execute("SELECT * from control")
+    nodes = cur.fetchall()
+    return nodes
+
 

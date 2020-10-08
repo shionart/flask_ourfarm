@@ -1,10 +1,18 @@
 // Call the dataTables jQuery plugin
+var pathArray = window.location.pathname.split('/');
+var url_baru = window.location.origin;
+
+url_baru += "/get/";
+url_baru += pathArray[2];
+function cek() {
+  return url_baru;
+}
 $(document).ready(function() {
   var table = $('#sensorTable').DataTable({
     destroy:true,
     // order:false,
     "ajax": {
-              url: 'http://127.0.0.1:5000/get',
+              url: url_baru,
               dataSrc: 'sensor'
             },
     "columns": [
