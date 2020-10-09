@@ -8,14 +8,18 @@ from functools import wraps
 from MySQLdb import cursors, connect
 import mysql.connector
 from flask_cors import CORS, cross_origin
+import socket
+
 
 main = Flask(__name__)
 cors = CORS(main)
 
 main.secret_key="081213342244"
 # non-route function
+hostname = socket.gethostname()
+ip_address = socket.gethostbyname(hostname)
 
-# DB_connect
+    # DB_connect
 def connect_db():
     conn = connect(host = "localhost", user="root", passwd="", db="db_sister", cursorclass=cursors.DictCursor)
     return conn

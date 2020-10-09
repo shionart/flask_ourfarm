@@ -10,13 +10,12 @@ from function import *
 @login_required
 def index():
     # mengambil data dari methode GET
-    get = request.args.get('get')
-    if get:
-        return render_template('base/master.html',isi=get)
-    else :
-        return render_template('base/master.html',isi="Ini Index Kosongan")
-
-    return render_template('base/master.html')
+    # get = request.args.get('get')
+    # if get:
+    #     return render_template('home.html',isi=get)
+    # else :
+    #     return render_template('home',isi="Ini Index Kosongan")
+    return render_template('home.html', ip=ip_address)
     
     # return render_template('laman di dalam folder template', variabeldikirim=isi)
 
@@ -31,6 +30,13 @@ def dashboard(id):
 def control(id):
     perintah = read_control(id)
     return render_template('control.html', data=perintah )
+
+@main.route('/control')
+@login_required
+def list_control():
+    response = render_template('list_nodes.html')
+    return response
+
 
 # Api ambil data dari db
 @main.route('/get/<id>',methods=["GET"])
@@ -67,7 +73,7 @@ def input_data():
     except Exception as e:
         return "error {}".format(e)
 
-@main.route('/control',methods=["POST"])
+@main.route('/input_control',methods=["POST"])
 @login_required
 def input_control():
     perintah = 0

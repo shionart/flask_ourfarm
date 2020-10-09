@@ -310,7 +310,6 @@ function updateChart2() {
 }
 var pathArray = window.location.pathname.split('/');
 var url_baru2 = window.location.origin;
-
 url_baru2 += "/get/";
 url_baru2 += pathArray[2];
 function getData2(){

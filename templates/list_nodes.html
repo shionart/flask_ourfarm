@@ -1,0 +1,51 @@
+{% extends "base/master.html" %}
+
+      <!-- Main Content -->
+     
+
+        <!-- Begin Page Content -->
+        <div>
+        {% block content %}
+          <div id="test" class="invisible">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div id="listnodes" class="col-md-12 animated--fade-in">
+              <h3 class="text-center mt-5">
+               <b>Waiting for a node to connect . . .</b>
+              </h3>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-grow text-success" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Conten -->
+         
+       
+          
+        {% endblock content %}
+        <!-- /.container-fluid -->
+      </div>
+      
+      <!-- End of Main Content -->
+
+  {% block scripts %}
+  <!-- Page level plugins -->
+  
+  <!-- Page level custom scripts -->
+  <script src="{{url_for('static', filename='js/custom/list_nodes.js')}}"></script>
+  {% endblock scripts %}

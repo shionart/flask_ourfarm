@@ -1,0 +1,65 @@
+{% extends "base/master.html" %}
+
+      <!-- Main Content -->
+     
+
+        <!-- Begin Page Content -->
+        <div>
+        {% block content %}
+          
+          <div class="row">
+            <div class="col-md-12 animated--fade-in">
+              <h1 class="text-center">
+                Welcome!
+              </h1>
+              <h2>
+                Getting started.
+              </h2>
+              <ol>
+                <li>
+                  Hubungkan perangkat ini dengan WiFi
+                </li>
+                <li>
+                  Kunjungi <b><a href="https://bwcr.rizaldiariif.com/public/login" target="_blank">bwcr.rizaldiariif.com</a></b> untuk melakukan <b>Registrasi</b> 
+                </li> 
+                <li>Tambah Nodes di menu <b><a href="https://bwcr.rizaldiariif.com/public/arduino" target="_blank">Arduino - Tambah Perangkat</a></b>   dengan keterangan sebagai berikut : <br>
+                 <code> 
+                  <ul> 
+                    <li>IP Address : <b><mark>{{ip}}</mark></b> </li>
+                    <li>Device Type : <b><mark>Garden</mark></b></li>
+                    <li>SSID WiFi : <b><mark>"nama WiFi anda yang tersambung dengan perangkat ini"</mark></b></li>
+                    <li>Password WiFi : <b><mark>"password WiFi anda tersambung dengan perangkat ini"</mark></b></li>
+                  </ul>
+                </code>
+                </li>
+                <li>
+                  Download dan install file.ino yang disediakan setelah menambah perangkat pada arduino yang akan digunakan!
+                </li>
+                <li>
+                  Hubungkan arduino dengan aliran listrik, tunggu sampai alat mengirim data (cek <b><a href="/control"> di sini</a></b>).
+                </li>
+              </ol>
+            </div>
+            
+          </div>
+          <!-- Conten -->
+         
+       
+          
+        {% endblock content %}
+        <!-- /.container-fluid -->
+      </div>
+      
+      <!-- End of Main Content -->
+
+  {% block scripts %}
+  <!-- Page level plugins -->
+  <script src="{{url_for('static', filename='vendor/chart.js/Chart.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  
+
+  <!-- Page level custom scripts -->
+  <script src="{{url_for('static', filename='js/demo/chart-bar-demo.js')}}"></script>
+  <script src="{{url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+  {% endblock scripts %}
