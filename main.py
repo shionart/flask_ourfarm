@@ -68,8 +68,9 @@ def input_data():
             sm = float(request.form["sm"])
             rel = int(request.form["relay"])
             id_arduino = int(request.form["id_arduino"])
-        insert_to_table(suhu,lembap,sm,rel,id_arduino)
-        return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(suhu ,lembap, sm, rel, id_arduino)
+            nama = request.form["nama"]
+            insert_to_table(suhu,lembap,sm,rel,id_arduino,nama)
+            return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(suhu ,lembap, sm, rel, id_arduino)
     except Exception as e:
         return "error {}".format(e)
 
@@ -155,7 +156,7 @@ def connectDB():
     query = "SELECT * from sensor order by id desc"
     read.execute(query)
     data = read.fetchall()
-    sensor = get_data(data)
+    sensor = get_sensor(data)
     return jsonify({'sensor':sensor})
 
 if __name__ == "__main__":

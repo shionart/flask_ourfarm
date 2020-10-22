@@ -308,12 +308,12 @@ function updateChart2() {
   myBarSuhu.update();
   myBarLembapTanah.update();
 }
-var pathArray = window.location.pathname.split('/');
-var url_baru2 = window.location.origin;
-url_baru2 += "/get/";
-url_baru2 += pathArray[2];
+// var pathArray = window.location.pathname.split('/');
+// var url_baru2 = window.location.origin;
+// url_baru2 += "/get/";
+// url_baru2 += pathArray[2];
 function getData2(){
-  $.get(url_baru2, function(data){
+  $.get(data_id, function(data){
     setTimeout(getData2,1000);
     console.log(data['bar_data']);
     $('#curr_lembap_udara').html(data['curr_data']['lembap']);

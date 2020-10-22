@@ -7,12 +7,12 @@
         <div>
         {% block content %}
           
-          <div class="row">
-            <div class="col-md-12 animated--fade-in">
-              <h1 class="text-center">
-                Welcome!
-              </h1>
-              <h2>
+          <div class="row mt-2 card shadow">
+            <h1 class="text-center card-header text-white bg-success">
+             <b>Welcome!</b>
+            </h1>
+            <div class="col-md-12 animated--fade-in card-body">
+              <h2 class="text-success">
                 Getting started.
               </h2>
               <ol>
@@ -54,12 +54,9 @@
 
   {% block scripts %}
   <!-- Page level plugins -->
-  <script src="{{url_for('static', filename='vendor/chart.js/Chart.min.js')}}"></script>
-  <script src="{{url_for('static', filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>
-  <script src="{{url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  
   
 
   <!-- Page level custom scripts -->
-  <script src="{{url_for('static', filename='js/demo/chart-bar-demo.js')}}"></script>
-  <script src="{{url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+  
   {% endblock scripts %}

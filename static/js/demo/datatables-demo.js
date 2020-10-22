@@ -1,9 +1,9 @@
 // Call the dataTables jQuery plugin
-var pathArray = window.location.pathname.split('/');
-var url_baru = window.location.origin;
+// var pathArray = window.location.pathname.split('/');
+// var url_baru = window.location.origin;
 
-url_baru += "/get/";
-url_baru += pathArray[2];
+// url_baru += "/get/";
+// url_baru += pathArray[2];
 function cek() {
   return url_baru;
 }
@@ -12,7 +12,7 @@ $(document).ready(function() {
     destroy:true,
     // order:false,
     "ajax": {
-              url: url_baru,
+              url: data_id,
               dataSrc: 'sensor'
             },
     "columns": [

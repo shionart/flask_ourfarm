@@ -6,22 +6,13 @@
         <!-- Begin Page Content -->
         <div>
         {% block content %}
-          <div id="test" class="invisible">
-            <div class="card border-left-primary shadow h-100 py-2">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                  </div>
-                  <div class="col-auto">
-                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <div class="row">
+            <div id="header" class="text-center">
+              <h2 >
+                List Nodes
+              </h2>
+            </div>
             <div id="listnodes" class="col-md-12 animated--fade-in">
               <h3 class="text-center mt-5">
                <b>Waiting for a node to connect . . .</b>
@@ -44,8 +35,19 @@
       <!-- End of Main Content -->
 
   {% block scripts %}
+  <!-- Passing data to JS -->
+  <script>
+    var data_control="{{url_for('get_data_control')}}";
+    function page_dashboard(id){
+      return "{{url_for('dashboard',id='')}}"+id;
+    }
+    function page_control(id){
+      return "{{url_for('control',id='')}}"+id;
+    }
+  </script>
   <!-- Page level plugins -->
   
   <!-- Page level custom scripts -->
+  
   <script src="{{url_for('static', filename='js/custom/list_nodes.js')}}"></script>
   {% endblock scripts %}

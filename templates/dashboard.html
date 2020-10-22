@@ -176,6 +176,10 @@
 
   {% block scripts %}
 
+  <!-- Passing data ke JS -->
+  <script>
+    var data_id="{{url_for('get_data_api', id=id)}}" 
+  </script>
   <!-- Page level plugins -->
   <script src="{{url_for('static', filename='vendor/chart.js/Chart.min.js')}}"></script>
   <script src="{{url_for('static', filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>

@@ -10,9 +10,10 @@ DHT dht(DHTPIN, DHTTYPE);
 //CONNECT WIFI, ganti wifi anda di sini
 char ssid[] = "muiren";     // your network SSID (name)  
 char password[] = "muirenoleander"; // your network key
-const char* raspi_input = "http://192.168.137.1:5000/input";
+char raspi_input[] = "http://192.168.137.1:5000/input";
 const char* control_page="control/2";
-const char* id_arduino="2";
+char id_arduino[]="2";
+char nama[]="Kebon 2";
 
 
 
@@ -68,7 +69,7 @@ bool Start = false;
     t = dht.readTemperature();
     //Post Data
     String postData;
-    postData = "suhu=" + String(t) + "&lembap=" + String(h) + "&sm=" + String(val) + "&relay=" + String(Relay)+ "&id_arduino="+String(id_arduino);
+    postData = "suhu=" + String(t) + "&lembap=" + String(h) + "&sm=" + String(val) + "&relay=" + String(Relay)+ "&id_arduino="+String(id_arduino)+ "&nama="+String(nama);
     //NGROK SERVER LOCAL HARAP DIGANTI SETIAP BOOT UP SERVER
     http.begin(raspi_input);              //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
@@ -78,7 +79,7 @@ bool Start = false;
     Serial.println(payload);    //Print request response payload
     http.end();  //Close connection
     Serial.println("Post berhasil");
-    Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val) + ", relay: "+ String(Relay)); 
+    Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val) + ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
   }
 
 
@@ -166,7 +167,7 @@ bool Start = false;
 //    delay(100);
     limit++;
     Serial.println(limit);
-    if(limit==4){
+    if(limit==100){
       post();//upload data to raspberry only happen once in 4 loop
       limit=0;
     }

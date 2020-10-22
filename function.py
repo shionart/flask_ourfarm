@@ -38,7 +38,7 @@ def login_required(f):
 #  ======= CRUD TABLE SENSOR =========
 # ------insert to table sensor------
 # @main.route('/inserttabel/<suhu>/<lembap>/<sm>/<rel>')
-def insert_to_table(suhu,lembap,sm,rel,id_arduino):
+def insert_to_table(suhu,lembap,sm,rel,id_arduino,nama):
     conn = connect_db()
     baca_suhu=suhu
     baca_lembap=lembap
@@ -48,20 +48,22 @@ def insert_to_table(suhu,lembap,sm,rel,id_arduino):
             lembap=100
         cek = conn.cursor()
         cursor = conn.cursor()
-        query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_node) VALUES (%s, %s, %s, %s, %s)"
+        query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)"
         tuple = (suhu, lembap, sm, rel, id_arduino)
         try:
+            print("Eksekusi insert to table")
             cursor.execute(query,tuple)
             # Auto Add Arduino
             cek_control = read_control(id_arduino)
             if cek_control == None :
-                cek.execute("INSERT INTO control (id_arduino) VALUES(%s)",[id_arduino])
+                print("Eksekusi insert to control")
+                cek.execute("INSERT INTO control (id_arduino,nama) VALUES(%s,%s)",[id_arduino,nama])
             # Auto Add selesai
             conn.commit()
         except:
             conn.rollback()
         print("Data berhasil dimasukkan")
-        print("Data DHT: {}, {}".format(baca_suhu,baca_lembap))
+        print("Data DHT: {}, {}, data sm: {}, data id_arduino:{}".format(baca_suhu,baca_lembap,sm,id_arduino))
     except Error as error:
         print("Gagal memasukkan data {}".format(error))
     finally:
@@ -75,7 +77,7 @@ def insert_to_table(suhu,lembap,sm,rel,id_arduino):
 def read_sensor(id_arduino):
     conn = connect_db()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM sensor WHERE id_arduino=%s ORDER BY id DESC",[id_arduino])
+    cur.execute("SELECT * FROM sensor WHERE id_arduino=%s ORDER BY time DESC",[id_arduino])
     data = cur.fetchall()
     sensor = get_sensor(data)
     top_data = read_top(sensor)
@@ -206,7 +208,7 @@ def insert_to_control(perintah,id_arduino):
 def read_control(id_arduino):
     conn = connect_db()
     cur= conn.cursor()
-    cur.execute("SELECT * FROM control WHERE id_arduino=%s",[id_arduino])
+    cur.execute("SELECT id_arduino FROM control WHERE id_arduino=%s",[id_arduino])
     data_perintah= cur.fetchone()
     # isi = data_perintah['perintah']
     return data_perintah
