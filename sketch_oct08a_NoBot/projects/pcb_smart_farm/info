@@ -1,0 +1,80 @@
+{
+  "uuid": "3312a5ee8dddbc7fbdd4d87eef91e1fa",
+  "path": "Offline/pcb_smart_farm",
+  "name": "pcb_smart_farm",
+  "content": "",
+  "created_at": "2020-10-27 14:47:46",
+  "updated_at": "2020-10-27 16:29:55",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "b4d731e682e2da3c61d0540b29d53a07",
+      "title": "Sheet_1",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "1b591e91dfe94fdb91c26daf1469453d": 1,
+        "ba4069bc28d74d51a7f6d8e201782944": 1,
+        "5d472524d79440a3bccee7b2d41783c7": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "BUZZER",
+          1,
+          "BUZZER-CCV",
+          "SG1",
+          {
+            "BOM_Manufacturer Part": "",
+            "puuid": "e1543b900e784130a9164bd615641b11",
+            "uuid": "1b591e91dfe94fdb91c26daf1469453d"
+          }
+        ],
+        [
+          "40 GPIO Header",
+          1,
+          "NPTC202KFMS-RC",
+          "J",
+          {
+            "BOM_Supplier Part": "1568-1462-ND",
+            "BOM_Supplier": "Digi-Key",
+            "BOM_Manufacturer Part": "",
+            "puuid": "0ede031e15684e2d89034a9fbdf939ae",
+            "uuid": "5d472524d79440a3bccee7b2d41783c7"
+          }
+        ],
+        [
+          "Soil Moisture Sensor",
+          1,
+          "SOIL MOISTURE SENSOR",
+          "P1",
+          {
+            "BOM_Supplier Part": "12587",
+            "BOM_Supplier": "SparkFun",
+            "BOM_Manufacturer Part": "",
+            "puuid": "9e45557634814d17bbc5f4246d331d45",
+            "uuid": "ba4069bc28d74d51a7f6d8e201782944"
+          }
+        ]
+      ],
+      "updateTime": 1603790995,
+      "createTime": 1603784936,
+      "histories": [],
+      "created_at": "2020-10-27 14:48:56",
+      "updated_at": "2020-10-27 16:29:55"
+    }
+  ],
+  "sort": [],
+  "title": "pcb_smart_farm",
+  "foldername": "pcb_smart_farm",
+  "schfilename": "pcb_smart_farm.json",
+  "schfilemtime": 1603790995773
+}

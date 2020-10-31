@@ -54,7 +54,7 @@ def insert_to_table(suhu,lembap,sm,rel,id_arduino,nama):
             print("Eksekusi insert to table")
             cursor.execute(query,tuple)
             # Auto Add Arduino
-            cek_control = read_control(id_arduino)
+            cek_control = read_control_id(id_arduino)
             if cek_control == None :
                 print("Eksekusi insert to control")
                 cek.execute("INSERT INTO control (id_arduino,nama) VALUES(%s,%s)",[id_arduino,nama])
@@ -181,9 +181,10 @@ def read_top(data):
 
 
 # ========CRUD TABLE CONTROL===========
+
 # --------Insert to table control------
 # @main.route('/insertperintah/<perintah>/<id_arduino>')
-def insert_to_control(perintah,id_arduino):
+def insert_to_control(perintah,id_arduino,status):
     """
     docstring
     Function update control
@@ -191,7 +192,7 @@ def insert_to_control(perintah,id_arduino):
     conn=connect_db()
     cur=conn.cursor()
     try:
-        cur.execute("UPDATE control SET perintah=%s WHERE id_arduino=%s",[perintah,id_arduino])
+        cur.execute("UPDATE control SET perintah=%s, status=%s WHERE id_arduino=%s",[perintah,status,id_arduino])
         conn.commit()
         print("Data control berhasil diupdate!")
     except Error as error:
@@ -208,7 +209,15 @@ def insert_to_control(perintah,id_arduino):
 def read_control(id_arduino):
     conn = connect_db()
     cur= conn.cursor()
-    cur.execute("SELECT id_arduino FROM control WHERE id_arduino=%s",[id_arduino])
+    cur.execute("SELECT * FROM control WHERE id_arduino=%s",[id_arduino])
+    data_perintah= cur.fetchone()
+    # isi = data_perintah['perintah']
+    return data_perintah
+
+def read_control_id(id_arduino):
+    conn = connect_db()
+    cur= conn.cursor()
+    cur.execute("SELECT id_ardui FROM control WHERE id_arduino=%s",[id_arduino])
     data_perintah= cur.fetchone()
     # isi = data_perintah['perintah']
     return data_perintah
@@ -225,4 +234,14 @@ def read_nodes():
     nodes = cur.fetchall()
     return nodes
 
-
+#  -----baca satu node--------
+def read_node(id):
+    """
+    docstring
+    Baca udah berapa node yang connect
+    """
+    conn = connect_db()    
+    cur = conn.cursor()
+    cur.execute("SELECT perintah, status FROM control WHERE id_arduino=%s",[id])
+    node= cur.fetchone()
+    return node
