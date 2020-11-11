@@ -52,15 +52,16 @@ def insert_to_table(suhu,lembap,sm,rel,id_arduino,nama):
         tuple = (suhu, lembap, sm, rel, id_arduino)
         try:
             print("Eksekusi insert to table")
-            cursor.execute(query,tuple)
+            cursor.execute("INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)",[suhu, lembap, sm, rel, id_arduino])
             # Auto Add Arduino
             cek_control = read_control_id(id_arduino)
             if cek_control == None :
                 print("Eksekusi insert to control")
-                cek.execute("INSERT INTO control (id_arduino,nama) VALUES(%s,%s)",[id_arduino,nama])
+                cek.execute("INSERT INTO control (id_arduino, nama) VALUES(%s,%s)",[id_arduino,nama])
             # Auto Add selesai
             conn.commit()
-        except:
+        except Exception as error:
+            print("error {}".format(error))
             conn.rollback()
         print("Data berhasil dimasukkan")
         print("Data DHT: {}, {}, data sm: {}, data id_arduino:{}".format(baca_suhu,baca_lembap,sm,id_arduino))
@@ -217,7 +218,7 @@ def read_control(id_arduino):
 def read_control_id(id_arduino):
     conn = connect_db()
     cur= conn.cursor()
-    cur.execute("SELECT id_ardui FROM control WHERE id_arduino=%s",[id_arduino])
+    cur.execute("SELECT id_arduino FROM control WHERE id_arduino=%s",[id_arduino])
     data_perintah= cur.fetchone()
     # isi = data_perintah['perintah']
     return data_perintah

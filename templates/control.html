@@ -18,27 +18,49 @@
                 </div> 
               </div>
               <div class="card-body">
-                <form action="" method="post">
-                  <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                    <label class="custom-control-label text-gray-800" for="customRadio1">Default (Otomatis)</label>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-12">
+                    <form>
+                      <div class="form-group">
+                        <label for="formGroupExampleInput">ID User</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Put your User ID here" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="formGroupExampleInput2">ID Device</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Put the device ID here" readonly>
+                      </div>
+                      <!-- <button id="change" class="btn btn-primary">Change</button> -->
+                    </form>
                   </div>
-                  <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                    <label class="custom-control-label text-gray-800" for="customRadio2">Scheduled</label>
-                  </div>
-                  <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                    <label class="custom-control-label text-gray-800" for="customRadio3">Stay On</label>
-                  </div>
-                  <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-                    <label class="custom-control-label text-gray-800" for="customRadio4">Stay Off</label>
-                  </div>
-                </form>
+                  <div class="col-lg-4 col-sm-12">
+                    <form action="" method="post">
+                      <label for="pumpControl">Pump Control Mode</label>
+                      <div id="pumpControl">
+                        <div class="custom-control custom-radio">
+                          <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                          <label class="custom-control-label text-gray-800" for="customRadio1">Default (Otomatis)</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                          <label class="custom-control-label text-gray-800" for="customRadio2">Scheduled</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                          <label class="custom-control-label text-gray-800" for="customRadio3">Stay On</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
+                          <label class="custom-control-label text-gray-800" for="customRadio4">Stay Off</label>
+                        </div>
+                      </div>
+                      </form>
+                    </div>
+                </div>
+                
               </div>
               <div class="card-footer">
                 perintah : <span id="perintah" class="float"></span> 
+                <br>
                 status : <span id="status" class="float"></span>
               </div>
               
@@ -58,7 +80,7 @@
   {% block scripts %}
   <!-- Page level plugins -->
   <script>
-    const id_arduino={{data.id_arduino}};
+    const id_arduino="{{data.id_arduino}}";
     const post_url="{{url_for('input_control')}}";
     const get_url="{{url_for('get_data_node',id=data.id_arduino)}}";
   </script>

@@ -23,7 +23,8 @@ def index():
 @main.route('/dashboard/<id>')
 @login_required
 def dashboard(id):
-    return render_template('dashboard.html', id=id )
+    info = read_control(id)
+    return render_template('dashboard.html', info=info )
 
 @main.route('/control/<id>')
 @login_required
@@ -75,7 +76,7 @@ def input_data():
             lembap = float(request.form["lembap"])
             sm = float(request.form["sm"])
             rel = int(request.form["relay"])
-            id_arduino = int(request.form["id_arduino"])
+            id_arduino = str(request.form["id_arduino"])
             nama = str(request.form["nama"])
             insert_to_table(suhu,lembap,sm,rel,id_arduino,nama)
             return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(suhu ,lembap, sm, rel, id_arduino)
@@ -91,7 +92,7 @@ def input_control():
     try:
         if request.method == "POST":
             perintah = int(request.form["perintah"])
-            id_arduino = int(request.form["id_arduino"])
+            id_arduino = str(request.form["id_arduino"])
         insert_to_control(perintah,id_arduino,status)
         return "perintah : {}, id_arduino : {}, status:{}".format(perintah, id_arduino,status)
     except Exception as e:

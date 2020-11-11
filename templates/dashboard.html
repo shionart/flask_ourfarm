@@ -6,7 +6,7 @@
         <div>
         {% block content %}
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Arduino {{id}}</h1>
+          <h1 class="h3 mb-4 text-gray-800">Arduino {{info.nama}}</h1>
           
           <!-- Conten -->
           <div class="row">
@@ -178,7 +178,7 @@
 
   <!-- Passing data ke JS -->
   <script>
-    var data_id="{{url_for('get_data_api', id=id)}}" 
+    var data_id="{{url_for('get_data_api', id=info.id_arduino)}}" 
   </script>
   <!-- Page level plugins -->
   <script src="{{url_for('static', filename='vendor/chart.js/Chart.min.js')}}"></script>
