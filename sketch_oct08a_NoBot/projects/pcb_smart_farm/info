@@ -4,7 +4,7 @@
   "name": "pcb_smart_farm",
   "content": "",
   "created_at": "2020-10-27 14:47:46",
-  "updated_at": "2020-10-27 16:29:55",
+  "updated_at": "2020-11-01 02:18:33",
   "stick": "",
   "documents": [
     {
@@ -17,7 +17,12 @@
       "components": {
         "1b591e91dfe94fdb91c26daf1469453d": 1,
         "ba4069bc28d74d51a7f6d8e201782944": 1,
-        "5d472524d79440a3bccee7b2d41783c7": 1
+        "5d472524d79440a3bccee7b2d41783c7": 1,
+        "5cbe824183374fac8e4c1ae848199ce3": 2,
+        "23fec1a60de44d669ad6af1c1a7770bf": 1,
+        "bb009484ef804a24ac5d18c54b249586": 2,
+        "7a6bdc4f0d18424ea99e5a2ecef580d3": 1,
+        "2558de572e2f4518a5eedacf77ed3180": 1
       },
       "BOM": [
         [
@@ -39,6 +44,20 @@
           }
         ],
         [
+          "LED-0603_R",
+          2,
+          "LED0603_RED",
+          "LED1,LED2",
+          {
+            "BOM_Manufacturer": "EVERLIGHT(台湾亿光)",
+            "BOM_Manufacturer Part": "19-217/R6C-AL1M2VY/3T",
+            "BOM_Supplier Part": "C72044",
+            "BOM_Supplier": "LCSC",
+            "puuid": "1efb3a885b5b4aecb6d41221a8f4d86b",
+            "uuid": "5cbe824183374fac8e4c1ae848199ce3"
+          }
+        ],
+        [
           "40 GPIO Header",
           1,
           "NPTC202KFMS-RC",
@@ -49,6 +68,45 @@
             "BOM_Manufacturer Part": "",
             "puuid": "0ede031e15684e2d89034a9fbdf939ae",
             "uuid": "5d472524d79440a3bccee7b2d41783c7"
+          }
+        ],
+        [
+          "5V water pump",
+          1,
+          "PUMP FOOTPRNT",
+          "WP1",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70a872b62c7e4949a056d71d961b9975",
+            "uuid": "7a6bdc4f0d18424ea99e5a2ecef580d3"
+          }
+        ],
+        [
+          "Light Sensor",
+          1,
+          "",
+          "U1",
+          {
+            "BOM_Manufacturer Part": "",
+            "puuid": "",
+            "uuid": "23fec1a60de44d669ad6af1c1a7770bf"
+          }
+        ],
+        [
+          "DHT11",
+          1,
+          "DHT11",
+          "DHT1",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "MAXIM",
+            "BOM_Manufacturer Part": "DS18B20+",
+            "BOM_Supplier Part": "C9753",
+            "puuid": "f8ff824f3cf74f81b6a250533f8951ab",
+            "uuid": "2558de572e2f4518a5eedacf77ed3180"
           }
         ],
         [
@@ -63,18 +121,31 @@
             "puuid": "9e45557634814d17bbc5f4246d331d45",
             "uuid": "ba4069bc28d74d51a7f6d8e201782944"
           }
+        ],
+        [
+          "1k",
+          2,
+          "R0603",
+          "R1,R2",
+          {
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "BOM_Manufacturer Part": "",
+            "puuid": "1bf59dff03ec4233aa077dc7cf0e92a1",
+            "uuid": "bb009484ef804a24ac5d18c54b249586"
+          }
         ]
       ],
-      "updateTime": 1603790995,
+      "updateTime": 1604171913,
       "createTime": 1603784936,
       "histories": [],
       "created_at": "2020-10-27 14:48:56",
-      "updated_at": "2020-10-27 16:29:55"
+      "updated_at": "2020-11-01 02:18:33"
     }
   ],
   "sort": [],
   "title": "pcb_smart_farm",
   "foldername": "pcb_smart_farm",
   "schfilename": "pcb_smart_farm.json",
-  "schfilemtime": 1603790995773
+  "schfilemtime": 1604171913324
 }

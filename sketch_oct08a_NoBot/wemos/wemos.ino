@@ -117,11 +117,14 @@ bool Start = false;
 
   void loop(){
     if (WiFi.status() != WL_CONNECTED) {
-        delay(1);
-        digitalWrite(led1,HIGH);
-        WiFi.begin(ssid, password);
-        return;
-    }   
+      Serial.print(".");//if not connected printing .........
+      digitalWrite(led1,HIGH);
+      delay(50);
+      return;
+    }else{
+      digitalWrite(led1,LOW);
+    }
+       
     
     smval = readSuhu();
     val= map(smval,1023,465,0,100);
