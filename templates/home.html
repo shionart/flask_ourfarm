@@ -36,18 +36,16 @@
                   Download dan install file.ino yang disediakan setelah menambah perangkat pada arduino yang akan digunakan!
                 </li>
                 <li>
-                  Copy Paste User ID pada bagian card Setup di bawah fitur download file.ino 
-                  <form action="">
+                  Salin User ID pada bagian card Setup di bawah fitur download file.ino dan tempelkan di form bawah ini
                     <div class="form-group row">
                       <div class="col-lg-4 pt-1">
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Put your User ID here" readonly>
+                        <input type="text" class="form-control" id="userID" placeholder="Masukkan User ID di sini" readonly>
                       </div>
                       <div class="col-lg-2 pt-1">
-                        <button id="change" class="btn btn-primary">Change</button>
+                        <button id="change" class="btn btn-outline-success">Change</button>
+                        <button id="save" class="btn btn-outline-success" hidden="true">save</button>
                       </div>
                     </div>
-                    
-                  </form>
                 </li>
                 <li>
                   Hubungkan arduino dengan aliran listrik, tunggu sampai alat mengirim data (cek <b><a href="/control"> di sini</a></b>).
@@ -68,7 +66,22 @@
 
   {% block scripts %}
   <!-- Page level plugins -->
-  
+  <script>
+    $("#change").click(
+      function(){
+        $("#userID").removeAttr("readonly");
+        $("#change").attr("hidden", true);
+        $("#save").attr("hidden", false);
+      }
+    );
+    $("#save").click(
+      function(){
+        $("#userID").attr("readonly", true);
+        $("#save").attr("hidden", true);
+        $("#change").attr("hidden", false);
+      }
+    );
+  </script>
   
 
   <!-- Page level custom scripts -->

@@ -19,7 +19,7 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-lg-6 col-sm-12">
+                  <!-- <div class="col-lg-6 col-sm-12">
                     <form>
                       <div class="form-group">
                         <label for="formGroupExampleInput">ID User</label>
@@ -29,10 +29,10 @@
                         <label for="formGroupExampleInput2">ID Device</label>
                         <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Put the device ID here" readonly>
                       </div>
-                      <!-- <button id="change" class="btn btn-primary">Change</button> -->
+                      <button id="change" class="btn btn-primary">Change</button>
                     </form>
-                  </div>
-                  <div class="col-lg-4 col-sm-12">
+                  </div> -->
+                  <div class="col-lg-12 col-sm-12">
                     <form action="" method="post">
                       <label for="pumpControl">Pump Control Mode</label>
                       <div id="pumpControl">
@@ -83,6 +83,7 @@
     const id_arduino="{{data.id_arduino}}";
     const post_url="{{url_for('input_control')}}";
     const get_url="{{url_for('get_data_node',id=data.id_arduino)}}";
+    const perintah={{data.perintah}};
   </script>
   <script src="{{url_for('static', filename='js/custom/control_node.js')}}"></script>
   

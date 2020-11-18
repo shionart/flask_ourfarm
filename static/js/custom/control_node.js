@@ -1,10 +1,26 @@
-function ubahStatus(status) {
+function ubahFooter(perintah,status) {
   if (status==1) {
-      document.getElementById("status").innerHTML="Executed";
+      $("#status").html("Executed");
     }
     else{
-      document.getElementById("status").innerHTML="Waiting";
+      $("#status").html("Waiting");
     }
+  switch (perintah) {
+    case 0:
+      $("#perintah").html("Default (Otomatis)");
+      break;
+    case 1:
+      $("#perintah").html("Scheduled");
+      break;
+    case 2:
+      $("#perintah").html("Stay On");
+      break;
+    case 3:
+      $("#perintah").html("Stay Off");
+      break;
+    default:
+      break;
+  }
 }
 function ubahPerintah(perintah) {
   switch (perintah) {
@@ -12,13 +28,13 @@ function ubahPerintah(perintah) {
       document.getElementById("customRadio1").checked = true;
       break;
     case 1:
-        document.getElementById("customRadio1").checked = true;
+        document.getElementById("customRadio2").checked = true;
         break;
     case 2:
-        document.getElementById("customRadio1").checked = true;
+        document.getElementById("customRadio3").checked = true;
         break;
     case 3:
-      document.getElementById("customRadio1").checked = true;
+      document.getElementById("customRadio4").checked = true;
       break;
     default:
       break;
@@ -37,13 +53,14 @@ function cekStatus() {
     setTimeout(cekStatus,1000);
     // let isi = data['status'];
     // console.log(isi);
-    ubahStatus(data['status']);
+    ubahFooter(data['perintah'],data['status']);
   });  
 }
-document.getElementById("customRadio1").onchange = function() {myFunction(id_arduino,0)};
-document.getElementById("customRadio2").onchange = function() {myFunction(id_arduino,1)};
-document.getElementById("customRadio3").onchange = function() {myFunction(id_arduino,2)};
-document.getElementById("customRadio4").onchange = function() {myFunction(id_arduino,3)};
+ubahPerintah(perintah);
+$("#customRadio1").change(function() {myFunction(id_arduino,0)});
+$("#customRadio2").change(function() {myFunction(id_arduino,1)});
+$("#customRadio3").change(function() {myFunction(id_arduino,2)});
+$("#customRadio4").change(function() {myFunction(id_arduino,3)});
 cekStatus();
     
     
