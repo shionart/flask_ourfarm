@@ -40,16 +40,17 @@ function ubahPerintah(perintah) {
       break;
   }
 }
-function myFunction(a,b) {
-  $.post(post_url,
+function myFunction(b) {
+  $.post(api_control_url,
     {
-      id_arduino: a,
-      perintah: b
+      perintah: b,
+      status:"0",
+      nama:""
     }
   );
 }
 function cekStatus() {
-  $.get(get_url, function (data) {
+  $.get(api_control_url, function (data) {
     setTimeout(cekStatus,1000);
     // let isi = data['status'];
     // console.log(isi);
@@ -57,10 +58,10 @@ function cekStatus() {
   });  
 }
 ubahPerintah(perintah);
-$("#customRadio1").change(function() {myFunction(id_arduino,0)});
-$("#customRadio2").change(function() {myFunction(id_arduino,1)});
-$("#customRadio3").change(function() {myFunction(id_arduino,2)});
-$("#customRadio4").change(function() {myFunction(id_arduino,3)});
+$("#customRadio1").change(function() {myFunction(0)});
+$("#customRadio2").change(function() {myFunction(1)});
+$("#customRadio3").change(function() {myFunction(2)});
+$("#customRadio4").change(function() {myFunction(3)});
 cekStatus();
     
     

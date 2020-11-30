@@ -19,20 +19,7 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <!-- <div class="col-lg-6 col-sm-12">
-                    <form>
-                      <div class="form-group">
-                        <label for="formGroupExampleInput">ID User</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Put your User ID here" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label for="formGroupExampleInput2">ID Device</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Put the device ID here" readonly>
-                      </div>
-                      <button id="change" class="btn btn-primary">Change</button>
-                    </form>
-                  </div> -->
-                  <div class="col-lg-12 col-sm-12">
+                  <div class="col-lg-6 col-sm-6 pl-5">
                     <form action="" method="post">
                       <label for="pumpControl">Pump Control Mode</label>
                       <div id="pumpControl">
@@ -54,14 +41,24 @@
                         </div>
                       </div>
                       </form>
-                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 pr-5">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ipsam nulla quasi eligendi tempore! Velit fugiat, aperiam corporis est quam vero ipsam commodi exercitationem reprehenderit? Possimus, iure. Ipsum, a at?
+                  </div>
                 </div>
                 
               </div>
               <div class="card-footer">
-                perintah : <span id="perintah" class="float"></span> 
-                <br>
-                status : <span id="status" class="float"></span>
+                <div class="row">
+                  <div class="col-6 pl-5 pt-3">
+                    <h4>Kondisi di Arduino</h4>
+                  </div>
+                  <div class="col-6 pr-5">
+                    perintah : <span id="perintah" class="float"></span> 
+                    <br>
+                    status : <span id="status" class="float"></span>
+                  </div>
+                </div>
               </div>
               
             
@@ -81,8 +78,7 @@
   <!-- Page level plugins -->
   <script>
     const id_arduino="{{data.id_arduino}}";
-    const post_url="{{url_for('input_control')}}";
-    const get_url="{{url_for('get_data_node',id=data.id_arduino)}}";
+    const api_control_url="{{url_for('api_data_node',id=data.id_arduino)}}";
     const perintah={{data.perintah}};
   </script>
   <script src="{{url_for('static', filename='js/custom/control_node.js')}}"></script>

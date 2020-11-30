@@ -39,7 +39,7 @@
                   Salin User ID pada bagian card Setup di bawah fitur download file.ino dan tempelkan di form bawah ini
                     <div class="form-group row">
                       <div class="col-lg-4 pt-1">
-                        <input type="text" class="form-control" id="userID" placeholder="Masukkan User ID di sini" readonly>
+                        <input value="{{user_id}}" type="text" class="form-control" id="userID" placeholder="Masukkan User ID di sini" readonly>
                       </div>
                       <div class="col-lg-2 pt-1">
                         <button id="change" class="btn btn-outline-success">Change</button>
@@ -67,21 +67,10 @@
   {% block scripts %}
   <!-- Page level plugins -->
   <script>
-    $("#change").click(
-      function(){
-        $("#userID").removeAttr("readonly");
-        $("#change").attr("hidden", true);
-        $("#save").attr("hidden", false);
-      }
-    );
-    $("#save").click(
-      function(){
-        $("#userID").attr("readonly", true);
-        $("#save").attr("hidden", true);
-        $("#change").attr("hidden", false);
-      }
-    );
+    const email = "{{session['email']}}"
+    const post_userid="{{url_for('post_raspi')}}";
   </script>
+  <script src="{{url_for('static', filename='js/custom/home.js')}}"></script>
   
 
   <!-- Page level custom scripts -->

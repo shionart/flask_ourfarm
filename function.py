@@ -1,23 +1,4 @@
-from flask import Flask, render_template, request, make_response, abort, redirect, url_for, jsonify, session, flash
-import json
-import time
-from datetime import datetime
-from statistics import mean
-import math
-from functools import wraps
-from MySQLdb import cursors, connect
-import mysql.connector
-from flask_cors import CORS, cross_origin
-import socket
-
-
-main = Flask(__name__)
-cors = CORS(main)
-
-main.secret_key="081213342244"
-# non-route function
-hostname = socket.gethostname()
-ip_address = socket.gethostbyname(hostname)
+from req_library import *
 
     # DB_connect
 def connect_db():
@@ -28,7 +9,7 @@ def connect_db():
 def login_required(f):
     @wraps(f)
     def login_handler(*args,**kwargs):
-        if 'email_user' in session:
+        if 'email' in session:
             return f(*args, **kwargs)
         else :
             flash("Please Login First!", "alert-warning")
@@ -38,7 +19,7 @@ def login_required(f):
 #  ======= CRUD TABLE SENSOR =========
 # ------insert to table sensor------
 # @main.route('/inserttabel/<suhu>/<lembap>/<sm>/<rel>')
-def insert_to_table(suhu,lembap,sm,rel,id_arduino,nama):
+def insert_to_table(suhu,lembap,sm,rel,id_arduino):
     conn = connect_db()
     baca_suhu=suhu
     baca_lembap=lembap
@@ -46,26 +27,19 @@ def insert_to_table(suhu,lembap,sm,rel,id_arduino,nama):
         if math.isnan(suhu) or math.isnan(lembap) :
             suhu=100
             lembap=100
-        cek = conn.cursor()
         cursor = conn.cursor()
         query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)"
         tuple = (suhu, lembap, sm, rel, id_arduino)
         try:
             print("Eksekusi insert to table")
             cursor.execute("INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)",[suhu, lembap, sm, rel, id_arduino])
-            # Auto Add Arduino
-            cek_control = read_control_id(id_arduino)
-            if cek_control == None :
-                print("Eksekusi insert to control")
-                cek.execute("INSERT INTO control (id_arduino, nama) VALUES(%s,%s)",[id_arduino,nama])
-            # Auto Add selesai
             conn.commit()
         except Exception as error:
             print("error {}".format(error))
             conn.rollback()
         print("Data berhasil dimasukkan")
         print("Data DHT: {}, {}, data sm: {}, data id_arduino:{}".format(baca_suhu,baca_lembap,sm,id_arduino))
-    except Error as error:
+    except Exception as error:
         print("Gagal memasukkan data {}".format(error))
     finally:
         if (conn):
@@ -180,23 +154,32 @@ def read_top(data):
           }
     return ret
 
+# =========================================================
+# =====================CRUD TABLE CONTROL==================
+# =========================================================
 
-# ========CRUD TABLE CONTROL===========
-
-# --------Insert to table control------
+# --------Insert / Update Node------
 # @main.route('/insertperintah/<perintah>/<id_arduino>')
-def insert_to_control(perintah,id_arduino,status):
+def insert_to_control(perintah,id_arduino,status,nama):
     """
-    docstring
-    Function update control
+    Jika belum ada node sebelum nya, maka INSERT
+    Bila sudah ada maka UPDATE
     """
     conn=connect_db()
     cur=conn.cursor()
     try:
-        cur.execute("UPDATE control SET perintah=%s, status=%s WHERE id_arduino=%s",[perintah,status,id_arduino])
+        # Auto Add Arduino
+        cek_control = read_control_id(id_arduino)
+        if cek_control == None :
+            print("Eksekusi insert to control")
+            cur.execute("INSERT INTO control (id_arduino, nama, perintah, status) VALUES(%s,%s,%s,%s)",[id_arduino,nama,"0","1"])
+            # Auto Add selesai
+        else:
+            print("Update control")
+            cur.execute("UPDATE control SET perintah=%s, status=%s WHERE id_arduino=%s",[perintah,status,id_arduino])
         conn.commit()
         print("Data control berhasil diupdate!")
-    except Error as error:
+    except Exception as error:
         conn.rollback()
         print("gagal update data {}".format(error))
     finally:
@@ -206,7 +189,7 @@ def insert_to_control(perintah,id_arduino,status):
             print("MySql ditutup")
     return "selesai"
 
-# -----cek perintah node x-----
+# -----read * dari 1 node -----
 def read_control(id_arduino):
     conn = connect_db()
     cur= conn.cursor()
@@ -215,6 +198,7 @@ def read_control(id_arduino):
     # isi = data_perintah['perintah']
     return data_perintah
 
+# ----- read id dari 1 node
 def read_control_id(id_arduino):
     conn = connect_db()
     cur= conn.cursor()
@@ -223,8 +207,8 @@ def read_control_id(id_arduino):
     # isi = data_perintah['perintah']
     return data_perintah
 
-# ------baca semua nodes-------
-def read_nodes():
+# ------read semua nodes-------
+def read_controls():
     """
     docstring
     Baca udah berapa node yang connect
@@ -235,14 +219,60 @@ def read_nodes():
     nodes = cur.fetchall()
     return nodes
 
-#  -----baca satu node--------
-def read_node(id):
+# ====================================================
+# ===================CRUD TABLE RASPI=================
+# ====================================================
+# @main.route('/test123/<email>')
+def read_user(email):
     """
-    docstring
-    Baca udah berapa node yang connect
+    Baca email & password raspi 1 email
     """
-    conn = connect_db()    
+    conn = connect_db()
     cur = conn.cursor()
-    cur.execute("SELECT perintah, status FROM control WHERE id_arduino=%s",[id])
-    node= cur.fetchone()
-    return node
+    try:
+        cur.execute("SELECT * FROM raspi WHERE email=%s",[email])
+        account = cur.fetchone()
+        return account
+    except Exception as e:
+        return 'error :{}'.format(e)
+    
+def cu_user(email,password,user_id):
+    """
+    Create account dan update user_id pada account
+    """
+    conn = connect_db()
+    cur = conn.cursor()
+    try:
+        if user_id==None:
+            cur.execute("INSERT INTO raspi (email,password) VALUES (%s, %s)",[email,password])
+            print("insert user executed")
+        else :
+            cur.execute("UPDATE raspi SET user_id=%s WHERE email=%s",[user_id,email])
+            print("update user_id executed")
+        conn.commit()
+    except Exception as error:
+        conn.rollback()
+        print("error :{}".format(error))
+    finally:
+        if (conn):
+            cur.close()
+            conn.close()
+            print("MySql ditutup")
+    return "selesai create update raspi" 
+
+def cek_auth(email,password):
+    """
+    cek email & password sama & ada atau tidak
+    """
+    auth=read_user(email)
+    if auth==None:
+        return "Akun Tidak ditemukan"
+    elif password!=auth['password']:
+        return "Password Tidak Sesuai"
+    else:
+        session['email'] = request.form['email']
+        return True
+    
+
+    
+    

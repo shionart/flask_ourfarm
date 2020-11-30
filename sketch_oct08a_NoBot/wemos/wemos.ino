@@ -10,11 +10,11 @@ DHT dht(DHTPIN, DHTTYPE);
 //CONNECT WIFI, ganti wifi anda di sini
 char ssid[] = "muiren";     // your network SSID (name)  
 char password[] = "muirenoleander"; // your network key
-char raspi_input[] = "http://192.168.137.1:5000/input";
-const char* control_page="control/2";
-char id_arduino[]="2";
+char ip_address[]="192.168.137.1";
 char nama[]="Kebon 2";
-
+char id_arduino[]="2";
+const char* control_page="/get_control/"+String(id_arduino);
+char raspi_input[] = "http://"+ip_address+":5000/input";
 
 
 

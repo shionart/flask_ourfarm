@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>OurFarm - Login</title>
+  <title>OurFarm - Register</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="bg-gradient-success">
+<body class="bg-gradient-info">
 
   <div class="container">
 
@@ -37,7 +37,7 @@
                 <div class="p-5">
                   <div class="text-center">
                     <i class="fas fa-leaf"></i>
-                    <h1 class="h4 text-gray-900 mb-4">OURFARM Login</h1>
+                    <h1 class="h4 text-gray-900 mb-4">OURFARM Register</h1>
                     {% with messages = get_flashed_messages(with_categories=true) %}
                       {% if messages %}
                         {% for category, message in messages %}
@@ -51,7 +51,7 @@
                       {% endif %}
                     {% endwith %}
                   </div>
-                  <form class="user" action="{{url_for('login')}}" method="POST">
+                  <form class="user" action="{{url_for('post_raspi')}}" method="POST">
                     <div class="form-group">
                       <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
                     </div>
@@ -65,7 +65,7 @@
                       </div>
                     </div> -->
                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                      Login
+                      Register
                     </button>
                     <!-- <hr>
                     <a href="index.html" class="btn btn-google btn-user btn-block">
@@ -75,10 +75,6 @@
                       <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                     </a> -->
                   </form>
-                  <hr>
-                  <div class="text-center">
-                    <a class="small" href="{{url_for('register')}}">Register Here</a>
-                  </div>
                   <!-- <div class="text-center">
                     <a class="small" href="register.html">Create an Account!</a>
                   </div> -->
