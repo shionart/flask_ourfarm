@@ -5,21 +5,12 @@ def connect_db():
     conn = connect(host = "localhost", user="root", passwd="", db="db_sister", cursorclass=cursors.DictCursor)
     return conn
 
-#Cek login atau tidak
-def login_required(f):
-    @wraps(f)
-    def login_handler(*args,**kwargs):
-        if 'email' in session:
-            return f(*args, **kwargs)
-        else :
-            flash("Please Login First!", "alert-warning")
-            return redirect(url_for('login'))
-    return login_handler
+
 
 #  ======= CRUD TABLE SENSOR =========
 # ------insert to table sensor------
 # @main.route('/inserttabel/<suhu>/<lembap>/<sm>/<rel>')
-def insert_to_table(suhu,lembap,sm,rel,id_arduino):
+def insert_to_sensor(suhu,lembap,sm,rel,id_arduino):
     conn = connect_db()
     baca_suhu=suhu
     baca_lembap=lembap
@@ -260,19 +251,5 @@ def cu_user(email,password,user_id):
             print("MySql ditutup")
     return "selesai create update raspi" 
 
-def cek_auth(email,password):
-    """
-    cek email & password sama & ada atau tidak
-    """
-    auth=read_user(email)
-    if auth==None:
-        return "Akun Tidak ditemukan"
-    elif password!=auth['password']:
-        return "Password Tidak Sesuai"
-    else:
-        session['email'] = request.form['email']
-        return True
-    
 
-    
     
