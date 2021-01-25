@@ -227,19 +227,19 @@ def read_user(email):
     except Exception as e:
         return 'error :{}'.format(e)
     
-def cu_user(email,password,user_id):
+def cu_user(email,password,id_user):
     """
-    Create account dan update user_id pada account
+    Create account dan update id_user pada account
     """
     conn = connect_db()
     cur = conn.cursor()
     try:
-        if user_id==None:
+        if id_user==None:
             cur.execute("INSERT INTO raspi (email,password) VALUES (%s, %s)",[email,password])
             print("insert user executed")
         else :
-            cur.execute("UPDATE raspi SET user_id=%s WHERE email=%s",[user_id,email])
-            print("update user_id executed")
+            cur.execute("UPDATE raspi SET id_user=%s WHERE email=%s",[id_user,email])
+            print("update id_user executed")
         conn.commit()
     except Exception as error:
         conn.rollback()

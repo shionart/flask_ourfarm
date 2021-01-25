@@ -11,15 +11,15 @@ import mysql.connector
 from flask_cors import CORS, cross_origin
 import socket
 
-# import time
+import time
 import atexit
 
-from apscheduler.schedulers.background import BackgroundScheduler
+# from apscheduler.schedulers.background import BackgroundScheduler
 
 main = Flask(__name__)
 cors = CORS(main)
 
-scheduler = BackgroundScheduler()
+# scheduler = BackgroundScheduler()
 
 main.secret_key="081213342244"
 hostname = socket.gethostname()

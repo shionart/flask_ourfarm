@@ -1,23 +1,23 @@
 from config.db import connect_db
 import math
 
-class Sensor:
+class Sensor(object):
     """
     docstring
     """
 
-    def __init__(self, *args):
+    def __init__(self, **kwargs):
         """
         docstring
         """
-        if len(args)>1:
-            self.id = id
-            self.time = time
-            self.suhu =  suhu
-            self.kelembapan = kelembapan
-            self.soil_moist = soil_moist
-            self.relay = relay
-            self.id_arduino = id_arduino
+        if len(kwargs)>0:
+            self.id = kwargs.pop("id_sensor", None)
+            self.time = kwargs.pop("time", None)
+            self.suhu =  kwargs.pop("suhu", None)
+            self.kelembapan = kwargs.pop("kelembapan", None)
+            self.soil_moist = kwargs.pop("soil_moist", None)
+            self.relay = kwargs.pop("relay", None)
+            self.id_arduino = kwargs.pop("id_arduino", None)
         else:
             self.id = None
             self.time = None

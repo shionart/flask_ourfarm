@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\MUHAMMAD AL AMIN\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "python.pythonPath": "Z:\\projectWeb\\flask_test\\venv\\Scripts\\python.exe",
     "python.testing.pytestArgs": [
         "."
     ],

@@ -48,6 +48,11 @@ function myFunction(b) {
       nama:""
     }
   );
+  $.get(sync_control_get,
+  {
+    nilai:b
+  }
+  )
 }
 function cekStatus() {
   $.get(api_control_url, function (data) {

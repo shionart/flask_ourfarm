@@ -1,4 +1,5 @@
 from service import *
+from model.Control import *
 
 # Routing
 @main.route('/')
@@ -11,8 +12,8 @@ def index():
     # else :
     #     return render_template('home',isi="Ini Index Kosongan")
     raspi = read_user(session['email'])
-    user_id= raspi['user_id']
-    return render_template('home.html', ip=ip_address, user_id=user_id)
+    id_user= raspi['id_user']
+    return render_template('home.html', ip=ip_address, id_user=id_user)
     
     # return render_template('laman di dalam folder template', variabeldikirim=isi)
 
@@ -88,12 +89,12 @@ def post_raspi():
         except Exception as error:
             flash("Error:{}".format(error), "alert-warning")
             return redirect(url_for('register'))
-    elif 'user_id' in request.form:
+    elif 'id_user' in request.form:
         try:
             email=str(request.form['email'])
-            user_id=str(request.form['user_id'])
-            cu_user(email,None,user_id)
-            return "user_id updated : {}".format(user_id)
+            id_user=str(request.form['id_user'])
+            cu_user(email,None,id_user)
+            return "id_user updated : {}".format(id_user)
         except Exception as e:
             return "error : {}".format(e)
     
@@ -155,4 +156,12 @@ def api_data_node(id):
         except Exception as e:
             return "error route {}".format(e)
 
+@main.route('/object',methods=["GET"])
+def testoo():
+    """
+    docstring
+    """
+    c = Control()
+    listControl = c.read_controls()
+    return jsonify(listControl)
 
