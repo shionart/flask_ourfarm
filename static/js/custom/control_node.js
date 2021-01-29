@@ -48,11 +48,32 @@ function myFunction(b) {
       nama:""
     }
   );
-  $.get(sync_control_get,
-  {
-    nilai:b
+  // $.get(sync_control_get+"?nilai="+b,
+  //   {
+  //     // nilai:b
+  //   }
+  // );
+  try {
+    $.get(sync_control_get,
+    {
+      nilai:b
+    }
+    ).fail(function() {
+      post_failure();
+      console.log("post failure");
+    });
+  } catch (error) {
+    print("Error :"+error);
   }
-  )
+}
+function post_failure(){
+  $.post(api_queue_url,
+    {
+      id_arduino:id_arduino,
+      id_user:id_user,
+      perintah:perintah 
+    }
+  );
 }
 function cekStatus() {
   $.get(api_control_url, function (data) {

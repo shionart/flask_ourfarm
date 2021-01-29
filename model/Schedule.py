@@ -18,19 +18,19 @@ scheduler = BackgroundScheduler({
 })
 class Schedule():
     """
-    docstring
+    Kelas untuk set scheduler dan fungsi yang berkaitan
     """
     
     def getListControl(self):
         """
-        docstring
+        Fungsi untuk mengecek secara berkala Control pada tiap Nodes
         """
         print("memulai getlistcontrol")
         try:
             a = Control().read_controls()
             if a!=None:
                 for control in a:
-                    print("Satuan control")
+                    # print("Satuan control")
                     c = Control(id_arduino=control['id_arduino'], id_user=control['id_user'])
                     c.getControl()
             else:

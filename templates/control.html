@@ -77,8 +77,14 @@
   {% block scripts %}
   <!-- Page level plugins -->
   <script>
+    /**
+         * harusnya untuk data di bawah cukup akses api, jadi dari flask / controller ga perlu masukin lagi data di render template
+         * Javascript -> get(api)->data disimpan ke variable local
+         */
     const id_arduino="{{data.id_arduino}}";
+    const id_user="{{data.id_user}}";
     const api_control_url="{{url_for('api_data_node',id=data.id_arduino)}}";
+    const api_queue_url="{{url_for('api_queue_control')}}";
     const perintah={{data.perintah}};
     const sync_control_get="https://bwcr.rizaldiariif.com/public/api/control/update/"+"{{data.id_user}}"+"/garden/"+id_arduino;
   </script>
