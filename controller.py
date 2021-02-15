@@ -165,7 +165,7 @@ def api_data_node(id):
             perintah = str(request.form["perintah"])
             status = str(request.form["status"])
             nama = str(request.form["nama"])
-            if(request.form["status"] != None or request.form["nama"] != None):
+            if(request.form["status"] != None or request.form["nama"] != None or request.form["perintah"] != None):
                 insert_to_control(perintah, id, status, nama)
             else:
                 pass  # skip sek
@@ -197,9 +197,16 @@ def api_queue_control():
         queue.queue_to_control()
         return "Queue control inserted"
     elif request.method == "GET":
-        return "get"
-    elif request.method == "DELETE":
         queue = Control()
-        queue.queue_clear()
+        read = queue.read_queue_control()
+        return jsonify(read) 
+    elif request.method == "DELETE":
+        idqueue=int(request.form["idqueue_control"])
+        if not idqueue:
+            queue = Control()
+            queue.queue_clear()
+        else:
+            queue = Control()
+            queue.queue_clear_id(idqueue)
         return "queue control cleared"
     

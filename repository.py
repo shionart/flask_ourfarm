@@ -10,6 +10,7 @@ def connect_db():
 #  ======= CRUD TABLE SENSOR =========
 # ------insert to table sensor------
 # @main.route('/inserttabel/<suhu>/<lembap>/<sm>/<rel>')
+#TODO migrate ke model sensor :done
 def insert_to_sensor(suhu,lembap,sm,rel,id_arduino):
     conn = connect_db()
     baca_suhu=suhu
@@ -40,6 +41,7 @@ def insert_to_sensor(suhu,lembap,sm,rel,id_arduino):
     return "selesai"
 
 # -----baca tabel Sensor-----
+#TODO migrate ke model sensor : done
 def read_sensor(id_arduino):
     conn = connect_db()
     cur = conn.cursor()
@@ -50,7 +52,7 @@ def read_sensor(id_arduino):
     curr_data = sensor[0]
     return sensor, curr_data, top_data
 
-# Fungsi biar ga mentahan dari db
+#TODO migrate ke model sensor : done
 def get_sensor(data):
     li = []
     for dat in data:
@@ -69,7 +71,7 @@ def get_sensor(data):
     return li
 
 # fungsi untuk ngambil data perbandingan
-#@main.route('/yesterday',methods=["GET"])
+#TODO migrate ke model sensor : done
 def read_yesterday(id_arduino):
     conn = connect_db()
     cur = conn.cursor()
@@ -110,6 +112,7 @@ def read_yesterday(id_arduino):
     #return jsonify({'suhu':suhu_yes,'lembap':lembap_yes,'sm':sm_yes})
     return yesterday
 
+#TODO migrate ke model sensor : done
 def mean_yesterday(sensors):
     list_suhu = []
     list_lembap = []
@@ -123,6 +126,7 @@ def mean_yesterday(sensors):
     mean_sm = mean(list_sm)
     return mean_suhu,mean_lembap,mean_sm
 
+#TODO migrate ke model sensor : done
 def read_top(data):
     top = data[:10]
     top = top[::-1]

@@ -103,7 +103,7 @@ class Control(object):
         finally:
             cur.close()
             conn.close()
-
+    
     def queue_clear(self):
         """
         Clear table queue_control
@@ -118,11 +118,37 @@ class Control(object):
         finally:
             cur.close()
             conn.close()
+    def queue_clear_id(self,idqueue):
+        """
+        Clear table queue_control
+        """
+        conn=connect_db()
+        cur=conn.cursor()
+        try:
+            cur.execute("DELETE FROM queue_control where idqueue_control=%s",[idqueue])
+            conn.commit()
+        except Exception as e :
+            print(e)
+        finally:
+            cur.close()
+            conn.close()
         
+    def read_queue_control(self):
+        """
+        Baca control yg ga ke submit
+        """
+        conn = connect_db()
+        cur = conn.cursor()
+        cur.execute("SELECT * from queue_control where id_arduino=%s",[self.id_arduino])
+        nodes = cur.fetchall()
+        if not nodes:
+            nodes = "KOSONG"
+        return nodes
 
     def getControl(self):
         """
-        Request Get to main web
+        Request Get Control main web\n
+        Mengambil data control terbaru dari main web.
         """
         url = "https://bwcr.rizaldiariif.com/public/api/control/"+self.id_user+"/garden"
         devid = {'deviceId': self.id_arduino}
@@ -133,8 +159,42 @@ class Control(object):
         cek = self.read_control()
         print("local :"+str(cek['perintah']))
         print("webpusat:"+str(data['nilai']))
-        if (ambil.status_code == 200 and str(cek['perintah']) != data["nilai"]):
-            print("data berubah")
+        if not cek :
+            print("Table Control Kosong!")
+        else :
+            if (ambil.status_code == 200 and str(cek['perintah']) != data["nilai"]):
+                print("data berubah")
+                try:
+                    conn = connect_db()
+                    cur = conn.cursor()
+                    cur.execute("UPDATE control SET perintah=%s, status=0 WHERE id_arduino=%s", [
+                                data['nilai'], self.id_arduino])
+                    conn.commit()
+                    cur.close()
+                    conn.close()
+                except Exception as e:
+                    conn.rollback()
+                    print(e)
+
+    def postControl(self):
+        """
+        Request Post Control to main web\n
+        Mengirim data control terbaru dari local ke main web.
+        
+        """
+        cek =self.read_queue_control()
+        
+        url = "https://bwcr.rizaldiariif.com/public/api/control/update/"+self.id_user+"/garden/"+self.id_arduino
+        perintah = {'nilai': self.perintah}
+        ambil = requests.get(url, params=perintah, headers={
+                             'User-Agent': 'Mozilla/5.0'})
+        # print(ambil.status_code)
+        data = ambil.json()
+        cek = self.read_queue_control()
+        # print("local :"+str(cek['perintah']))
+        # print("webpusat:"+str(data['nilai']))
+        if (ambil.status_code == 200 and cek!="KOSONG"):
+            print("ada data queue")
             try:
                 conn = connect_db()
                 cur = conn.cursor()
@@ -146,3 +206,5 @@ class Control(object):
             except Exception as e:
                 conn.rollback()
                 print(e)
+        else:
+            print("Status code : "+ambil.status_code+"queue : "+cek)
