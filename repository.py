@@ -155,6 +155,7 @@ def read_top(data):
 
 # --------Insert / Update Node------
 # @main.route('/insertperintah/<perintah>/<id_arduino>')
+#TODO migrate ke model sensor :done
 def insert_to_control(perintah,id_arduino,status,nama):
     """
     Jika belum ada node sebelum nya, maka INSERT
@@ -185,6 +186,7 @@ def insert_to_control(perintah,id_arduino,status,nama):
     return "selesai"
 
 # -----read * dari 1 node -----
+#TODO migrate ke model sensor :done
 def read_control(id_arduino):
     conn = connect_db()
     cur= conn.cursor()
@@ -194,6 +196,7 @@ def read_control(id_arduino):
     return data_perintah
 
 # ----- read id dari 1 node
+#TODO migrate ke model sensor :done
 def read_control_id(id_arduino):
     conn = connect_db()
     cur= conn.cursor()
@@ -203,6 +206,7 @@ def read_control_id(id_arduino):
     return data_perintah
 
 # ------read semua nodes-------
+#TODO migrate ke model sensor :done
 def read_controls():
     """
     docstring
@@ -218,19 +222,21 @@ def read_controls():
 # ===================CRUD TABLE RASPI=================
 # ====================================================
 # @main.route('/test123/<email>')
+#TODO migrate ke model user : done
 def read_user(email):
     """
-    Baca email & password raspi 1 email
+    Baca email & password user 1 email
     """
     conn = connect_db()
     cur = conn.cursor()
     try:
-        cur.execute("SELECT * FROM raspi WHERE email=%s",[email])
+        cur.execute("SELECT * FROM user WHERE email=%s",[email])
         account = cur.fetchone()
         return account
     except Exception as e:
         return 'error :{}'.format(e)
-    
+
+#TODO migrate ke model user : done 
 def cu_user(email,password,id_user):
     """
     Create account dan update id_user pada account
@@ -239,10 +245,10 @@ def cu_user(email,password,id_user):
     cur = conn.cursor()
     try:
         if id_user==None:
-            cur.execute("INSERT INTO raspi (email,password) VALUES (%s, %s)",[email,password])
+            cur.execute("INSERT INTO user (email,password) VALUES (%s, %s)",[email,password])
             print("insert user executed")
         else :
-            cur.execute("UPDATE raspi SET id_user=%s WHERE email=%s",[id_user,email])
+            cur.execute("UPDATE user SET id_user=%s WHERE email=%s",[id_user,email])
             print("update id_user executed")
         conn.commit()
     except Exception as error:
@@ -253,7 +259,7 @@ def cu_user(email,password,id_user):
             cur.close()
             conn.close()
             print("MySql ditutup")
-    return "selesai create update raspi" 
+    return "selesai create update user" 
 
 
     
