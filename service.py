@@ -25,26 +25,5 @@ def cek_auth(email,password):
         session['email'] = request.form['email']
         return True
     
-def post_sensor(id):
-    """
-    desc: Post data setiap n menit
-    init: run server
-    algo: 
-        Baca tabel sensor yg flag 0 Sort by time asc
-        Jika ada    
-            Baca id user & arduino -> link post
-            Tiap data
-                Parsing data to format post
-                Post to link post
-                Cek status
-                Jika Ok -> flag = 1, data selanjutnya
-                Tidak -> flag = 0, return error
-        Tidak
-            status semua data updated
-    """
-    read_sensor(id)
-    
-    pass
-
 def print_date_time():
     print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))

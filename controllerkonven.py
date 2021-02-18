@@ -1,23 +1,24 @@
 from service import *
 from model.Control import *
+from route import *
 
 # Routing
 
 
-@main.route('/')
-@login_required
-def index():
-    # mengambil data dari methode GET
-    # get = request.args.get('get')
-    # if get:
-    #     return render_template('home.html',isi=get)
-    # else :
-    #     return render_template('home',isi="Ini Index Kosongan")
-    raspi = read_user(session['email'])
-    id_user = raspi['id_user']
-    return render_template('home.html', ip=ip_address, id_user=id_user)
+# @main.route('/')
+# @login_required
+# def index():
+#     # mengambil data dari methode GET
+#     # get = request.args.get('get')
+#     # if get:
+#     #     return render_template('home.html',isi=get)
+#     # else :
+#     #     return render_template('home',isi="Ini Index Kosongan")
+#     raspi = read_user(session['email'])
+#     id_user = raspi['id_user']
+#     return render_template('home.html', ip=ip_address, id_user=id_user)
 
-    # return render_template('laman di dalam folder template', variabeldikirim=isi)
+#     # return render_template('laman di dalam folder template', variabeldikirim=isi)
 
 
 @main.route('/dashboard/<id>')
@@ -44,40 +45,40 @@ def list_control():
 # get data dari form post
 
 
-@main.route('/login', methods=['GET', 'POST'])
-def login():
-    # Sudah login
-    if 'email' in session:
-        return redirect(url_for('index'))
-        # Untuk redirect, value ke 2 bukan yg di dalem html, tapi metode get.
-        # Jadi kalo render_html itu isi=xxx karena di html variabel nya isi
-        # Tapi kalo redirect itu parameter_get = xxxx karena munculnya bakalan /?parameter_get=xxxx
-    # proses login
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        message = cek_auth(email, password)
-        if message == True:
-            flash("Logged in as {}!".format(email), 'alert-success')
-            return redirect(url_for('index'))
-        else:
-            flash(message, "alert-warning")
-            return redirect(url_for('login'))
-    # belum login
-    return render_template('login.html')
+# @main.route('/login', methods=['GET', 'POST'])
+# def login():
+#     # Sudah login
+#     if 'email' in session:
+#         return redirect(url_for('index'))
+#         # Untuk redirect, value ke 2 bukan yg di dalem html, tapi metode get.
+#         # Jadi kalo render_html itu isi=xxx karena di html variabel nya isi
+#         # Tapi kalo redirect itu parameter_get = xxxx karena munculnya bakalan /?parameter_get=xxxx
+#     # proses login
+#     if request.method == 'POST':
+#         email = request.form['email']
+#         password = request.form['password']
+#         message = cek_auth(email, password)
+#         if message == True:
+#             flash("Logged in as {}!".format(email), 'alert-success')
+#             return redirect(url_for('index'))
+#         else:
+#             flash(message, "alert-warning")
+#             return redirect(url_for('login'))
+#     # belum login
+#     return render_template('login.html')
 
 
-@main.route('/logout')
-@login_required
-def logout():
-    session.pop('email', None)
-    flash("Logged Out!", 'alert-success')
-    return redirect(url_for('login'))
+# @main.route('/logout')
+# @login_required
+# def logout():
+#     session.pop('email', None)
+#     flash("Logged Out!", 'alert-success')
+#     return redirect(url_for('login'))
 
 
-@main.route('/register', methods=['GET'])
-def register():
-    return render_template('register.html')
+# @main.route('/register', methods=['GET'])
+# def register():
+#     return render_template('register.html')
 
 
 # -------------------------------------------------------------
