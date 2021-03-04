@@ -13,8 +13,8 @@ DHT dht(DHTPIN, DHTTYPE);
 char ssid[] = "muiren";     // your network SSID (name)  
 char password[] = "muirenoleander"; // your network key
 char ip_address[]="192.168.137.1";
-char nama[]="taratakdung";
-char id_arduino[]="450591a91d744559aff2";
+char nama[]="front";
+char id_arduino[]="48c4d907e4604b10ac65";
 String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino);
 String raspi_input= "http://"+String(ip_address)+":5000/input";
 

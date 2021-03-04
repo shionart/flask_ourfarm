@@ -7,28 +7,40 @@ from controller.Controller import login_required
 @login_required
 def index():
     """
-    docstring
+    Route untuk home
     """
     return UserController().index()
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     """
-    docstring
+    Route untuk login 
+    ------
+    methods = get, post
     """
     return UserController().login()
 
 @main.route('/logout')
 @login_required
 def logout():
+    """
+    Route untuk logout
+    """
     return UserController().logout()
 
 @main.route('/register', methods=['GET'])
 def register():
     """
-    docstring
+    Route untuk register methods = GET
     """
     return UserController().register()
+
+@main.route('/post_raspi', methods=["POST"])
+def post_raspi():
+    """
+    Route untuk POST data dari register
+    """
+    return UserController().post_raspi()
 
 
 

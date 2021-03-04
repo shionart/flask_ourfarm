@@ -86,26 +86,26 @@ def list_control():
 # -------------------------------------------------------------
 
 # API POST data ke RASPI
-@main.route('/post_raspi', methods=["POST"])
-def post_raspi():
-    if "password" in request.form:
-        try:
-            email = str(request.form['email'])
-            password = str(request.form['password'])
-            cu_user(email, password, None)
-            flash("Berhasil registrasi, silahkan login!", "alert-success")
-            return redirect(url_for('login'))
-        except Exception as error:
-            flash("Error:{}".format(error), "alert-warning")
-            return redirect(url_for('register'))
-    elif 'id_user' in request.form:
-        try:
-            email = str(request.form['email'])
-            id_user = str(request.form['id_user'])
-            cu_user(email, None, id_user)
-            return "id_user updated : {}".format(id_user)
-        except Exception as e:
-            return "error : {}".format(e)
+# @main.route('/post_raspi', methods=["POST"])
+# def post_raspi():
+#     if "password" in request.form:
+#         try:
+#             email = str(request.form['email'])
+#             password = str(request.form['password'])
+#             cu_user(email, password, None)
+#             flash("Berhasil registrasi, silahkan login!", "alert-success")
+#             return redirect(url_for('login'))
+#         except Exception as error:
+#             flash("Error:{}".format(error), "alert-warning")
+#             return redirect(url_for('register'))
+#     elif 'id_user' in request.form:
+#         try:
+#             email = str(request.form['email'])
+#             id_user = str(request.form['id_user'])
+#             cu_user(email, None, id_user)
+#             return "id_user updated : {}".format(id_user)
+#         except Exception as e:
+#             return "error : {}".format(e)
 
 # Api input data dari arduino
 

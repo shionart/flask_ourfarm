@@ -10,7 +10,7 @@
     "python.autoComplete.addBrackets": true,
     "python.analysis.autoImportCompletions": true,
     "python.languageServer": "Pylance",
-    "python.linting.pylintEnabled": true,
+    "python.linting.pylintEnabled": false,
     "python.linting.enabled": true,
     "python.analysis.completeFunctionParens": true,
     

@@ -1,8 +1,8 @@
-from functools import wraps
 from flask import render_template, request, session, redirect, url_for, flash
 from controller.Controller import login_required
-from config.config import main, ip_address
+from config.config import ip_address
 from model.User import User
+
 
 
 class UserController(object):
@@ -87,6 +87,28 @@ class UserController(object):
     def register(self):
         return render_template('register.html')
 
+    
+    def post_raspi(self):
+        if "password" in request.form:
+            try:
+                email = str(request.form['email'])
+                password = str(request.form['password'])
+                self.user=User(email=email, password=password)
+                self.user.cu_user()
+                flash("Berhasil registrasi, silahkan login!", "alert-success")
+                return redirect(url_for('login'))
+            except Exception as error:
+                flash("Error:{}".format(error), "alert-warning")
+                return redirect(url_for('register'))
+        elif 'id_user' in request.form:
+            try:
+                email = str(request.form['email'])
+                id_user = str(request.form['id_user'])
+                self.user=User(email=email, id_user=id_user)
+                self.user.cu_user()
+                return "id_user updated : {}".format(id_user)
+            except Exception as e:
+                return "error : {}".format(e)
 
 
     
