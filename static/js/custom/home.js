@@ -18,7 +18,7 @@ function postUserid(a,b) {
     $.post(post_userid,
       {
         email: a,
-        user_id: b
+        id_user: b
       }
     );
   }
