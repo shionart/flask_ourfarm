@@ -110,25 +110,25 @@ from route import *
 # Api input data dari arduino
 
 
-@main.route('/input', methods=["POST"])
-def input_data():
-    suhu = 0.0
-    lembap = 0.0
-    sm = 0.0
-    rel = 0
-    id_arduino = 0
-# perintah arduino
-    try:
-        if request.method == "POST":
-            suhu = float(request.form["suhu"])
-            lembap = float(request.form["lembap"])
-            sm = float(request.form["sm"])
-            rel = int(request.form["relay"])
-            id_arduino = str(request.form["id_arduino"])
-            insert_to_sensor(suhu, lembap, sm, rel, id_arduino)
-            return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(suhu, lembap, sm, rel, id_arduino)
-    except Exception as e:
-        return "error {}".format(e)
+# @main.route('/input', methods=["POST"])
+# def input_data():
+#     suhu = 0.0
+#     lembap = 0.0
+#     sm = 0.0
+#     rel = 0
+#     id_arduino = 0
+# # perintah arduino
+#     try:
+#         if request.method == "POST":
+#             suhu = float(request.form["suhu"])
+#             lembap = float(request.form["lembap"])
+#             sm = float(request.form["sm"])
+#             rel = int(request.form["relay"])
+#             id_arduino = str(request.form["id_arduino"])
+#             insert_to_sensor(suhu, lembap, sm, rel, id_arduino)
+#             return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(suhu, lembap, sm, rel, id_arduino)
+#     except Exception as e:
+#         return "error {}".format(e)
 
 
 # -------------------------------------------------------------
@@ -136,12 +136,12 @@ def input_data():
 # -------------------------------------------------------------
 
 # Api ambil data dari db
-@main.route('/get/<id>', methods=["GET"])
-def get_data_api(id):
-    sensor, curr_data, bar_data = read_sensor(id)
-    yesterday = read_yesterday(id)
-    # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
-    return jsonify({'sensor': sensor, 'curr_data': curr_data, 'bar_data': bar_data, 'yesterday': yesterday})
+# @main.route('/get/<id>', methods=["GET"])
+# def get_data_api(id):
+#     sensor, curr_data, bar_data = read_sensor(id)
+#     yesterday = read_yesterday(id)
+#     # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
+#     return jsonify({'sensor': sensor, 'curr_data': curr_data, 'bar_data': bar_data, 'yesterday': yesterday})
 
 # Api ambil list arduino
 

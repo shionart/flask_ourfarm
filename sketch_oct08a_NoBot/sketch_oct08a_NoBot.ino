@@ -12,9 +12,9 @@ DHT dht(DHTPIN, DHTTYPE);
 //CONNECT WIFI, ganti wifi anda di sini
 char ssid[] = "muiren";     // your network SSID (name)  
 char password[] = "muirenoleander"; // your network key
-char ip_address[]="192.168.137.1";
+char ip_address[]="192.168.1.6";
 char nama[]="front";
-char id_arduino[]="48c4d907e4604b10ac65";
+char id_arduino[]="48C4D907E4604B10AC65";
 String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino);
 String raspi_input= "http://"+String(ip_address)+":5000/input";
 
@@ -58,6 +58,14 @@ String curr_perintah;
     digitalWrite(relay,HIGH);
     delay(1000);
     digitalWrite(relay,LOW);
+    }
+    else if(Relay==0) 
+    digitalWrite(relay,LOW); 
+  }
+
+  void relay2(int Relay){
+    if(Relay==1){
+    digitalWrite(relay,HIGH);
     }
     else if(Relay==0) 
     digitalWrite(relay,LOW); 
@@ -174,11 +182,11 @@ void mode_control(String a){
   }else if(a=="1"){//mode terjadwal, sesuai timestamp pagi&sore nyiram
     Serial.println("Mode 1");
   }else if(a=="2"){//mode menyala
-    relay1(1);
+    relay2(1);
     Relay=1;
     Serial.println("Mode 2");
   }else if(a=="3"){//mode mati
-    relay1(0);
+    relay2(0);
     Relay=0;
     Serial.println("Mode 3");
   }
