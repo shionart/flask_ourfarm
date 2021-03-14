@@ -1,3 +1,4 @@
+from controller.SensorController import SensorController
 from controller.ControlController import ControlController
 from controller.UserController import UserController
 from config.config import main
@@ -82,3 +83,18 @@ def api_data_node(id):
     Route API untuk control A node 
     """
     return ControlController().api_data_node(id)
+
+#--------------Sensor-------------------
+@main.route('/input', methods=["POST"])
+def input_data():
+    """
+    Route API untuk input data sensor 
+    """
+    return SensorController().input_data()
+
+@main.route('/get/<id>', methods=["GET"])
+def get_data_api(id):
+    """
+    Route API untuk GET data sensor per Id
+    """
+    return SensorController().get_data_api(id)
