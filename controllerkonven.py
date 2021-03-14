@@ -21,26 +21,26 @@ from route import *
 #     # return render_template('laman di dalam folder template', variabeldikirim=isi)
 
 
-@main.route('/dashboard/<id>')
-@login_required
-def dashboard(id):
-    info = read_control(id)
-    return render_template('dashboard.html', info=info)
+# @main.route('/dashboard/<id>')
+# @login_required
+# def dashboard(id):
+#     info = read_control(id)
+#     return render_template('dashboard.html', info=info)
 
 
-@main.route('/control/<id>')
-@login_required
-def control(id):
-    perintah = read_control(id)
-    # return perintah
-    return render_template('control.html', data=perintah)
+# @main.route('/control/<id>')
+# @login_required
+# def control(id):
+#     perintah = read_control(id)
+#     # return perintah
+#     return render_template('control.html', data=perintah)
 
 
-@main.route('/control')
-@login_required
-def list_control():
-    response = render_template('list_nodes.html')
-    return response
+# @main.route('/control')
+# @login_required
+# def list_control():
+#     response = render_template('list_nodes.html')
+#     return response
 
 # get data dari form post
 
@@ -146,33 +146,33 @@ def get_data_api(id):
 # Api ambil list arduino
 
 
-@main.route('/get_control', methods=["GET"])
-def get_data_control():
-    nodes = read_controls()
-    # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
-    return jsonify({'nodes': nodes})
+# @main.route('/get_control', methods=["GET"])
+# def get_data_control():
+#     nodes = read_controls()
+#     # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
+#     return jsonify({'nodes': nodes})
 
 # Api ambil data control node N
 
 
-@main.route('/api_control/<id>', methods=["GET", "POST"])
-def api_data_node(id):
-    if(request.method == "GET"):
-        node = read_control(id)
-        # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
-        return node
-    elif (request.method == "POST"):
-        try:
-            perintah = str(request.form["perintah"])
-            status = str(request.form["status"])
-            nama = str(request.form["nama"])
-            if(request.form["status"] != None or request.form["nama"] != None or request.form["perintah"] != None):
-                insert_to_control(perintah, id, status, nama)
-            else:
-                pass  # skip sek
-            return "perintah: {}, status: {}, id: {}, nama:{}".format(perintah, status, id, nama)
-        except Exception as e:
-            return "error route {}".format(e)
+# @main.route('/api_control/<id>', methods=["GET", "POST"])
+# def api_data_node(id):
+#     if(request.method == "GET"):
+#         node = read_control(id)
+#         # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
+#         return node
+#     elif (request.method == "POST"):
+#         try:
+#             perintah = str(request.form["perintah"])
+#             status = str(request.form["status"])
+#             nama = str(request.form["nama"])
+#             if(request.form["status"] != None or request.form["nama"] != None or request.form["perintah"] != None):
+#                 insert_to_control(perintah, id, status, nama)
+#             else:
+#                 pass  # skip sek
+#             return "perintah: {}, status: {}, id: {}, nama:{}".format(perintah, status, id, nama)
+#         except Exception as e:
+#             return "error route {}".format(e)
 
 
 @main.route('/object', methods=["GET"])
