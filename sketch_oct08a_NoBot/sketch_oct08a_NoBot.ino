@@ -10,8 +10,8 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 //CONNECT WIFI, ganti wifi anda di sini
-char ssid[] = "muiren";     // your network SSID (name)  
-char password[] = "muirenoleander"; // your network key
+char ssid[] = "andah";     // your network SSID (name)  
+char password[] = "ASuryani"; // your network key
 char ip_address[]="192.168.1.6";
 char nama[]="front";
 char id_arduino[]="48C4D907E4604B10AC65";
@@ -42,8 +42,8 @@ int smval=0;
 int val=0;
 bool Start = false;
 String perintah;
-String status_perintah;
-String curr_perintah;
+String status_perintah="1";
+String curr_perintah="0";
 
   
   int readSuhu(){
@@ -202,7 +202,7 @@ void cek_control(){
   Serial.println("perintah :"+perintah);
   Serial.println("status :"+status_perintah);
   Serial.println("curr_perintah:"+curr_perintah);
-  if(curr_perintah!=perintah){
+  if(curr_perintah!=perintah && perintah!= "null"){
     Serial.println("Baca perintah baru!");
     curr_perintah=perintah;
     status_perintah="1";

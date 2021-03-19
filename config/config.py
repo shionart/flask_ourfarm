@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 import socket
+import platform
+
 
 # from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -12,3 +14,11 @@ cors = CORS(main)
 main.secret_key="081213342244"
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
+os = platform.system()
+# Please do connect your internet while setting up this at first time
+if os =="Linux":
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    ip_address = s.getsockname()[0]
+    s.close()
+
