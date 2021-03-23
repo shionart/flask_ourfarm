@@ -7,7 +7,16 @@
         <div>
         {% block content %}
           <!-- Page Heading -->
-          <!-- <h1 class="h3 mb-4 text-gray-800">Control {{id}}</h1> -->
+          <h1 class="h3 mb-4 text-gray-800">{{data.nama}} - {{data.id_arduino}} |
+            <a href="{{url_for('dashboard', id=data.id_arduino)}}" class="btn btn-success btn-icon-split">
+              <span class="icon text-white-50">
+                <i class="fas fa-arrow-right"></i>
+              </span>
+              <span class="text">go to Dashboard</span>
+            </a>
+              <!-- <a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true">Control</a> -->
+          
+          </h1>
           
           <div class="card row mt-5">
               <div class="card-header">
