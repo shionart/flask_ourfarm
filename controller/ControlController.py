@@ -72,3 +72,30 @@ class ControlController(object):
                 return "perintah: {}, status: {}, id: {}, nama:{}".format(perintah, status, id, nama)
             except Exception as e:
                 return "error route {}".format(e)
+
+        
+        #TODO : buat routing untuk queue control
+    def api_queue_control(self):
+        """
+        Api untuk table queue
+        """
+        if request.method =="POST":
+            id_arduino=str(request.form["id_arduino"])
+            id_user=str(request.form["id_user"])
+            perintah = int(request.form["perintah"])
+            queue = Control(id_arduino=id_arduino, id_user=id_user, perintah=perintah)
+            queue.queue_to_control()
+            return "Queue control inserted"
+        elif request.method == "GET":
+            queue = Control()
+            read = queue.read_queue_control()
+            return jsonify(read) 
+        elif request.method == "DELETE":
+            idqueue=int(request.form["idqueue_control"])
+            if not idqueue:
+                queue = Control()
+                queue.queue_clear()
+            else:
+                queue = Control()
+                queue.queue_clear_id(idqueue)
+            return "queue control cleared"

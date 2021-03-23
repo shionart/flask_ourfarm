@@ -98,3 +98,10 @@ def get_data_api(id):
     Route API untuk GET data sensor per Id
     """
     return SensorController().get_data_api(id)
+
+@main.route('/api_queue_control', methods=['GET','POST','DELETE'])
+def api_queue_control():
+    """
+    Route API untuk queue data control
+    """
+    return ControlController().api_queue_control()

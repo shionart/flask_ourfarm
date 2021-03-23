@@ -1,13 +1,8 @@
-from controllerkonven import *
+from config.config import *
+from route import *
 from model.Schedule import *
-# from model.Sensor import Sensor
-# from model.Control import *
-# s = Sensor()
-# s.setId_arduino("8d81e4eaf3d04534a9e3")
+import atexit
 
-# c = Control(id_arduino="6f39b26f5345407b94f8", id_user="fpC1dDVM36WpxPkD56pMEOSM8zI2")
-# c.setId_user("fpC1dDVM36WpxPkD56pMEOSM8zI2")
-# c.setId("450591a91d744559aff2")
   
 # scheduler.start()
 
