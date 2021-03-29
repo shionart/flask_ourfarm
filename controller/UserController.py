@@ -100,7 +100,7 @@ class UserController(object):
             except Exception as error:
                 flash("Error:{}".format(error), "alert-warning")
                 return redirect(url_for('register'))
-        elif 'id_user' in request.form:
+        if 'id_user' in request.form:
             try:
                 email = str(request.form['email'])
                 id_user = str(request.form['id_user'])
