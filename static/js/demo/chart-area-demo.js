@@ -312,6 +312,25 @@ function updateChart2() {
 // var url_baru2 = window.location.origin;
 // url_baru2 += "/get/";
 // url_baru2 += pathArray[2];
+function ubahYesterday(a, b, c){
+  console.log(a['nilai']+b['nilai']+c['nilai']);
+  if (a['sign']>0) {
+    $('#yesterdayudara').html("> "+a['nilai']);
+  }else{
+    $('#yesterdayudara').html("< "+a['nilai']);
+  }
+  if (b['sign']>0) {
+    $('#yesterdaysuhu').html("> "+b['nilai']);
+  }else{
+    $('#yesterdaysuhu').html("< "+b['nilai']);
+  }
+  if (c['sign']>0) {
+    $('#yesterdaysm').html("> "+c['nilai']);
+  }else{
+    $('#yesterdaysm').html("<"+c['nilai']);
+  }
+}
+
 function getData2(){
   $.get(data_id, function(data){
     setTimeout(getData2,1000);
@@ -325,6 +344,7 @@ function getData2(){
     $('#prog_suhu').attr("aria-valuenow",data['curr_data']['suhu']+"");
     $('#prog_lembap_tanah').css("width",data['curr_data']['sm']+"%");
     $('#prog_lembap_tanah').attr("aria-valuenow",data['curr_data']['sm']+"");
+    ubahYesterday(data['yesterday']['lembap'], data['yesterday']['suhu'], data['yesterday']['sm']);
     data_suhu2=data['bar_data']['suhu'];
     data_lembap2=data['bar_data']['lembap'];
     data_sm2=data['bar_data']['sm'];

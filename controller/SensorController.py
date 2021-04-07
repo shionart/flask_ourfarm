@@ -55,7 +55,7 @@ class SensorController(object):
         except Exception as e:
             return "error {}".format(e)
 
-    # @main.route('/get/<id>', methods=["GET"])
+    
     def get_data_api(self, id):
         self.sensor = Sensor(id_arduino=id)
         s = self.sensor
