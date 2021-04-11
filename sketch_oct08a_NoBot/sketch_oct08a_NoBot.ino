@@ -12,7 +12,7 @@ DHT dht(DHTPIN, DHTTYPE);
 //CONNECT WIFI, ganti wifi anda di sini
 char ssid[] = "andah";     // your network SSID (name)  
 char password[] = "ASuryani"; // your network key
-char ip_address[]="192.168.1.6";
+char ip_address[]="192.168.1.50";
 char nama[]="front";
 char id_arduino[]="48C4D907E4604B10AC65";
 String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino);
