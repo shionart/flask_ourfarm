@@ -80,7 +80,7 @@ class Sensor(object):
         """
         conn = connect_db()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM sensor WHERE id_arduino=%s LIMIT 1000 ORDER BY time DESC",[self.id_arduino])
+        cur.execute("SELECT * FROM sensor WHERE id_arduino=%s ORDER BY time DESC LIMIT 1000",[self.id_arduino])
         data = cur.fetchall()
         #TODO masukin yg bukan query ke service
         sensor = self.get_sensor(data)
