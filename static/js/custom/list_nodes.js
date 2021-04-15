@@ -18,6 +18,7 @@ function generateCard(array){
     for(a in array){
        var id_arduino = array[a]['id_arduino'];
        var nama = array[a]['nama'];
+        getLastUpdated(id_arduino);
     //    var perintah= array[a]['perintah'];
     //    var status= array[a]['status'];
        if (nama==null) {
@@ -30,6 +31,7 @@ function generateCard(array){
                                 '<div class="text-xs font-weight-bold text-success text-uppercase mb-1">'+id_arduino+
                                     '<div class="h5 mb-0 font-weight-bold text-gray-800">'+nama+'<i class="fas fa-leaf"></i>'+'</div>'+
                                 '</div>'+
+                                '<div id="'+id_arduino+'" class=" mb-0 text-gray-500"></div>'+
                             '</div>'+
                             '<div class="col-lg-2 col-md-3 pt-2">'+
                                 '<a href='+page_dashboard(id_arduino)+' class="btn btn-info btn-lg active" role="button" aria-pressed="true">Dashboard</a>'+
@@ -44,7 +46,15 @@ function generateCard(array){
     }
     return all;
 }
+function getLastUpdated(id_arduino){
+    // console.log(url_last_updated(id_arduino));
+    $.get(url_last_updated(id_arduino),function String( data ) {
+        console.log(data['time']);
+        $("#"+id_arduino).html(data['time'])
+     });
 
+    // return a['time'];
+}
 function getControl(){
     $.get(data_control, function( data ) {
         isi = data['nodes']
@@ -53,15 +63,8 @@ function getControl(){
             console.log('data kosong');
         }
         else{
-            // for (a in isi) {
-            //     console.log(isi[a]['id_arduino']);    
-            // }
-            // console.log(isi);
-            
             $("#listnodes").html(generateCard(isi));
-
         }
-        // alert( "Load was performed." );
     });
 }
 

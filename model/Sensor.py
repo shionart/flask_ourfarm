@@ -1,5 +1,6 @@
 from statistics import mean
 from config.db import connect_db
+from datetime import date
 import math
 
 class Sensor(object):
@@ -82,6 +83,8 @@ class Sensor(object):
         cur = conn.cursor()
         cur.execute("SELECT * FROM sensor WHERE id_arduino=%s ORDER BY time DESC LIMIT 1000",[self.id_arduino])
         data = cur.fetchall()
+        cur.close()
+        conn.close()
         #TODO masukin yg bukan query ke service
         sensor = self.get_sensor(data)
         top_data = self.read_top(sensor)
@@ -176,6 +179,8 @@ class Sensor(object):
         yesterday['lembap'] = {'nilai':float(round(lembap_yes,2)), 'sign':sign(lembap_yes)}
         yesterday['sm'] = {'nilai':float(round(sm_yes,2)), 'sign':sign(sm_yes)}
         #return jsonify({'suhu':suhu_yes,'lembap':lembap_yes,'sm':sm_yes})
+        cur.close()
+        conn.close()
         return yesterday
     
     def mean_yesterday(self, sensors):
@@ -193,3 +198,20 @@ class Sensor(object):
         mean_lembap = mean(list_lembap)
         mean_sm = mean(list_sm)
         return mean_suhu,mean_lembap,mean_sm
+
+
+    def last_updated(self):
+        """
+        Ambil tanggal terakhir data terupdate
+        """
+        conn = connect_db()
+        cur = conn.cursor()
+        cur.execute("SELECT time FROM sensor WHERE id_arduino=%s order by time DESC limit 1",[self.id_arduino])
+        last_date = cur.fetchone()
+        last_date=last_date['time'].strftime("%d/%m/%Y")
+        currDate = date.today().strftime("%d/%m/%Y")
+        if last_date==currDate:
+            last_date="Hari ini"
+        cur.close()
+        conn.close()
+        return last_date
