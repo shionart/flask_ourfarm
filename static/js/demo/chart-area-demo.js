@@ -315,19 +315,19 @@ function updateChart2() {
 function ubahYesterday(a, b, c){
   console.log(a['nilai']+b['nilai']+c['nilai']);
   if (a['sign']>0) {
-    $('#yesterdayudara').html("> "+a['nilai']);
+    $('#yesterdayudara').html("<i class='fas fa fa-angle-double-up'></i>"+a['nilai']);
   }else{
-    $('#yesterdayudara').html("< "+a['nilai']);
+    $('#yesterdayudara').html("<i class='fas fa fa-angle-double-down'></i>"+a['nilai']*-1);
   }
   if (b['sign']>0) {
-    $('#yesterdaysuhu').html("> "+b['nilai']);
+    $('#yesterdaysuhu').html("<i class='fas fa fa-angle-double-up'></i>"+b['nilai']);
   }else{
-    $('#yesterdaysuhu').html("< "+b['nilai']);
+    $('#yesterdaysuhu').html("<i class='fas fa fa-angle-double-down'></i>"+b['nilai']*-1);
   }
   if (c['sign']>0) {
-    $('#yesterdaysm').html("> "+c['nilai']);
+    $('#yesterdaysm').html("<i class='fas fa fa-angle-double-up'></i>"+c['nilai']);
   }else{
-    $('#yesterdaysm').html("<"+c['nilai']);
+    $('#yesterdaysm').html("<i class='fas fa fa-angle-double-down'></i>"+c['nilai']*-1);
   }
 }
 
