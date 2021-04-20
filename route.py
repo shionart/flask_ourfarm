@@ -84,6 +84,13 @@ def api_data_node(id):
     """
     return ControlController().api_data_node(id)
 
+@main.route('/api_queue_control', methods=['GET','POST','DELETE'])
+def api_queue_control():
+    """
+    Route API untuk queue data control
+    """
+    return ControlController().api_queue_control()
+
 #--------------Sensor-------------------
 @main.route('/input', methods=["POST"])
 def input_data():
@@ -99,9 +106,11 @@ def get_data_api(id):
     """
     return SensorController().get_data_api(id)
 
-@main.route('/api_queue_control', methods=['GET','POST','DELETE'])
-def api_queue_control():
+
+@main.route('/get_last_updated/<id>', methods=["GET"])
+def get_last_updated(id):
     """
-    Route API untuk queue data control
+    Route API untuk GET data sensor per Id
     """
-    return ControlController().api_queue_control()
+    return SensorController().get_last_updated(id)
+

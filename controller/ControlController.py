@@ -2,7 +2,7 @@ from flask.globals import request
 from flask.json import jsonify
 from flask.templating import render_template
 from model.Control import Control
-from controller.Controller import login_required
+
 class ControlController(object):
     """
     Controller dari model Control
