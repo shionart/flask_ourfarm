@@ -313,7 +313,7 @@ function updateChart2() {
 // url_baru2 += "/get/";
 // url_baru2 += pathArray[2];
 function ubahYesterday(a, b, c){
-  console.log(a['nilai']+b['nilai']+c['nilai']);
+  // console.log(a['nilai']+b['nilai']+c['nilai']);
   if (a['sign']>0) {
     $('#yesterdayudara').html("<i class='fas fa fa-angle-double-up'></i>"+a['nilai']);
   }else{
