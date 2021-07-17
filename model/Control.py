@@ -154,14 +154,15 @@ class Control(object):
         devid = {'deviceId': self.id_arduino}
         ambil = requests.get(url, params=devid, headers={
                              'User-Agent': 'Mozilla/5.0'})
-        # print(ambil.status_code)
-        data = ambil.json()
-        cek = self.read_control()
-        print("local :"+str(cek['perintah']))
-        print("webpusat:"+str(data['nilai']))
-        if not cek :
-            print("Table Control Kosong!")
-        else :
+        if ambil.status_code==200 :
+            print(ambil.status_code)
+            data = ambil.json()
+            cek = self.read_control() #ngambil current perintah
+            print("local :"+str(cek['perintah']))
+            print("webpusat:"+str(data['nilai']))
+            # if not cek :
+            #     print("Table Control Kosong!")
+            # else :
             if (ambil.status_code == 200 and str(cek['perintah']) != data["nilai"]):
                 print("data berubah")
                 try:
@@ -175,6 +176,8 @@ class Control(object):
                 except Exception as e:
                     conn.rollback()
                     print(e)
+        else :
+            print("main web cannot be reached")
 
     def postControl(self):
         """
@@ -208,3 +211,19 @@ class Control(object):
                 print(e)
         else:
             print("Status code : "+ambil.status_code+"queue : "+cek)
+    
+    def get_notified(self):
+        """
+        Ambil data sensor dari List id_arduino & notif!=0
+        """
+        try:
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute("select * from sensor where id_arduino in (select id_arduino from control where id_user=%s) and notif!=0",[self.id_user])
+            list_notif = cur.fetchall()
+            cur.close()
+            conn.close()
+            return list_notif
+        except Exception as e:
+            print(e)
+

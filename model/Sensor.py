@@ -215,3 +215,18 @@ class Sensor(object):
         cur.close()
         conn.close()
         return last_date
+
+    def update_notified(self):
+        """
+        Update notif jadi read
+        """
+        try:
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute("UPDATE sensor SET notif=2 WHERE id_arduino=%s", self.id)
+            conn.commit()
+            cur.close()
+            conn.close()
+        except Exception as e:
+            conn.rollback()
+            print(e)

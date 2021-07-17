@@ -50,7 +50,7 @@ function getLastUpdated(id_arduino){
     // console.log(url_last_updated(id_arduino));
     $.get(url_last_updated(id_arduino),function String( data ) {
         console.log(data['time']);
-        $("#"+id_arduino).html(data['time'])
+        $("#"+id_arduino).html("Update Terakhir : "+data['time'])
      });
 
     // return a['time'];

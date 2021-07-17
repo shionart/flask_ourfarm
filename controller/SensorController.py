@@ -72,3 +72,11 @@ class SensorController(object):
         s = self.sensor
         last_date = s.last_updated()
         return jsonify({'time':last_date})
+    
+    def update_notified(self, id):
+        """
+        Controller untuk update notif pada data sensor
+        """
+        self.sensor = Sensor(id=id)
+        s = self.sensor
+        s.update_notified()

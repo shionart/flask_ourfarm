@@ -99,3 +99,11 @@ class ControlController(object):
                 queue = Control()
                 queue.queue_clear_id(idqueue)
             return "queue control cleared"
+
+    def get_notif(self, id):
+        """
+        Api untuk ambil data notif
+        """
+        c = self.control
+        c.id_user=id
+        return jsonify({"notif": c.get_notified()})
