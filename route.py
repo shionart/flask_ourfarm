@@ -92,18 +92,19 @@ def api_queue_control():
     """
     return ControlController().api_queue_control()
 
-@main.route('/api_notif/<id>', methods=['GET', 'UPDATE'])
+@main.route('/api_notif/<id>', methods=['GET', 'POST'])
 def api_notif(id):
     """
     Route API untuk get data notif
     """
     if request.method=="GET" :
         # print(request.get_data())
-        print(request.form)
+        # print(request.form)
         return ControlController().get_notif(id)
-    elif request.method=="UPDATE" :
-        # return SensorController().update_notified()
-        pass
+    elif request.method=="POST" :
+        # return str(request.form["id_sensor"])
+        return SensorController().update_notified(str(request.form["id_sensor"]))
+        
     # elif request.get_data() is not None :
         
 
