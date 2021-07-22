@@ -219,7 +219,11 @@ class Control(object):
         try:
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute("select * from sensor where id_arduino in (select id_arduino from control where id_user=%s) and notif!=0",[self.id_user])
+            cur.execute("select a.id_arduino, b.time, b.soil_moist from control a "+
+                        "left join ("+
+                        "select * from sensor c where c.time in "
+                        "(select max(c.time) from sensor c where c.notif!=0 group by c.id_arduino)) "+
+                        "b on a.id_arduino=b.id_arduino where a.id_user=%s",[self.id_user])
             list_notif = cur.fetchall()
             cur.close()
             conn.close()
