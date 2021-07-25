@@ -149,7 +149,7 @@ class Sensor(object):
         cur = conn.cursor()
         #ini tambahan\
         try:
-            cur.execute("SELECT * FROM sensor WHERE DATE(time) = DATE(NOW() - INTERVAL 3 DAY) AND id_arduino=%s order by id desc",[self.id_arduino])
+            cur.execute("SELECT * FROM sensor WHERE DATE(time) >= DATE(NOW() - INTERVAL 3 DAY) AND id_arduino=%s order by id desc",[self.id_arduino])
             data = cur.fetchall()
             sensor = self.get_sensor(data)
             y_suhu, y_lembap, y_sm = self.mean_yesterday(sensor)
@@ -161,18 +161,15 @@ class Sensor(object):
         sensor,curr_data,bar = self.read_sensor()
         #tambahan - edit
         if y_suhu != 0:
-            suhu_yes=((curr_data['suhu']-y_suhu)/y_suhu)
-            suhu_yes = suhu_yes * 100
+            suhu_yes=(curr_data['suhu']-y_suhu)
         else:
             suhu_yes = 0
         if y_lembap != 0:
-            lembap_yes=((curr_data['lembap']-y_lembap)/y_lembap)
-            lembap_yes = lembap_yes * 100
+            lembap_yes=(curr_data['lembap']-y_lembap)
         else:
             lembap_yes = 0
         if y_sm != 0:
-            sm_yes = ((curr_data['sm']-y_sm)/y_sm)
-            sm_yes = sm_yes * 100
+            sm_yes = (curr_data['sm']-y_sm)
         else:
             sm_yes = 0
         # tambah -edit end

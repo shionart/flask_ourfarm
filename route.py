@@ -67,21 +67,21 @@ def control(id):
 @login_required
 def list_control():
     """
-    Route untuk list node
+    Route untuk webpage list node
     """
     return ControlController().list_control()
 
-@main.route('/get_control', methods=["GET"])
-def get_data_control():
+@main.route('/get_control/<id>', methods=["GET"])
+def get_data_control(id):
     """
-    Route API untuk control local
+    Route API GET untuk list arduino dari sebuah user <id>
     """
-    return ControlController().get_data_control()
+    return ControlController().get_data_control(id)
 
 @main.route('/api_control/<id>', methods=["GET", "POST"])
 def api_data_node(id):
     """
-    Route API untuk control A node 
+    Route API untuk control hanya pada satu node
     """
     return ControlController().api_data_node(id)
 

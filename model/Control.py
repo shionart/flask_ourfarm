@@ -33,7 +33,7 @@ class Control(object):
         """
         conn = connect_db()
         cur = conn.cursor()
-        cur.execute("SELECT * from control")
+        cur.execute("SELECT * from control where id_user=%s",[self.id_user])
         nodes = cur.fetchall()
         return nodes
 
@@ -223,7 +223,7 @@ class Control(object):
                         "left join ("+
                         "select * from sensor c where c.time in "
                         "(select max(c.time) from sensor c where c.notif!=0 group by c.id_arduino)) "+
-                        "b on a.id_arduino=b.id_arduino where a.id_user=%s",[self.id_user])
+                        "b on a.id_arduino=b.id_arduino where a.id_user=%s order by b.time DESC",[self.id_user])
             list_notif = cur.fetchall()
             cur.close()
             conn.close()

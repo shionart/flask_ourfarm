@@ -39,7 +39,7 @@
   {% block scripts %}
   <!-- Passing data to JS -->
   <script>
-    var data_control="{{url_for('get_data_control')}}";
+    var data_control="{{url_for('get_data_control',id='')}}"+"{{session['iduser']}}";
     function url_last_updated(id){
       return "{{url_for('get_last_updated',id='')}}"+id;
     }

@@ -46,8 +46,9 @@ class ControlController(object):
     def list_control(self):
         return render_template('list_nodes.html')
 
-    def get_data_control(self):
+    def get_data_control(self, id_user):
         c = self.control
+        c.id_user=id_user
         nodes = c.read_controls()
         # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
         return jsonify({'nodes': nodes})
