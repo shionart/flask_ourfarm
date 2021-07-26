@@ -219,7 +219,7 @@ class Control(object):
         try:
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute("select a.id_arduino, b.time, b.soil_moist from control a "+
+            cur.execute("select a.id_arduino, date_format(b.time,'%%a, %%b %%e %%Y %%H:%%i') as time, b.soil_moist from control a "+
                         "left join ("+
                         "select * from sensor c where c.time in "
                         "(select max(c.time) from sensor c where c.notif!=0 group by c.id_arduino)) "+
