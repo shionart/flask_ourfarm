@@ -241,10 +241,10 @@
 
   <!-- Custom scripts for all pages-->
   <script>
-    function url(id){
-      return "{{url_for('api_notif',id='')}}"+id;
+    const url_notified = "{{url_for('api_notif',id='')}}"+"{{session['iduser']}}";
+    function notif_dashboard(id){
+      return "{{url_for('dashboard',id='')}}"+id;
     }
-    const url_notified = url("{{session['iduser']}}");
   </script>
   <script src="{{url_for('static', filename='js/sb-admin-2.min.js')}}"></script>
   <script src="{{url_for('static', filename='js/custom/notification.js')}}"></script>
