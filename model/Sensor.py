@@ -223,7 +223,8 @@ class Sensor(object):
         try:
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute("UPDATE sensor SET notif=2 WHERE id=%s", [self.id_sensor])
+            cur.execute("UPDATE sensor SET notif=2 WHERE id_arduino=%s and time<=now()", [self.id_arduino])
+
             conn.commit()
             cur.close()
             conn.close()

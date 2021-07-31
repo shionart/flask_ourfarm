@@ -77,7 +77,7 @@ class SensorController(object):
         """
         Controller untuk update notif pada data sensor
         """
-        self.sensor = Sensor(id_sensor=id)
+        self.sensor = Sensor(id_arduino=id)
         s = self.sensor
         s.update_notified()
-        return "Notif has been read {}".format(s.id_sensor)
+        print("Notif has been read {}".format(s.id_arduino))

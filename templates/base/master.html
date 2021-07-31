@@ -19,7 +19,21 @@
   <!-- Custom styles for this template-->
   <link href="{{url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
   <link href="{{url_for('static', filename='css/personalized.css')}}" rel="stylesheet">
+  <style>
+    .inline-notif {
+      display: inline;
+    }
 
+    .link-button-notif {
+      background: none;
+    }
+    .link-button-notif:focus {
+      outline: none;
+    }
+    .link-button-notif:active {
+      color:red;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -100,7 +114,12 @@
                   Alerts Center
                 </h6>
                 <!-- start per item -->
-                <div id="listnotif" class="overflow-auto"></div>
+                <div id="listnotif" class="overflow-auto">
+                  <a class="dropdown-item d-flex align-items-center" href="">
+                    <div class="mr-3"></div>
+                    <div>Tidak ada notifikasi terbaru.</div>
+                  </a>
+                </div>
                 <!-- end per item -->
                 <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
               </div>
@@ -243,7 +262,7 @@
   <script>
     const url_notified = "{{url_for('api_notif',id='')}}"+"{{session['iduser']}}";
     function notif_dashboard(id){
-      return "{{url_for('dashboard',id='')}}"+id;
+      return "{{url_for('api_notif',id='')}}"+id;
     }
   </script>
   <script src="{{url_for('static', filename='js/sb-admin-2.min.js')}}"></script>

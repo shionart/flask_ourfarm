@@ -103,7 +103,9 @@ def api_notif(id):
         return ControlController().get_notif(id)
     elif request.method=="POST" :
         # return str(request.form["id_sensor"])
-        return SensorController().update_notified(str(request.form["id_sensor"]))
+        # SensorController().update_notified(str(request.form["id_sensor"]))
+        SensorController().update_notified(id)
+        return dashboard(id=id)
         
     # elif request.get_data() is not None :
         
