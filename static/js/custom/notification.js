@@ -39,7 +39,7 @@ function generateCard2(array){
       // }
       
     }
-    return all;
+    return {alerts:all,badge:array.length};
 }
 
 function getNotified(){
@@ -50,7 +50,11 @@ function getNotified(){
             console.log('tidak ada notif');
         }
         else{
-            $("#listnotif").html(generateCard2(isi));
+          var dict = generateCard2(isi);
+          $("#listnotif").html(dict['alerts']);
+          if (dict['badge']!=0) {
+            $("#countnotif").html(dict['badge']);  
+          }
         }
     });
 }
