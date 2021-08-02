@@ -64,14 +64,14 @@ class SensorController(object):
         # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
         return jsonify({'sensor': sensor, 'curr_data': curr_data, 'bar_data': bar_data, 'yesterday': yesterday})
 
-    def get_last_updated(self, id):
-        """
-        Controller untuk get last update from certain arduino
-        """
-        self.sensor = Sensor(id_arduino=id)
-        s = self.sensor
-        last_date = s.last_updated()
-        return jsonify({'time':last_date})
+    # def get_last_updated(self, id):
+    #     """
+    #     Controller untuk get last update from certain arduino
+    #     """
+    #     self.sensor = Sensor(id_arduino=id)
+    #     s = self.sensor
+    #     last_date = s.last_updated()
+    #     return jsonify({'time':last_date})
     
     def update_notified(self, id):
         """

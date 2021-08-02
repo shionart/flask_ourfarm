@@ -13,7 +13,7 @@ def index():
     Route untuk home
     """
     return UserController().index()
-
+#-------------------User---------------------
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     """
@@ -37,7 +37,7 @@ def register():
     Route untuk register methods = GET
     """
     return UserController().register()
-
+#-----------------User API--------------------------
 @main.route('/post_raspi', methods=["POST"])
 def post_raspi():
     """
@@ -70,7 +70,7 @@ def list_control():
     Route untuk webpage list node
     """
     return ControlController().list_control()
-
+#--------------Control API--------------------
 @main.route('/get_control/<id>', methods=["GET"])
 def get_data_control(id):
     """
@@ -91,7 +91,7 @@ def api_queue_control():
     Route API untuk queue data control
     """
     return ControlController().api_queue_control()
-
+#--------------Notif API-----------------------
 @main.route('/api_notif/<id>', methods=['GET', 'POST'])
 def api_notif(id):
     """
@@ -105,12 +105,9 @@ def api_notif(id):
         # return str(request.form["id_sensor"])
         # SensorController().update_notified(str(request.form["id_sensor"]))
         SensorController().update_notified(id)
-        return dashboard(id=id)
-        
-    # elif request.get_data() is not None :
-        
+        return dashboard(id=id)     
 
-#--------------Sensor-------------------
+#--------------Sensor API-------------------
 @main.route('/input', methods=["POST"])
 def input_data():
     """
@@ -126,10 +123,10 @@ def get_data_api(id):
     return SensorController().get_data_api(id)
 
 
-@main.route('/get_last_updated/<id>', methods=["GET"])
-def get_last_updated(id):
-    """
-    Route API untuk GET data sensor per Id
-    """
-    return SensorController().get_last_updated(id)
+# @main.route('/get_last_updated/<id>', methods=["GET"])
+# def get_last_updated(id):
+#     """
+#     Route API untuk GET data sensor per Id
+#     """
+#     return SensorController().get_last_updated(id)
 

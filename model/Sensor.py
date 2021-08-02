@@ -27,6 +27,12 @@ class Sensor(object):
         """
         Constructor Sensor \n
         Parameters : id, time, suhu, kelembapan, soil_moist, relay, id_arduino
+        -------
+        Function :
+            - insert_to_control()
+            - read_sensor()
+            - read_yesterday()
+            - mean_yesterday(sensors)
         """
         if len(kwargs)>0:
             self.id_sensor = kwargs.pop("id_sensor", None)
@@ -200,25 +206,25 @@ class Sensor(object):
         return mean_suhu,mean_lembap,mean_sm
 
 
-    def last_updated(self):
-        """
-        Ambil tanggal terakhir data terupdate
-        """
-        conn = connect_db()
-        cur = conn.cursor()
-        cur.execute("SELECT time FROM sensor WHERE id_arduino=%s order by time DESC limit 1",[self.id_arduino])
-        last_date = cur.fetchone()
-        last_date=last_date['time'].strftime("%d/%m/%Y")
-        currDate = date.today().strftime("%d/%m/%Y")
-        if last_date==currDate:
-            last_date="Hari ini"
-        cur.close()
-        conn.close()
-        return last_date
+    # def last_updated(self):
+    #     """
+    #     Ambil tanggal terakhir data terupdate
+    #     """
+    #     conn = connect_db()
+    #     cur = conn.cursor()
+    #     cur.execute("SELECT time FROM sensor WHERE id_arduino=%s order by time DESC limit 1",[self.id_arduino])
+    #     last_date = cur.fetchone()
+    #     last_date=last_date['time'].strftime("%d/%m/%Y")
+    #     currDate = date.today().strftime("%d/%m/%Y")
+    #     if last_date==currDate:
+    #         last_date="Hari ini"
+    #     cur.close()
+    #     conn.close()
+    #     return last_date
 
     def update_notified(self):
         """
-        Update notif jadi read
+        Update notif jadi read per id_arduino
         """
         try:
             conn = connect_db()

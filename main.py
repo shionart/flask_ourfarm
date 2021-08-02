@@ -24,4 +24,4 @@ if __name__ == "__main__":
     # atexit.register(lambda: scheduler.shutdown())
     # atexit.register(lambda: scheduler.remove_all_jobs())
     ## sync end
-    main.run(host='0.0.0.0',port='5000',debug=True, threaded=True)
+    main.run(host='0.0.0.0',port='5000', threaded=True)

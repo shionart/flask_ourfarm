@@ -1,19 +1,19 @@
 
 var isi=[];
 
+/**
+ * Fungsi untuk membuat card notifikasi sesuai jumlah notifikasi
+ * @param {*} array dicts dari notifikasi
+ * @returns html card notifikasi dan jumlah card
+ */
 function generateCard2(array){
     var all="";
     for(a in array){
       var id_arduino = array[a]['id_arduino'];
       var soil_moist = array[a]['soil_moist'];
       var time = array[a]['time'];
-      // var notif = array[a]['notif'];
       var nama = array[a]['nama'];
-      // var id_sensor = array[a]['id_sensor'];
-      // if (notif==1) {
-        
-      // } else {
-        all+='<form method="post" action="'+notif_dashboard(id_arduino)+'" class="inline-notif">'+
+      all+='<form method="post" action="'+notif_dashboard(id_arduino)+'" class="inline-notif">'+
         '<button type="submit" class="link-button-notif dropdown-item d-flex align-items-center">'+
         '<div class="mr-3">'+
          '<div class="icon-circle bg-warning">'+
@@ -41,12 +41,15 @@ function generateCard2(array){
     }
     return {alerts:all,badge:array.length};
 }
-
+/**
+ * Jquery get data notifikasi dari API 
+ * Json format notif[{id_arduino, soil_moist, time, nama}}]
+ */
 function getNotified(){
     $.get(url_notified, function( data ) {
         isi = data['notif'];
         setTimeout(getNotified,10000);
-        if (isi==null) {
+        if (isi==null || isi[0]==null) {
             console.log('tidak ada notif');
         }
         else{

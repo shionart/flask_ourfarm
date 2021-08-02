@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Ourfarm - {% block title %}Home{% endblock title%}</title>
+  <title>Ourfarm - {% block title %}{% endblock title%}</title>
   <link rel="shortcut icon" type="image/x-icon" href="https://www.logolynx.com/images/logolynx/d9/d9919c041510c71109ff9bb7a42e2259.png">
 
   <!-- Custom fonts for this template-->
@@ -66,7 +66,7 @@
       <li class="nav-item">
         <a class="nav-link" href="{{url_for('index')}}">
           <i class="fas fa-fw fa-home"></i>
-          <span>Home</span></a>
+          <span>Beranda</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url_for('list_control')}}">
@@ -92,12 +92,12 @@
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
-
+          <h1 class="display-5">{% block header %}{% endblock %}</h1>
+          
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -111,13 +111,13 @@
               <!-- Dropdown - Notification -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                  Alerts Center
+                  Notifikasi
                 </h6>
                 <!-- start per item -->
                 <div id="listnotif" class="overflow-auto">
                   <a class="dropdown-item d-flex align-items-center" href="">
                     <div class="mr-3"></div>
-                    <div>Tidak ada notifikasi terbaru.</div>
+                    <div class="text-muted">Tidak ada notifikasi terbaru.</div>
                   </a>
                 </div>
                 <!-- end per item -->
@@ -186,7 +186,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
+            <span>&copy; OurFarm 2020</span>
           </div>
         </div>
       </footer>
