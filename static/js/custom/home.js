@@ -10,7 +10,10 @@ $("#save").click(
         $("#userID").attr("readonly", true);
         $("#save").attr("hidden", true);
         $("#change").attr("hidden", false);
-        postUserid(email,$("#userID").val());
+        var key = $("#userID").val().trim();
+        $("#userID").val(key);
+        postUserid(email,key);
+
     }
 );
 

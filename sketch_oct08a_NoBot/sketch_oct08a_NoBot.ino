@@ -10,21 +10,15 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 //CONNECT WIFI, ganti wifi anda di sini
-char ssid[] = "andah";     // your network SSID (name)  
+char ssid[] = "kamar_aal";     // your network SSID (name)  
 char password[] = "ASuryani"; // your network key
-char ip_address[]="192.168.1.50";
+char ip_address[]="192.168.1.20";
 char nama[]="front";
 char id_arduino[]="48C4D907E4604B10AC65";
 String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino);
 String raspi_input= "http://"+String(ip_address)+":5000/input";
 
-
-
-
-
-
 WiFiClientSecure client;
-
 
 int led1=14;
 int stat = 0;
@@ -55,20 +49,20 @@ String curr_perintah="0";
   //Relay control for timing 
   void relay1(int Relay){
     if(Relay==1){
-    digitalWrite(relay,HIGH);
-    delay(1000);
     digitalWrite(relay,LOW);
+    delay(1000);
+    digitalWrite(relay,HIGH);
     }
     else if(Relay==0) 
-    digitalWrite(relay,LOW); 
+    digitalWrite(relay,HIGH); 
   }
 
   void relay2(int Relay){
     if(Relay==1){
-    digitalWrite(relay,HIGH);
+    digitalWrite(relay,LOW);
     }
     else if(Relay==0) 
-    digitalWrite(relay,LOW); 
+    digitalWrite(relay,HIGH); 
   }
 
   //GET control
@@ -216,6 +210,7 @@ void cek_control(){
 //-------------------SETUP MULAI------------------
   void setup() {
     Serial.begin(9600);
+    digitalWrite(relay, HIGH);
     dht.begin();
     // Set WiFi to station mode and disconnect from an AP if it was Previously
     // connected

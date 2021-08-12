@@ -27,9 +27,15 @@ class Sensor(object):
         """
         Constructor Sensor \n
         Parameters : id, time, suhu, kelembapan, soil_moist, relay, id_arduino
+        -------
+        Function :
+            - insert_to_control()
+            - read_sensor()
+            - read_yesterday()
+            - mean_yesterday(sensors)
         """
         if len(kwargs)>0:
-            self.id = kwargs.pop("id_sensor", None)
+            self.id_sensor = kwargs.pop("id_sensor", None)
             self.time = kwargs.pop("time", None)
             self.suhu =  kwargs.pop("suhu", None)
             self.kelembapan = kwargs.pop("kelembapan", None)
@@ -37,7 +43,7 @@ class Sensor(object):
             self.relay = kwargs.pop("relay", None)
             self.id_arduino = kwargs.pop("id_arduino", None)
         else:
-            self.id = None
+            self.id_sensor = None
             self.time = None
             self.suhu =  None
             self.kelembapan = None
@@ -54,7 +60,10 @@ class Sensor(object):
                 self.suhu=0
                 self.kelembapan=0
             cursor = conn.cursor()
-            query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)"
+            if self.soil_moist<40:
+                query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino, notif) VALUES (%s, %s, %s, %s, %s, 1)"
+            else:
+                query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)"
             isituple = (self.suhu, self.kelembapan, self.soil_moist, self.relay, self.id_arduino)
             try:
                 print("Eksekusi insert to table")
@@ -146,7 +155,7 @@ class Sensor(object):
         cur = conn.cursor()
         #ini tambahan\
         try:
-            cur.execute("SELECT * FROM sensor WHERE DATE(time) = DATE(NOW() - INTERVAL 3 DAY) AND id_arduino=%s order by id desc",[self.id_arduino])
+            cur.execute("SELECT * FROM sensor WHERE DATE(time) >= DATE(NOW() - INTERVAL 3 DAY) AND id_arduino=%s order by id desc",[self.id_arduino])
             data = cur.fetchall()
             sensor = self.get_sensor(data)
             y_suhu, y_lembap, y_sm = self.mean_yesterday(sensor)
@@ -158,18 +167,15 @@ class Sensor(object):
         sensor,curr_data,bar = self.read_sensor()
         #tambahan - edit
         if y_suhu != 0:
-            suhu_yes=((curr_data['suhu']-y_suhu)/y_suhu)
-            suhu_yes = suhu_yes * 100
+            suhu_yes=(curr_data['suhu']-y_suhu)
         else:
             suhu_yes = 0
         if y_lembap != 0:
-            lembap_yes=((curr_data['lembap']-y_lembap)/y_lembap)
-            lembap_yes = lembap_yes * 100
+            lembap_yes=(curr_data['lembap']-y_lembap)
         else:
             lembap_yes = 0
         if y_sm != 0:
-            sm_yes = ((curr_data['sm']-y_sm)/y_sm)
-            sm_yes = sm_yes * 100
+            sm_yes = (curr_data['sm']-y_sm)
         else:
             sm_yes = 0
         # tambah -edit end
@@ -200,18 +206,33 @@ class Sensor(object):
         return mean_suhu,mean_lembap,mean_sm
 
 
-    def last_updated(self):
+    # def last_updated(self):
+    #     """
+    #     Ambil tanggal terakhir data terupdate
+    #     """
+    #     conn = connect_db()
+    #     cur = conn.cursor()
+    #     cur.execute("SELECT time FROM sensor WHERE id_arduino=%s order by time DESC limit 1",[self.id_arduino])
+    #     last_date = cur.fetchone()
+    #     last_date=last_date['time'].strftime("%d/%m/%Y")
+    #     currDate = date.today().strftime("%d/%m/%Y")
+    #     if last_date==currDate:
+    #         last_date="Hari ini"
+    #     cur.close()
+    #     conn.close()
+    #     return last_date
+
+    def update_notified(self):
         """
-        Ambil tanggal terakhir data terupdate
+        Update notif jadi read per id_arduino
         """
-        conn = connect_db()
-        cur = conn.cursor()
-        cur.execute("SELECT time FROM sensor WHERE id_arduino=%s order by time DESC limit 1",[self.id_arduino])
-        last_date = cur.fetchone()
-        last_date=last_date['time'].strftime("%d/%m/%Y")
-        currDate = date.today().strftime("%d/%m/%Y")
-        if last_date==currDate:
-            last_date="Hari ini"
-        cur.close()
-        conn.close()
-        return last_date
+        try:
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute("UPDATE sensor SET notif=0 WHERE id_arduino=%s and time<=now() and notif=1", [self.id_arduino])
+            conn.commit()
+            cur.close()
+            conn.close()
+        except Exception as e:
+            conn.rollback()
+            print(e)

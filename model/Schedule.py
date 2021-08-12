@@ -23,7 +23,7 @@ class Schedule():
     
     def getListControl(self):
         """
-        Fungsi untuk mengecek secara berkala Control pada tiap Nodes
+        Fungsi untuk mengecek secara berkala Control pada tiap Nodes ke Main Web
         """
         print("memulai getlistcontrol")
         try:

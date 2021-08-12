@@ -33,7 +33,7 @@ class Control(object):
         """
         conn = connect_db()
         cur = conn.cursor()
-        cur.execute("SELECT * from control")
+        cur.execute("SELECT * from control a left join (select c.id_arduino, date_format(max(c.time),'%%a,%%b %%e %%Y %%H:%%i') time from sensor c group by c.id_arduino) b on a.id_arduino=b.id_arduino where a.id_user=%s",[self.id_user])
         nodes = cur.fetchall()
         return nodes
 
@@ -154,14 +154,15 @@ class Control(object):
         devid = {'deviceId': self.id_arduino}
         ambil = requests.get(url, params=devid, headers={
                              'User-Agent': 'Mozilla/5.0'})
-        # print(ambil.status_code)
-        data = ambil.json()
-        cek = self.read_control()
-        print("local :"+str(cek['perintah']))
-        print("webpusat:"+str(data['nilai']))
-        if not cek :
-            print("Table Control Kosong!")
-        else :
+        if ambil.status_code==200 :
+            print(ambil.status_code)
+            data = ambil.json()
+            cek = self.read_control() #ngambil current perintah
+            print("local :"+str(cek['perintah']))
+            print("webpusat:"+str(data['nilai']))
+            # if not cek :
+            #     print("Table Control Kosong!")
+            # else :
             if (ambil.status_code == 200 and str(cek['perintah']) != data["nilai"]):
                 print("data berubah")
                 try:
@@ -175,6 +176,8 @@ class Control(object):
                 except Exception as e:
                     conn.rollback()
                     print(e)
+        else :
+            print("main web cannot be reached")
 
     def postControl(self):
         """
@@ -208,3 +211,23 @@ class Control(object):
                 print(e)
         else:
             print("Status code : "+ambil.status_code+"queue : "+cek)
+    
+    def get_notified(self):
+        """
+        Ambil data sensor dari List id_arduino & notif!=0
+        """
+        try:
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute("select a.nama, a.id_arduino, date_format(b.time,'%%a, %%b %%e %%Y %%H:%%i') as time, b.soil_moist, b.id as id_sensor from control a "+
+                        "left join ("+
+                        "select * from sensor c where c.time in "
+                        "(select max(c.time) from sensor c where c.notif=1 group by c.id_arduino)) "+
+                        "b on a.id_arduino=b.id_arduino where a.id_user=%s and b.notif=1 order by b.time DESC",[self.id_user])
+            list_notif = cur.fetchall()
+            cur.close()
+            conn.close()
+            return list_notif
+        except Exception as e:
+            print(e)
+

@@ -1,5 +1,6 @@
 {% extends "base/master.html" %}
-  {% block title %} Dashboard {% endblock title %}
+  {% block title %} Dasbor {% endblock title %}
+  {% block header %} Dasbor {% endblock %}
       <!-- Main Content -->
      
         <!-- Begin Page Content -->
@@ -11,7 +12,7 @@
               <span class="icon text-white-50">
                 <i class="fas fa-arrow-right"></i>
               </span>
-              <span class="text">go to Control</span>
+              <span class="text">Ke Kontrol</span>
             </a>
               <!-- <a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true">Control</a> -->
           
@@ -19,14 +20,125 @@
           
           <!-- Conten -->
           <div class="row">
+            <div class="col-12">
+              <div class="card shadow mb-4 animated--fade-in">
+                <div class="card-header py-3 ">
+                  <h6 class="m-0 font-weight-bold text-dark">Data Terakhir</h6>
+                </div>
+                <div class="card-body border-left-success">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                      <div class="card shadow mb-4 animated--grow-in border-left-info">
+                          <a href="#collapseCardExample1" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <h6 class="m-0 font-weight-bold text-dark">Kelembapan Udara <i class="fas fa-wind"></i></h6> 
+                          </a>
+                        <div class="card-body"  id="collapseCardExample1">
+                          <div class="chart-bar "><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <canvas id="myBarLembapUdara" style="display: block; width: 80px; height: 40px;"  class="chartjs-render-monitor "></canvas>
+                        </div>
+                        </div>
+                        <div class="card-footer  ">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                  <div class="d-flex h6 mb-0 mr-3 font-weight-bold text-gray-800">                  
+                                    {{curr_kelembapan}} <div id="curr_lembap_udara">0</div> %
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="progress progress-sm mr-2">
+                                    <div id="prog_lembap_udara" class="progress-bar bg-info" role="progressbar" style="width:0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                          <span id="yesterdayudara"></span>% dari kemarin
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+        
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                      <div class="card shadow mb-4 animated--grow-in border-left-danger">
+                          <a href="#collapseCardExample2" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <h6 class="m-0 font-weight-bold text-dark">Suhu <i class="fas fa-thermometer-half"></i></h6>
+                          </a>
+                        <div class="card-body" id="collapseCardExample2">
+                          <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <canvas id="myBarSuhu" style="display: block; width: 80px; height: 40px;" class="chartjs-render-monitor"></canvas>
+                        </div>
+                        </div>
+                        <div class="card-footer">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                  <div class="d-flex h6 mb-0 mr-3 font-weight-bold text-gray-800">                  
+                                    {{curr_suhu}} <div id="curr_suhu">0</div>&#8451;
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="progress progress-sm mr-2">
+                                    <div id="prog_suhu" class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            <span id="yesterdaysuhu"></span>&#8451; dari kemarin
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+        
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                      <div class="card shadow mb-4 animated--grow-in border-left-success">
+                          <a href="#collapseCardExample3" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <h6 class="m-0 font-weight-bold text-dark">Kelembapan Tanah <i class="fas fa-water"></i></h6>
+                          </a>
+                        <div class="card-body " id="collapseCardExample3">
+                          <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <canvas id="myBarLembapTanah" style="display: block; width: 80px; height: 40px;" class="chartjs-render-monitor"></canvas>
+                        </div>
+                        </div>
+                        <div class="card-footer">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                  <div class="d-flex h6 mb-0 mr-3 font-weight-bold text-gray-800">                  
+                                    {{curr_kelembapan}} <div id="curr_lembap_tanah">0</div> %
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="progress progress-sm mr-2">
+                                    <div id="prog_lembap_tanah" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            <span id="yesterdaysm"></span>% dari kemarin
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="card shadow mb-4 animated--grow-in border-left-info">
-                <!-- <div class="card-header py-3"> -->
-                  <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Kelembapan</h6> -->
-                  <a href="#collapseCardExample1" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                    <h6 class="m-0 font-weight-bold text-dark">Kelembapan Udara <i class="fas fa-wind"></i></h6> 
-                  </a>
-                <!-- </div> -->
+                <a href="#collapseCardExample1" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                  <h6 class="m-0 font-weight-bold text-dark">Kelembapan Udara <i class="fas fa-wind"></i></h6> 
+                </a>
                 <div class="card-body collapse"  id="collapseCardExample1">
                   <div class="chart-bar "><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                     <canvas id="myBarLembapUdara" style="display: block; width: 80px; height: 40px;"  class="chartjs-render-monitor "></canvas>
@@ -58,12 +170,9 @@
 
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="card shadow mb-4 animated--grow-in border-left-danger">
-                <!-- <div class="card-header py-3"> -->
-                  <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Kelembapan</h6> -->
                   <a href="#collapseCardExample2" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                     <h6 class="m-0 font-weight-bold text-dark">Suhu <i class="fas fa-thermometer-half"></i></h6>
                   </a>
-                <!-- </div> -->
                 <div class="card-body collapse" id="collapseCardExample2">
                   <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                     <canvas id="myBarSuhu" style="display: block; width: 80px; height: 40px;" class="chartjs-render-monitor"></canvas>
@@ -95,12 +204,9 @@
 
             <div class="col-lg-4 col-md-12 col-sm-12">
               <div class="card shadow mb-4 animated--grow-in border-left-success">
-                <!-- <div class="card-header py-3"> -->
-                  <!-- <h6 class="m-0 font-weight-bold text-primary text-center">Kelembapan</h6> -->
                   <a href="#collapseCardExample3" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                     <h6 class="m-0 font-weight-bold text-dark">Kelembapan Tanah <i class="fas fa-water"></i></h6>
                   </a>
-                <!-- </div> -->
                 <div class="card-body collapse " id="collapseCardExample3">
                   <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                     <canvas id="myBarLembapTanah" style="display: block; width: 80px; height: 40px;" class="chartjs-render-monitor"></canvas>
@@ -129,7 +235,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           
           <!-- tabel -->
           <div class="row">
@@ -140,7 +246,7 @@
                 </div>
                 <div class="card-body border-left-success">
                   <div class="table-responsive">
-                    <table class="table table-bordered" id="sensorTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-hover" id="sensorTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
                           <th data-field="date">Tanggal</th>

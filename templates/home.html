@@ -1,68 +1,65 @@
 {% extends "base/master.html" %}
 
-      <!-- Main Content -->
-     
-
-        <!-- Begin Page Content -->
-        <div>
-        {% block content %}
-          
-          <div class="row mt-2 card shadow">
-            <h1 class="text-center card-header text-white bg-success">
-             <b>Welcome!</b>
-            </h1>
-            <div class="col-md-12 animated--fade-in card-body">
-              <h2 class="text-success">
-                Getting started.
-              </h2>
-              <ol>
-                <li>
-                  Hubungkan perangkat ini dengan WiFi
-                </li>
-                <li>
-                  Kunjungi <b><a rel="noopener noreferrer" href="https://bwcr.rizaldiariif.com/public/login" target="_blank">bwcr.rizaldiariif.com</a></b> untuk melakukan <b>Registrasi</b> 
-                </li> 
-                <li>Tambah Nodes di menu <b><a rel="noopener noreferrer" href="https://bwcr.rizaldiariif.com/public/device" target="_blank">Arduino - Tambah Perangkat</a></b>   dengan keterangan sebagai berikut : <br>
-                 <code> 
-                  <ul> 
-                    <li>IP Address : <b><mark>{{ip}}</mark></b> </li>
-                    <li>Device Type : <b><mark>Garden</mark></b></li>
-                    <li>SSID WiFi : <b><mark>"nama WiFi anda yang tersambung dengan perangkat ini"</mark></b></li>
-                    <li>Password WiFi : <b><mark>"password WiFi anda tersambung dengan perangkat ini"</mark></b></li>
-                  </ul>
-                </code>
-                </li>
-                <li>
-                  Download dan install file.ino yang disediakan setelah menambah perangkat pada arduino yang akan digunakan!
-                </li>
-                <li>
-                  Salin User ID pada bagian card Setup di bawah fitur download file.ino dan tempelkan di form bawah ini
-                    <div class="form-group row">
-                      <div class="col-lg-4 pt-1">
-                        <input value="{{id_user}}" type="text" class="form-control" id="userID" placeholder="Masukkan User ID di sini" readonly>
-                      </div>
-                      <div class="col-lg-2 pt-1">
-                        <button id="change" class="btn btn-outline-success">Change</button>
-                        <button id="save" class="btn btn-outline-success" hidden="true">save</button>
-                      </div>
-                    </div>
-                </li>
-                <li>
-                  Hubungkan arduino dengan aliran listrik, tunggu sampai alat mengirim data (cek <b><a href="/control"> di sini</a></b>).
-                </li>
-              </ol>
-            </div>
-            
-          </div>
-          <!-- Conten -->
-         
-       
-          
-        {% endblock content %}
-        <!-- /.container-fluid -->
+  <!-- Main Content -->
+  <!-- Begin Page Content -->
+  {% block title %}Beranda{% endblock title%}
+  {% block header%}Beranda{% endblock %}
+  <div>
+  {% block content %}
+    
+    <div class="row mt-2 card shadow">
+      <h1 class="text-center card-header text-white bg-success">
+        <b>Panduan Memulai</b>
+      </h1>
+      <div class="col-md-12 animated--fade-in card-body">
+        <ol>
+          <li>
+            Hubungkan perangkat ini dengan WiFi
+          </li>
+          <li>
+            Kunjungi <b><a rel="noopener noreferrer" href="https://bwcr.rizaldiariif.com/public/login" target="_blank">bwcr.rizaldiariif.com</a></b> untuk melakukan <b>Registrasi</b> 
+          </li> 
+          <li>Tambah Nodes di menu <b><a rel="noopener noreferrer" href="https://bwcr.rizaldiariif.com/public/device" target="_blank">Arduino - Tambah Perangkat</a></b>   dengan keterangan sebagai berikut : <br>
+            <code> 
+            <ul> 
+              <li>IP Address : <b><mark>{{ip}}</mark></b> </li>
+              <li>Device Type : <b><mark>Garden</mark></b></li>
+              <li>SSID WiFi : <b><mark>"nama WiFi anda yang tersambung dengan perangkat ini"</mark></b></li>
+              <li>Password WiFi : <b><mark>"password WiFi anda tersambung dengan perangkat ini"</mark></b></li>
+            </ul>
+          </code>
+          </li>
+          <li>
+            Download dan install file.ino yang disediakan setelah menambah perangkat pada arduino yang akan digunakan!
+          </li>
+          <li>
+            Salin User ID pada bagian card Setup di bawah fitur download file.ino dan tempelkan di form bawah ini
+              <div class="form-group row">
+                <div class="col-lg-4 pt-1">
+                  <input value="{{id_user}}" type="text" class="form-control" id="userID" placeholder="Masukkan User ID di sini" readonly>
+                </div>
+                <div class="col-lg-2 pt-1">
+                  <button id="change" class="btn btn-outline-success">Ubah User ID</button>
+                  <button id="save" class="btn btn-outline-success" hidden="true">Simpan</button>
+                </div>
+              </div>
+          </li>
+          <li>
+            Hubungkan arduino dengan aliran listrik, tunggu sampai alat mengirim data (cek <b><a href="/control"> di sini</a></b>).
+          </li>
+        </ol>
       </div>
       
-      <!-- End of Main Content -->
+    </div>
+    <!-- Conten -->
+    
+  
+    
+  {% endblock content %}
+  <!-- /.container-fluid -->
+  </div>
+
+  <!-- End of Main Content -->
 
   {% block scripts %}
   <!-- Page level plugins -->

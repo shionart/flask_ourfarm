@@ -2,22 +2,19 @@
 
       <!-- Main Content -->
      {% block title %}
-     List Nodes
+     Daftar Perangkat
      {% endblock %}
-
+  {% block header %}
+  Perangkat
+  {% endblock %}
         <!-- Begin Page Content -->
         <div>
         {% block content %}
           
-          <div class="row">
-            <div id="header" class="text-center">
-              <h2 >
-                List Nodes
-              </h2>
-            </div>
-            <div id="listnodes" class="col-md-12 animated--fade-in">
+          <div  id="listnodes" class="row">
+            <div class="col-md-12 animated--fade-in">
               <h3 class="text-center mt-5">
-               <b>Waiting for a node to connect . . .</b>
+               <b>Menunggu perangkat tersambung . . . </b>
               </h3>
               <div class="d-flex justify-content-center">
                 <div class="spinner-grow text-success" role="status">
@@ -39,10 +36,8 @@
   {% block scripts %}
   <!-- Passing data to JS -->
   <script>
-    var data_control="{{url_for('get_data_control')}}";
-    function url_last_updated(id){
-      return "{{url_for('get_last_updated',id='')}}"+id;
-    }
+    var data_control="{{url_for('get_data_control',id='')}}"+"{{session['iduser']}}";
+    
     function page_dashboard(id){
       return "{{url_for('dashboard',id='')}}"+id;
     }

@@ -1,3 +1,4 @@
+from flask.globals import request
 from controller.SensorController import SensorController
 from controller.ControlController import ControlController
 from controller.UserController import UserController
@@ -12,7 +13,7 @@ def index():
     Route untuk home
     """
     return UserController().index()
-
+#-------------------User---------------------
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     """
@@ -36,7 +37,7 @@ def register():
     Route untuk register methods = GET
     """
     return UserController().register()
-
+#-----------------User API--------------------------
 @main.route('/post_raspi', methods=["POST"])
 def post_raspi():
     """
@@ -66,21 +67,21 @@ def control(id):
 @login_required
 def list_control():
     """
-    Route untuk list node
+    Route untuk webpage list node
     """
     return ControlController().list_control()
-
-@main.route('/get_control', methods=["GET"])
-def get_data_control():
+#--------------Control API--------------------
+@main.route('/get_control/<id>', methods=["GET"])
+def get_data_control(id):
     """
-    Route API untuk control local
+    Route API GET untuk list arduino dari sebuah user <id>
     """
-    return ControlController().get_data_control()
+    return ControlController().get_data_control(id)
 
 @main.route('/api_control/<id>', methods=["GET", "POST"])
 def api_data_node(id):
     """
-    Route API untuk control A node 
+    Route API untuk control hanya pada satu node
     """
     return ControlController().api_data_node(id)
 
@@ -90,8 +91,23 @@ def api_queue_control():
     Route API untuk queue data control
     """
     return ControlController().api_queue_control()
+#--------------Notif API-----------------------
+@main.route('/api_notif/<id>', methods=['GET', 'POST'])
+def api_notif(id):
+    """
+    Route API untuk get data notif
+    """
+    if request.method=="GET" :
+        # print(request.get_data())
+        # print(request.form)
+        return ControlController().get_notif(id)
+    elif request.method=="POST" :
+        # return str(request.form["id_sensor"])
+        # SensorController().update_notified(str(request.form["id_sensor"]))
+        SensorController().update_notified(id)
+        return dashboard(id=id)     
 
-#--------------Sensor-------------------
+#--------------Sensor API-------------------
 @main.route('/input', methods=["POST"])
 def input_data():
     """
@@ -107,10 +123,10 @@ def get_data_api(id):
     return SensorController().get_data_api(id)
 
 
-@main.route('/get_last_updated/<id>', methods=["GET"])
-def get_last_updated(id):
-    """
-    Route API untuk GET data sensor per Id
-    """
-    return SensorController().get_last_updated(id)
+# @main.route('/get_last_updated/<id>', methods=["GET"])
+# def get_last_updated(id):
+#     """
+#     Route API untuk GET data sensor per Id
+#     """
+#     return SensorController().get_last_updated(id)
 

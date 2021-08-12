@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Ourfarm - {% block title %}Home{% endblock title%}</title>
+  <title>Ourfarm - {% block title %}{% endblock title%}</title>
   <link rel="shortcut icon" type="image/x-icon" href="https://www.logolynx.com/images/logolynx/d9/d9919c041510c71109ff9bb7a42e2259.png">
 
   <!-- Custom fonts for this template-->
@@ -19,7 +19,21 @@
   <!-- Custom styles for this template-->
   <link href="{{url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
   <link href="{{url_for('static', filename='css/personalized.css')}}" rel="stylesheet">
+  <style>
+    .inline-notif {
+      display: inline;
+    }
 
+    .link-button-notif {
+      background: none;
+    }
+    .link-button-notif:focus {
+      outline: none;
+    }
+    .link-button-notif:active {
+      color:red;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -52,12 +66,12 @@
       <li class="nav-item">
         <a class="nav-link" href="{{url_for('index')}}">
           <i class="fas fa-fw fa-home"></i>
-          <span>Home</span></a>
+          <span>Beranda</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url_for('list_control')}}">
           <i class="fas fa-fw fa-cog"></i>
-          <span>List Arduino</span></a>
+          <span>Daftar Perangkat</span></a>
       </li>
       
       <!-- Nav Item - Pages Collapse Menu -->
@@ -78,65 +92,41 @@
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
-
+          <h2 class="display-5">{% block header %}{% endblock %}</h2>
+          
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Alerts -->
+            <!-- Nav Item - Notification -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+                <!-- Counter - Notification -->
+                <span id="countnotif" class="badge badge-danger badge-counter"></span>
               </a>
-              <!-- Dropdown - Alerts -->
-              <!-- TODO add ajax here to load new notification -->
+              <!-- Dropdown - Notification -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                  Alerts Center
+                  Notifikasi
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                <!-- start per item -->
+                <div id="listnotif" class="overflow-auto">
+                  <a class="dropdown-item d-flex align-items-center" href="">
+                    <div class="mr-3"></div>
+                    <div class="text-muted">Tidak ada notifikasi terbaru.</div>
+                  </a>
+                </div>
+                <!-- end per item -->
+                <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
               </div>
             </li>
+            <!-- Notification Selesai -->
 
+            
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
@@ -196,7 +186,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
+            <span>&copy; OurFarm 2020</span>
           </div>
         </div>
       </footer>
@@ -269,7 +259,14 @@
   <script src="{{url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
   <!-- Custom scripts for all pages-->
+  <script>
+    const url_notified = "{{url_for('api_notif',id='')}}"+"{{session['iduser']}}";
+    function notif_dashboard(id){
+      return "{{url_for('api_notif',id='')}}"+id;
+    }
+  </script>
   <script src="{{url_for('static', filename='js/sb-admin-2.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/custom/notification.js')}}"></script>
 
   <!-- Page level plugins -->
   {% block scripts %}
