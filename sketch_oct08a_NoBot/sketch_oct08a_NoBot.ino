@@ -12,7 +12,7 @@ DHT dht(DHTPIN, DHTTYPE);
 //CONNECT WIFI, ganti wifi anda di sini
 char ssid[] = "kamar_aal";     // your network SSID (name)  
 char password[] = "ASuryani"; // your network key
-char ip_address[]="192.168.1.50";
+char ip_address[]="192.168.1.20";
 char nama[]="front";
 char id_arduino[]="48C4D907E4604B10AC65";
 char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
@@ -21,6 +21,18 @@ String raspi_input= "http://"+String(ip_address)+":5000/input";
 
 WiFiClientSecure client;
 
+<<<<<<< HEAD
+int led1=14;
+int stat = 0;
+int led2=13;
+int relay=5;
+int buzzer=12;
+float h=0;
+float t=0;
+int sm=0;
+int Relay = 0;
+int limit=0;
+=======
 int led1=14; //PIN LED INDIKATOR WIFI
 int stat = 0; //
 int led2=13; //PIN LED KE LDR
@@ -31,6 +43,7 @@ float t=0; //var temperature di udara
 int sm=0; // PIN ANALOG SOIL MOISTURE
 int Relay = 0; //VAR RELAY 0 mati, 1 nyala
 int limit=0; //VAR COUNTER
+>>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
 
 
 int smval=0;
@@ -49,12 +62,28 @@ int status_connect=1;
   }
 
   //Relay control for timing 
+<<<<<<< HEAD
+  void relay1(int Relay){
+    if(Relay==1){
+=======
   void relay1(int rly){
     if(rly==1){
+>>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
     digitalWrite(relay,LOW);
     delay(1000);
     digitalWrite(relay,HIGH);
     }
+<<<<<<< HEAD
+    else if(Relay==0) 
+    digitalWrite(relay,HIGH); 
+  }
+
+  void relay2(int Relay){
+    if(Relay==1){
+    digitalWrite(relay,LOW);
+    }
+    else if(Relay==0) 
+=======
     else if(rly==0) 
     digitalWrite(relay,HIGH); 
   }
@@ -64,6 +93,7 @@ int status_connect=1;
     digitalWrite(relay,LOW);
     }
     else if(rly==0) 
+>>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
     digitalWrite(relay,HIGH); 
   }
 
