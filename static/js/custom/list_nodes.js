@@ -38,17 +38,10 @@ function generateCard(array){
                             '</div>'+
                             '<div class="col-lg-1"></div>'+
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-<<<<<<< HEAD
-                                '<a href='+page_dashboard(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Dashboard</a>'+
-                            '</div>'+
-                            '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Control</a>'+
-=======
                                 '<a href='+page_dashboard(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Dasbor</a>'+
                             '</div>'+
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
                                 '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Kontrol</a>'+
->>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
                             '</div>'+
                         '</div>'+
                     '</div>'+
