@@ -1,5 +1,4 @@
 from config.db import connect_db
-# from repository import insert_to_control, read_control
 import requests
 
 
@@ -29,7 +28,7 @@ class Control(object):
 
     def read_controls(self):
         """
-        Baca udah berapa node yang connect
+        Baca udah berapa node yang connect untuk User yg login
         """
         conn = connect_db()
         cur = conn.cursor()
@@ -44,6 +43,7 @@ class Control(object):
                     [self.id_arduino])
         data_perintah = cur.fetchone()
         # isi = data_perintah['perintah']
+        # if data_perintah!=None:
         return data_perintah
 
     def read_control_id(self):
