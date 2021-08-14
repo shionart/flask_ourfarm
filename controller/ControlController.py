@@ -59,11 +59,7 @@ class ControlController(object):
         if(request.method == "GET"):
             node = c.read_control()
             # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
-            if node!=None:
-                return node
-            else:
-                return jsonify({'perintah': '5',
-                'status':'1'})
+            return node
         elif (request.method == "POST"):
             try:
                 perintah = str(request.form["perintah"])

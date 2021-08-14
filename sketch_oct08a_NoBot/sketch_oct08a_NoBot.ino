@@ -15,13 +15,15 @@ char password[] = "ASuryani"; // your network key
 char ip_address[]="192.168.1.20";
 char nama[]="front";
 char id_arduino[]="48C4D907E4604B10AC65";
-char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
 String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino);
 String raspi_input= "http://"+String(ip_address)+":5000/input";
 
 WiFiClientSecure client;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 19b48ac (update tampilan dikit)
 int led1=14;
 int stat = 0;
 int led2=13;
@@ -32,6 +34,7 @@ float t=0;
 int sm=0;
 int Relay = 0;
 int limit=0;
+<<<<<<< HEAD
 =======
 int led1=14; //PIN LED INDIKATOR WIFI
 int stat = 0; //
@@ -44,18 +47,19 @@ int sm=0; // PIN ANALOG SOIL MOISTURE
 int Relay = 0; //VAR RELAY 0 mati, 1 nyala
 int limit=0; //VAR COUNTER
 >>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
+=======
+>>>>>>> parent of 19b48ac (update tampilan dikit)
 
 
 int smval=0;
 int val=0;
 bool Start = false;
-String perintah; //Var untuk perintah dari rasp
-String status_perintah="1"; //status perintah eksekusi
-String curr_perintah="0"; //perintah yg dijalankan arduino
-int status_connect=1;
+String perintah;
+String status_perintah="1";
+String curr_perintah="0";
 
   
-  int readSM(){
+  int readSuhu(){
     smval = analogRead(sm);
     Serial.println(smval);
     return smval;
@@ -63,16 +67,22 @@ int status_connect=1;
 
   //Relay control for timing 
 <<<<<<< HEAD
+<<<<<<< HEAD
   void relay1(int Relay){
     if(Relay==1){
 =======
   void relay1(int rly){
     if(rly==1){
 >>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
+=======
+  void relay1(int Relay){
+    if(Relay==1){
+>>>>>>> parent of 19b48ac (update tampilan dikit)
     digitalWrite(relay,LOW);
     delay(1000);
     digitalWrite(relay,HIGH);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
     else if(Relay==0) 
     digitalWrite(relay,HIGH); 
@@ -85,15 +95,22 @@ int status_connect=1;
     else if(Relay==0) 
 =======
     else if(rly==0) 
+=======
+    else if(Relay==0) 
+>>>>>>> parent of 19b48ac (update tampilan dikit)
     digitalWrite(relay,HIGH); 
   }
 
-  void relay2(int rly){
-    if(rly==1){
+  void relay2(int Relay){
+    if(Relay==1){
     digitalWrite(relay,LOW);
     }
+<<<<<<< HEAD
     else if(rly==0) 
 >>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
+=======
+    else if(Relay==0) 
+>>>>>>> parent of 19b48ac (update tampilan dikit)
     digitalWrite(relay,HIGH); 
   }
 
@@ -121,7 +138,7 @@ int status_connect=1;
   void post_sensor(){
     HTTPClient http;    //Declare object of class HTTPClient
     //Sensor
-    smval = readSM();
+    smval = readSuhu();
     val= map(smval,1023,465,0,100);
     if(val<0)val=0;
     else if (val>100)val=100;
@@ -179,35 +196,31 @@ void post_control(){
 
 void mode_control(String a){
   if(a=="0"){ //Mode default, otomatis menyiram bila lembap tanah < 40%
-    digitalWrite(relay,HIGH); 
-    if (limit==100){
-         if (val < 40.00) {
-            digitalWrite(buzzer,HIGH);
-            delay(500);
-            digitalWrite(buzzer,LOW);
-            delay(500);
-            digitalWrite(buzzer,HIGH);
-            delay(500);
-            digitalWrite(buzzer,LOW);
-            relay1(1);
-            Relay = 1;
-            if (stat == 1){
-              stat = 0;
-            }
-        }else if(val >= 40.00 && stat == 0) {
-            digitalWrite(buzzer,HIGH);
-            delay(50);
-            digitalWrite(buzzer,LOW);
-            delay(50);
-            digitalWrite(buzzer,HIGH);
-            delay(50);
-            digitalWrite(buzzer,LOW);
-            relay1(0);
-            Relay = 0;
-            stat = 1;
+    if (val < 40.00 && limit==3) {
+        digitalWrite(buzzer,HIGH);
+        delay(500);
+        digitalWrite(buzzer,LOW);
+        delay(500);
+        digitalWrite(buzzer,HIGH);
+        delay(500);
+        digitalWrite(buzzer,LOW);
+        relay1(1);
+        Relay = 1;
+        if (stat == 1){
+          stat = 0;
         }
-      }
-    
+    }else if(val >= 40.00 && stat == 0 && limit==3) {
+        digitalWrite(buzzer,HIGH);
+        delay(50);
+        digitalWrite(buzzer,LOW);
+        delay(50);
+        digitalWrite(buzzer,HIGH);
+        delay(50);
+        digitalWrite(buzzer,LOW);
+        relay1(0);
+        Relay = 0;
+        stat = 1;
+    }
     Serial.println("Mode 0");
   }else if(a=="1"){//mode terjadwal, sesuai timestamp pagi&sore nyiram
     Serial.println("Mode 1");
@@ -226,8 +239,8 @@ void cek_control(){
   /*
    * bila belum ada node, return error, tapi di sini perintah jadi 0???
   */
-//  Serial.println("perintah :"+perintah);
-//  Serial.println("status :"+status_perintah);
+  Serial.println("perintah :"+perintah);
+  Serial.println("status :"+status_perintah);
   get_control();
   Serial.println("perintah :"+perintah);
   Serial.println("status :"+status_perintah);
@@ -285,7 +298,7 @@ void cek_control(){
 //Periksa perintah baru atau tidak------
     cek_control();
 //Baca sensor------
-    smval = readSM();
+    smval = readSuhu();
     val= map(smval,1023,465,0,100);
     if(val<0)val=0;
     else if (val>100)val=100;
@@ -296,7 +309,7 @@ void cek_control(){
     limit++;
     Serial.println(limit);
     if(limit==100){
-      post_sensor();//upload data to raspberry only happen once in 100 loop
+      post_sensor();//upload data to raspberry only happen once in 4 loop
       limit=0;
     }
   }
