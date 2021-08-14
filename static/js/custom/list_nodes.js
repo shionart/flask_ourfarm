@@ -40,10 +40,14 @@ function generateCard(array){
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 2515e6f (commit conflict)
                                 '<a href='+page_dashboard(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Dashboard</a>'+
                             '</div>'+
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
                                 '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Control</a>'+
+<<<<<<< HEAD
 =======
                                 '<a href='+page_dashboard(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Dasbor</a>'+
                             '</div>'+
@@ -56,6 +60,8 @@ function generateCard(array){
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
                                 '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Control</a>'+
 >>>>>>> parent of 19b48ac (update tampilan dikit)
+=======
+>>>>>>> parent of 2515e6f (commit conflict)
                             '</div>'+
                         '</div>'+
                     '</div>'+

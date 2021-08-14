@@ -22,8 +22,11 @@ WiFiClientSecure client;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 19b48ac (update tampilan dikit)
+=======
+>>>>>>> parent of 2515e6f (commit conflict)
 int led1=14;
 int stat = 0;
 int led2=13;
@@ -34,6 +37,7 @@ float t=0;
 int sm=0;
 int Relay = 0;
 int limit=0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 int led1=14; //PIN LED INDIKATOR WIFI
@@ -49,6 +53,8 @@ int limit=0; //VAR COUNTER
 >>>>>>> 19b48acd42595c7b5ab03967e7c6e61061f822d1
 =======
 >>>>>>> parent of 19b48ac (update tampilan dikit)
+=======
+>>>>>>> parent of 2515e6f (commit conflict)
 
 
 int smval=0;
@@ -68,6 +74,7 @@ String curr_perintah="0";
   //Relay control for timing 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   void relay1(int Relay){
     if(Relay==1){
 =======
@@ -78,12 +85,19 @@ String curr_perintah="0";
   void relay1(int Relay){
     if(Relay==1){
 >>>>>>> parent of 19b48ac (update tampilan dikit)
+=======
+  void relay1(int Relay){
+    if(Relay==1){
+>>>>>>> parent of 2515e6f (commit conflict)
     digitalWrite(relay,LOW);
     delay(1000);
     digitalWrite(relay,HIGH);
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 2515e6f (commit conflict)
     else if(Relay==0) 
     digitalWrite(relay,HIGH); 
   }
@@ -93,6 +107,7 @@ String curr_perintah="0";
     digitalWrite(relay,LOW);
     }
     else if(Relay==0) 
+<<<<<<< HEAD
 =======
     else if(rly==0) 
 =======
@@ -111,6 +126,8 @@ String curr_perintah="0";
 =======
     else if(Relay==0) 
 >>>>>>> parent of 19b48ac (update tampilan dikit)
+=======
+>>>>>>> parent of 2515e6f (commit conflict)
     digitalWrite(relay,HIGH); 
   }
 
