@@ -260,7 +260,7 @@
 
   <!-- Custom scripts for all pages-->
   <script>
-    const url_notified = "{{url_for('api_notif',id='')}}"+"{{session['iduser']}}";
+    const url_notified ="{{url_for('api_notif',id='')}}"+"{{session['iduser']}}";
     function notif_dashboard(id){
       return "{{url_for('api_notif',id='')}}"+id;
     }
