@@ -55,16 +55,20 @@ int status_connect=1;
     delay(1000);
     digitalWrite(relay,HIGH);
     }
-    else if(rly==0) 
+    else if(rly==0){ 
     digitalWrite(relay,HIGH); 
+    }
+    Relay=rly;
   }
 
   void relay2(int rly){
     if(rly==1){
     digitalWrite(relay,LOW);
     }
-    else if(rly==0) 
+    else if(rly==0) {
     digitalWrite(relay,HIGH); 
+    }
+    Relay=rly;
   }
 
   //GET control
@@ -116,7 +120,7 @@ void post_control(){
     //Post Data
     String postData;
 //     
-    postData = "perintah=" + curr_perintah + "&status=" + status_perintah+ "&nama=" + String(nama);
+    postData = "perintah=" + curr_perintah + "&status=" + status_perintah+ "&nama=" + String(nama)+"&id_user="+String(id_user);
     http.begin(control_page);              //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
     int httpCode = http.POST(postData);   //Send the request
@@ -160,7 +164,6 @@ void mode_control(String a){
             delay(500);
             digitalWrite(buzzer,LOW);
             relay1(1);
-            Relay = 1;
             if (stat == 1){
               stat = 0;
             }
@@ -173,7 +176,6 @@ void mode_control(String a){
             delay(50);
             digitalWrite(buzzer,LOW);
             relay1(0);
-            Relay = 0;
             stat = 1;
         }
       }
@@ -183,11 +185,9 @@ void mode_control(String a){
     Serial.println("Mode 1");
   }else if(a=="2"){//mode menyala
     relay2(1);
-    Relay=1;
     Serial.println("Mode 2");
   }else if(a=="3"){//mode mati
     relay2(0);
-    Relay=0;
     Serial.println("Mode 3");
   }
 }
