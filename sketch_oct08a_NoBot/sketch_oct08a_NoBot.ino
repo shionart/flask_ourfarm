@@ -111,7 +111,7 @@ int status_connect=1;
     Serial.println(httpCode);   //Print HTTP return code
     Serial.println(payload);    //Print request response payload
     http.end();  //Close connection
-    Serial.println("Post berhasil");
+    Serial.println("Post selesai");
     Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val) + ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
   }
   
@@ -128,7 +128,7 @@ void post_control(){
     Serial.println(httpCode);   //Print HTTP return code
     Serial.println(payload);    //Print request response payload
     http.end();  //Close connection
-    Serial.println("Post control berhasil");
+    Serial.println("Post control selesai");
   }
 
 /*
@@ -191,29 +191,40 @@ void mode_control(String a){
     Serial.println("Mode 3");
   }
 }
-
+boolean handler = false;
 void cek_control(){
   /*
    * bila belum ada node, return error, tapi di sini perintah jadi 0???
   */
 //  Serial.println("perintah :"+perintah);
 //  Serial.println("status :"+status_perintah);
-  get_control();
-  Serial.println("perintah :"+perintah);
-  Serial.println("status :"+status_perintah);
-  Serial.println("curr_perintah:"+curr_perintah);
-  if(curr_perintah!=perintah && perintah!= "null"){
-    Serial.println("Baca perintah baru!");
-    curr_perintah=perintah;
+  if(perintah=="null" || handler){
+    perintah="0";
     status_perintah="1";
-    post_control();
-    Serial.println("Perintah tersimpan");
-    //Eksekusi perintah    
-  }
-  if(perintah="5"){
-      perintah="0";
+    handler=true;
+    if(limit % 10 ==0){
+//      get_control();
+      handler=false;}
+  }else{
+    get_control();  
+    Serial.println("perintah :"+perintah);
+    Serial.println("status :"+status_perintah);
+    Serial.println("curr_perintah:"+curr_perintah);
+    if(perintah=="5"){
+        perintah="0";
+        post_control();
+    } 
+    if(curr_perintah!=perintah && perintah!= "null"){
+      Serial.println("Baca perintah baru!");
+      curr_perintah=perintah;
+      status_perintah="1";
       post_control();
+      Serial.println("Perintah tersimpan");
+      //Eksekusi perintah    
+    }
   }
+ 
+  
 }
 
 
