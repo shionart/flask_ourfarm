@@ -67,8 +67,8 @@ class Control(object):
             cek_control = self.read_control_id()
             if cek_control == None:
                 print("Eksekusi insert to control")
-                cur.execute("INSERT INTO control (id_arduino, id_user, nama, perintah, status) VALUES(%s,%s,%s,%s,%s)", [
-                            self.id_arduino, self.id_user, self.nama, "0", "1"])
+                cur.execute("INSERT INTO control (id_arduino, id_user, nama, perintah, status) VALUES(%s,%s,%s,%s)", [
+                            self.id_arduino, self.nama, "0", "1"])
                 # Auto Add selesai
             else:
                 print("Update control")
