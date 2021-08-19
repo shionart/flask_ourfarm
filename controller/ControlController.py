@@ -69,8 +69,9 @@ class ControlController(object):
                 perintah = str(request.form["perintah"])
                 status = str(request.form["status"])
                 nama = str(request.form["nama"])
+                id_user = str(request.form["id_user"])
                 if(request.form["status"] != None or request.form["nama"] != None or request.form["perintah"] != None):
-                    c = Control(perintah=perintah, id_arduino=id, status=status, nama=nama)
+                    c = Control(perintah=perintah, id_arduino=id, status=status, nama=nama, id_user=id_user )
                     c.insert_to_control()
                 else:
                     pass  # skip sek
