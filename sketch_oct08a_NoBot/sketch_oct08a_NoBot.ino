@@ -120,7 +120,7 @@ void post_control(){
     //Post Data
     String postData;
 //     
-    postData = "perintah=" + curr_perintah + "&status=" + status_perintah+ "&nama=" + String(nama)+"&id_user="+String(id_user);
+    postData = "perintah=" + curr_perintah + "&status=" + status_perintah+ "&nama=" + String(nama);
     http.begin(control_page);              //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
     int httpCode = http.POST(postData);   //Send the request
