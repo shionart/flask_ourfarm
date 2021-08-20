@@ -53,7 +53,8 @@ function myFunction(perintah_i) {
     {
       perintah: perintah_i,
       status:"0",
-      nama:""
+      nama:"",
+      id_user:""
     }
   );
   try {//sync ke api bayu
