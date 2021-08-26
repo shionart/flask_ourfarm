@@ -20,10 +20,10 @@ String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_
 String raspi_input= "http://"+String(ip_address)+":5000/input";
 
 WiFiClientSecure client;
-
+int led3=2; //cadangan
 int led1=14; //PIN LED INDIKATOR WIFI
 int stat = 0; //
-int led2=13; //PIN LED KE LDR
+int led2=15; //PIN RELAY LED KE LDR
 int relay=5; //PIN RELAY PUMP
 int buzzer=12; //PIN BUZZER
 float h=0; //var humidity di udara
@@ -31,7 +31,8 @@ float t=0; //var temperature di udara
 int sm=0; // PIN ANALOG SOIL MOISTURE
 int Relay = 0; //VAR RELAY 0 mati, 1 nyala
 int limit=0; //VAR COUNTER
-
+int ldr = 13;
+int ldrvalue=0;
 
 int smval=0;
 int val=0;
@@ -96,7 +97,7 @@ int status_connect=1;
     HTTPClient http;    //Declare object of class HTTPClient
     //Sensor
     smval = readSM();
-    val= map(smval,1023,465,0,100);
+    val= map(smval,1023,165,0,100);
     if(val<0)val=0;
     else if (val>100)val=100;
     h = dht.readHumidity();
@@ -154,8 +155,8 @@ void post_control(){
 void mode_control(String a){
   if(a=="0"){ //Mode default, otomatis menyiram bila lembap tanah < 40%
     digitalWrite(relay,HIGH); 
-    if (limit==100){
-         if (val < 40.00) {
+    if (limit==99){
+         if (val < 30.00) {
             digitalWrite(buzzer,HIGH);
             delay(500);
             digitalWrite(buzzer,LOW);
@@ -167,7 +168,7 @@ void mode_control(String a){
             if (stat == 1){
               stat = 0;
             }
-        }else if(val >= 40.00 && stat == 0) {
+        }else if(val >= 30.00 && stat == 0) {
             digitalWrite(buzzer,HIGH);
             delay(50);
             digitalWrite(buzzer,LOW);
@@ -223,9 +224,18 @@ void cek_control(){
       //Eksekusi perintah    
     }
   }
- 
-  
 }
+
+void lampu(){
+  ldrvalue = digitalRead(ldr);
+    Serial.println(ldrvalue);
+  if(ldrvalue==0){
+    digitalWrite(led2, LOW);
+    }
+   else{
+    digitalWrite(led2, HIGH);
+    }
+  }
 
 
 //-------------------SETUP MULAI------------------
@@ -242,6 +252,7 @@ void cek_control(){
     pinMode(relay,OUTPUT);
     pinMode(led1,OUTPUT);
     pinMode(led2,OUTPUT);
+    pinMode(ldr,INPUT);
     Serial.print("Connecting Wifi: ");
     Serial.println(ssid);
     WiFi.begin(ssid, password);
@@ -267,13 +278,17 @@ void cek_control(){
         WiFi.begin(ssid, password);
         return;
     }
+    
+    lampu();
 //Periksa perintah baru atau tidak------
     cek_control();
 //Baca sensor------
-    smval = readSM();
-    val= map(smval,1023,465,0,100);
-    if(val<0)val=0;
-    else if (val>100)val=100;
+//    smval = readSM();
+//    val= map(smval,1023,165,0,100);
+//    if(val<0)val=0;
+//    else if (val>100)val=100;
+    Serial.println( "Lembap Udara "+dht.readHumidity()+
+    " Suhu "+dht.readTemperature());
 //Aksi pompa-----
     mode_control(curr_perintah);
 //Loop-control-----
@@ -283,5 +298,8 @@ void cek_control(){
     if(limit==100){
       post_sensor();//upload data to raspberry only happen once in 100 loop
       limit=0;
+      digitalWrite(buzzer,HIGH);
+      delay(200);
+      digitalWrite(buzzer,LOW);
     }
   }
