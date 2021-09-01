@@ -287,8 +287,8 @@ void lampu(){
 //    val= map(smval,1023,165,0,100);
 //    if(val<0)val=0;
 //    else if (val>100)val=100;
-    Serial.println( "Lembap Udara "+dht.readHumidity()+
-    " Suhu "+dht.readTemperature());
+    Serial.println( "Lembap Udara "+String(dht.readHumidity())+
+    " Suhu "+String(dht.readTemperature()));
 //Aksi pompa-----
     mode_control(curr_perintah);
 //Loop-control-----

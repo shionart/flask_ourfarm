@@ -60,7 +60,7 @@ class Sensor(object):
                 self.suhu=0
                 self.kelembapan=0
             cursor = conn.cursor()
-            if self.soil_moist<40:
+            if self.soil_moist<=30:
                 query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino, notif) VALUES (%s, %s, %s, %s, %s, 1)"
             else:
                 query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)"
