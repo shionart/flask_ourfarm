@@ -96,12 +96,12 @@ int status_connect=1;
   void post_sensor(){
     HTTPClient http;    //Declare object of class HTTPClient
     //Sensor
-    smval = readSM();
-    val= map(smval,1023,165,0,100);
-    if(val<0)val=0;
-    else if (val>100)val=100;
-    h = dht.readHumidity();
-    t = dht.readTemperature();
+//    smval = readSM();
+//    val= map(smval,1023,165,0,100);
+//    if(val<0)val=0;
+//    else if (val>100)val=100;
+//    h = dht.readHumidity();
+//    t = dht.readTemperature();
     //Post Data
     String postData;
     postData = "suhu=" + String(t) + "&lembap=" + String(h) + "&sm=" + String(val) + "&relay=" + String(Relay)+ "&id_arduino="+String(id_arduino);
@@ -155,31 +155,31 @@ void post_control(){
 void mode_control(String a){
   if(a=="0"){ //Mode default, otomatis menyiram bila lembap tanah < 40%
     digitalWrite(relay,HIGH); 
-    if (limit==99){
-         if (val < 30.00) {
-            digitalWrite(buzzer,HIGH);
-            delay(500);
-            digitalWrite(buzzer,LOW);
-            delay(500);
-            digitalWrite(buzzer,HIGH);
-            delay(500);
-            digitalWrite(buzzer,LOW);
-            relay1(1);
-            if (stat == 1){
-              stat = 0;
-            }
-        }else if(val >= 30.00 && stat == 0) {
-            digitalWrite(buzzer,HIGH);
-            delay(50);
-            digitalWrite(buzzer,LOW);
-            delay(50);
-            digitalWrite(buzzer,HIGH);
-            delay(50);
-            digitalWrite(buzzer,LOW);
-            relay1(0);
-            stat = 1;
+    //if (limit==99){
+     if (val < 30.00) {
+        digitalWrite(buzzer,HIGH);
+        delay(500);
+        digitalWrite(buzzer,LOW);
+        delay(500);
+        digitalWrite(buzzer,HIGH);
+        delay(500);
+        digitalWrite(buzzer,LOW);
+        relay1(1);
+        if (stat == 1){
+          stat = 0;
         }
-      }
+    }else if(val >= 30.00 && stat == 0) {
+        digitalWrite(buzzer,HIGH);
+        delay(50);
+        digitalWrite(buzzer,LOW);
+        delay(50);
+        digitalWrite(buzzer,HIGH);
+        delay(50);
+        digitalWrite(buzzer,LOW);
+        relay1(0);
+        stat = 1;
+    }
+     // }
     
     Serial.println("Mode 0");
   }else if(a=="1"){//mode terjadwal, sesuai timestamp pagi&sore nyiram
@@ -237,6 +237,14 @@ void lampu(){
     }
   }
 
+void data_sensor(){
+   smval = readSM();
+    val= map(smval,1023,165,0,100);
+    if(val<0)val=0;
+    else if (val>100)val=100;
+    h = dht.readHumidity();
+    t = dht.readTemperature();
+  }
 
 //-------------------SETUP MULAI------------------
   void setup() {
@@ -278,7 +286,6 @@ void lampu(){
         WiFi.begin(ssid, password);
         return;
     }
-    
     lampu();
 //Periksa perintah baru atau tidak------
     cek_control();
@@ -290,12 +297,14 @@ void lampu(){
     Serial.println( "Lembap Udara "+String(dht.readHumidity())+
     " Suhu "+String(dht.readTemperature()));
 //Aksi pompa-----
-    mode_control(curr_perintah);
+    
 //Loop-control-----
     delay(1000);
     limit++;
     Serial.println(limit);
     if(limit==100){
+      data_sensor();
+      mode_control(curr_perintah);
       post_sensor();//upload data to raspberry only happen once in 100 loop
       limit=0;
       digitalWrite(buzzer,HIGH);
