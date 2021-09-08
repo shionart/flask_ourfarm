@@ -63,7 +63,7 @@ class ControlController(object):
                 return node
             else:
                 return jsonify({'perintah': '5',
-                'status':'1'})
+                'status':'0'})
         elif (request.method == "POST"):
             try:
                 perintah = str(request.form["perintah"])
