@@ -156,31 +156,31 @@ void post_control(){
 void mode_control(String a){
   if(a=="0"){ //Mode default, otomatis menyiram bila lembap tanah < 40%
     digitalWrite(relay,HIGH); 
-    //if (limit==99){
-     if (val < 30.00) {
-        digitalWrite(buzzer,HIGH);
-        delay(500);
-        digitalWrite(buzzer,LOW);
-        delay(500);
-        digitalWrite(buzzer,HIGH);
-        delay(500);
-        digitalWrite(buzzer,LOW);
-        relay1(1);
-        if (stat == 1){
-          stat = 0;
-        }
-    }else if(val >= 30.00 && stat == 0) {
-        digitalWrite(buzzer,HIGH);
-        delay(50);
-        digitalWrite(buzzer,LOW);
-        delay(50);
-        digitalWrite(buzzer,HIGH);
-        delay(50);
-        digitalWrite(buzzer,LOW);
-        relay1(0);
-        stat = 1;
+    if (limit==100){
+       if (val < 30.00) {
+          digitalWrite(buzzer,HIGH);
+          delay(500);
+          digitalWrite(buzzer,LOW);
+          delay(500);
+          digitalWrite(buzzer,HIGH);
+          delay(500);
+          digitalWrite(buzzer,LOW);
+          relay1(1);
+          if (stat == 1){
+            stat = 0;
+          }
+      }else if(val >= 30.00 && stat == 0) {
+          digitalWrite(buzzer,HIGH);
+          delay(50);
+          digitalWrite(buzzer,LOW);
+          delay(50);
+          digitalWrite(buzzer,HIGH);
+          delay(50);
+          digitalWrite(buzzer,LOW);
+          relay1(0);
+          stat = 1;
+      }
     }
-     // }
     
     Serial.println("Mode 0");
   }else if(a=="1"){//mode terjadwal, sesuai timestamp pagi&sore nyiram
@@ -216,7 +216,7 @@ void cek_control(){
         perintah="0";
         post_control();
     } 
-    if(status_perintah="0" && perintah!= "null"){
+    if(status_perintah=="0" && perintah!= "null"){
       Serial.println("Baca perintah baru!");
       curr_perintah=perintah;
       status_perintah="1";
@@ -311,5 +311,8 @@ void data_sensor(){
       digitalWrite(buzzer,HIGH);
       delay(200);
       digitalWrite(buzzer,LOW);
-    }
+    }else{
+      mode_control(curr_perintah);
+      }
+    
   }
