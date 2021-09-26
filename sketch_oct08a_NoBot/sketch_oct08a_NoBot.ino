@@ -169,7 +169,7 @@ void mode_control(String a){
           if (stat == 1){
             stat = 0;
           }
-      }else if(val >= 30.00 && stat == 0) {
+      }else if(val >= 40.00 && stat == 0) {
           digitalWrite(buzzer,HIGH);
           delay(50);
           digitalWrite(buzzer,LOW);
@@ -240,7 +240,8 @@ void lampu(){
 
 void data_sensor(){
    smval = readSM();
-    val= map(smval,1023,165,0,100);
+    //val= map(smval,1023,165,0,100); // sm biasa
+    val = smval/10; //sm robotdyn
     if(val<0)val=0;
     else if (val>100)val=100;
     h = dht.readHumidity();
