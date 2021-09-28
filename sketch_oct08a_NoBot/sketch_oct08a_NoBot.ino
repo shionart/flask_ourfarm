@@ -114,7 +114,7 @@ int status_connect=1;
     Serial.println(payload);    //Print request response payload
     http.end();  //Close connection
     Serial.println("Post selesai");
-    Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val) + ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
+    Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val)+"|"+String(smval)+ ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
   }
   
 void post_control(){
@@ -216,7 +216,7 @@ void cek_control(){
         perintah="0";
         post_control();
     } 
-    if(status_perintah=="0" && perintah!= "null"){
+    if(status_perintah=="0" || perintah!= curr_perintah){
       Serial.println("Baca perintah baru!");
       curr_perintah=perintah;
       status_perintah="1";
