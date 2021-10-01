@@ -114,7 +114,7 @@ int status_connect=1;
     Serial.println(payload);    //Print request response payload
     http.end();  //Close connection
     Serial.println("Post selesai");
-    Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val) + ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
+    Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val)+"|"+String(smval)+ ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
   }
   
 void post_control(){
@@ -169,7 +169,7 @@ void mode_control(String a){
           if (stat == 1){
             stat = 0;
           }
-      }else if(val >= 30.00 && stat == 0) {
+      }else if(val >= 40.00 && stat == 0) {
           digitalWrite(buzzer,HIGH);
           delay(50);
           digitalWrite(buzzer,LOW);
@@ -216,7 +216,7 @@ void cek_control(){
         perintah="0";
         post_control();
     } 
-    if(status_perintah=="0" && perintah!= "null"){
+    if(status_perintah=="0" || perintah!= curr_perintah){
       Serial.println("Baca perintah baru!");
       curr_perintah=perintah;
       status_perintah="1";
@@ -240,7 +240,8 @@ void lampu(){
 
 void data_sensor(){
    smval = readSM();
-    val= map(smval,1023,165,0,100);
+    //val= map(smval,1023,165,0,100); // sm biasa
+    val = smval/10; //sm robotdyn
     if(val<0)val=0;
     else if (val>100)val=100;
     h = dht.readHumidity();
