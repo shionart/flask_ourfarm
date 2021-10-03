@@ -29,19 +29,19 @@ function generateCard(array){
                     '<div class="card-body">'+
                         '<div class="row no-gutters align-items-center">'+
                             '<div class="col-lg-5 col-md-12">'+
-                                '<div class="text-xs font-weight-bold text-success text-uppercase mb-1">'+id_arduino+
-                                    '<div class="h5 mb-0 font-weight-bold text-gray-800">'+nama+'<i class="fas fa-leaf"></i>'+
+                                '<div class="text-xs font-weight-bold text-gray-500 text-uppercase mb-1">'+id_arduino+
+                                    '<div class="h5 mb-0 font-weight-bold text-success">'+nama+' <i class="fas fa-seedling"></i>'+
                                     '</div>'+
                                 '</div>'+
-                                '<div id="'+id_arduino+'" class=" mb-0 text-gray-500">Update Terakhir : '+lastUpdated+
+                                '<div id="'+id_arduino+'" class=" mb-0 text-info">Update Terakhir : '+lastUpdated+
                                 '</div>'+
                             '</div>'+
                             '<div class="col-lg-1"></div>'+
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href='+page_dashboard(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Dasbor</a>'+
+                                '<a href='+page_dashboard(id_arduino)+' class="btn btn-primary btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Data <i class="fas fa-chart-line"></i></a>'+
                             '</div>'+
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg active col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Kontrol</a>'+
+                                '<a href='+page_control(id_arduino)+' class="btn btn-primary btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Kontrol <i class="fas fa-faucet"></i></a>'+
                             '</div>'+
                         '</div>'+
                     '</div>'+
