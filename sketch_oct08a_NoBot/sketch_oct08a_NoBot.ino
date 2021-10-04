@@ -23,15 +23,15 @@ WiFiClientSecure client;
 int led3=2; //cadangan
 int led1=14; //PIN LED INDIKATOR WIFI
 int stat = 0; //
-int led2=15; //PIN RELAY LED KE LDR
+int led2=15; //PIN RELAY LED controlled by ldr
 int relay=5; //PIN RELAY PUMP
 int buzzer=12; //PIN BUZZER
-float h=0; //var humidity di udara
-float t=0; //var temperature di udara
+float h=0; //VAR humidity di udara
+float t=0; //VAR temperature di udara
 int sm=0; // PIN ANALOG SOIL MOISTURE
 int Relay = 0; //VAR RELAY 0 mati, 1 nyala
 int limit=0; //VAR COUNTER
-int ldr = 13;
+int ldr = 13; //PIN LDR output
 int ldrvalue=0;
 
 int smval=0;
@@ -53,7 +53,7 @@ int status_connect=1;
   void relay1(int rly){
     if(rly==1){
     digitalWrite(relay,LOW);
-    delay(1000);
+    delay(2000);
     digitalWrite(relay,HIGH);
     }
     else if(rly==0){ 
@@ -77,14 +77,13 @@ int status_connect=1;
     HTTPClient http;
     http.useHTTP10(true);
     http.begin(control_page);
-//    Serial.println(control_page);
     http.addHeader("Content-Type", "application/json");
     http.GET();
     //Test
-//    String json=http.getString();
-//    Serial.println(json);
+    //String json=http.getString();
+    //Serial.println(json);
     //Parsing
-//  StaticJsonDocument<256> doc;
+    //StaticJsonDocument<256> doc;
     DynamicJsonDocument doc(2048); 
     deserializeJson(doc, http.getStream());   
     //Read result parsing
@@ -96,13 +95,6 @@ int status_connect=1;
   //upload data to raspberry server local
   void post_sensor(){
     HTTPClient http;    //Declare object of class HTTPClient
-    //Sensor
-//    smval = readSM();
-//    val= map(smval,1023,165,0,100);
-//    if(val<0)val=0;
-//    else if (val>100)val=100;
-//    h = dht.readHumidity();
-//    t = dht.readTemperature();
     //Post Data
     String postData;
     postData = "suhu=" + String(t) + "&lembap=" + String(h) + "&sm=" + String(val) + "&relay=" + String(Relay)+ "&id_arduino="+String(id_arduino);
@@ -121,7 +113,6 @@ void post_control(){
     HTTPClient http;    //Declare object of class HTTPClient
     //Post Data
     String postData;
-//     
     postData = "id_user="+String(id_user)+"&perintah=" + curr_perintah + "&status=" + status_perintah+ "&nama=" + String(nama);
     http.begin(control_page);              //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
@@ -157,7 +148,7 @@ void mode_control(String a){
   if(a=="0"){ //Mode default, otomatis menyiram bila lembap tanah < 40%
     digitalWrite(relay,HIGH); 
     if (limit==100){
-       if (val < 30.00) {
+       if (val < 40.00) {
           digitalWrite(buzzer,HIGH);
           delay(500);
           digitalWrite(buzzer,LOW);
@@ -169,7 +160,7 @@ void mode_control(String a){
           if (stat == 1){
             stat = 0;
           }
-      }else if(val >= 40.00 && stat == 0) {
+      }else if(val >= 50.00 && stat == 0) {
           digitalWrite(buzzer,HIGH);
           delay(50);
           digitalWrite(buzzer,LOW);
@@ -198,14 +189,11 @@ void cek_control(){
   /*
    * bila belum ada node, return error, tapi di sini perintah jadi 0???
   */
-//  Serial.println("perintah :"+perintah);
-//  Serial.println("status :"+status_perintah);
-  if(perintah=="null" || handler){
+  if(perintah=="null" || handler){//tidak ada koneksi
     perintah="0";
     status_perintah="1";
     handler=true;
-    if(limit % 10 ==0){
-//      get_control();
+    if(limit % 10 ==0){ //lakukan pengecekan koneksi setiap 10 loop
       handler=false;}
   }else{
     get_control();  
@@ -227,6 +215,7 @@ void cek_control(){
   }
 }
 
+//ldr control led
 void lampu(){
   ldrvalue = digitalRead(ldr);
     Serial.println(ldrvalue);
@@ -238,6 +227,7 @@ void lampu(){
     }
   }
 
+//fetch data from sensor
 void data_sensor(){
    smval = readSM();
     //val= map(smval,1023,165,0,100); // sm biasa
