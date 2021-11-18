@@ -86,6 +86,26 @@ class Control(object):
                 print("MySql ditutup")
         return "selesai"
 
+    def delete_control(self):
+        """
+        Fungsi menghapus nodes
+        """
+        try:
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute("DELETE FROM control WHERE id_arduino=%s",[self.id_arduino])
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            print(e)
+        finally :
+            if conn:
+                cur.close()
+                conn.close()
+    
+                
+        
+
     def queue_to_control(self):
         """
         untuk stack perubahan control jika response tidak ok

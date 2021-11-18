@@ -52,6 +52,9 @@ class Sensor(object):
             self.id_arduino = None
     
     def insert_to_sensor(self):
+        """
+        Memasukkan data Sensor dari Arduino, jika Arduino belum pernah terdaftar maka melakukan pendaftaran otomatis.
+        """
         conn = connect_db()
         baca_suhu=self.suhu
         baca_lembap=self.kelembapan
@@ -82,6 +85,22 @@ class Sensor(object):
                 print("MySql ditutup")
         return "selesai"
 
+    def delete_sensor_arduino(self):
+        """
+        Fungsi menghapus semua data sensor per Id_arduino
+        """
+        conn = connect_db()
+        try:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM sensor WHERE id_arduino=%s",[self.id_arduino])
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            print(e)
+        finally:
+            if (conn):
+                cur.close()
+                conn.close()
 
     def read_sensor(self):
         """

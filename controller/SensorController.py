@@ -35,7 +35,10 @@ class SensorController(object):
         else:
             self.sensor = Sensor()
     
-    def input_data(self):
+    def controller_api_data(self):
+        """
+        controller cud api data sensor arduino
+        """
         self.sensor = Sensor(suhu = 0.0, 
             kelembapan = 0.0,
             soil_moist = 0.0,
@@ -52,6 +55,10 @@ class SensorController(object):
                 s.id_arduino = str(request.form["id_arduino"])
                 s.insert_to_sensor()
                 return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(s.suhu, s.kelembapan, s.soil_moist, s.relay, s.id_arduino)
+            elif request.method=="DELETE" :
+                s.id_arduino = str(request.form["id_arduino"])
+                s.delete_sensor_arduino()
+                return "data {} deleted".format(s.id_arduino)
         except Exception as e:
             return "error {}".format(e)
 

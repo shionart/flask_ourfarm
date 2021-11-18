@@ -78,7 +78,10 @@ class ControlController(object):
                 return "perintah: {}, status: {}, id: {}, nama:{}".format(perintah, status, id, nama)
             except Exception as e:
                 return "error route {}".format(e)
-
+        elif request.method=="DELETE":
+            c.id_arduino = str(request.form["id_arduino"])
+            c.delete_control()
+            return "node {} deleted".format(c.id_arduino)
         
         #TODO : buat routing untuk queue control
     def api_queue_control(self):
