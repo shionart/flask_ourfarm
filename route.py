@@ -34,14 +34,14 @@ def logout():
 @main.route('/register', methods=['GET'])
 def register():
     """
-    Route untuk register methods = GET
+    Route untuk register akun methods = GET
     """
     return UserController().register()
 #-----------------User API--------------------------
 @main.route('/post_raspi', methods=["POST"])
 def post_raspi():
     """
-    Route API untuk POST data dari register
+    Route API untuk POST data dari register akun
     """
     return UserController().post_raspi()
 
@@ -59,7 +59,7 @@ def dashboard(id):
 @login_required
 def control(id):
     """
-    Route untuk control pompa node <id>
+    Route untuk LAMAN control pompa node <id>
     """
     return ControlController().control_page(id)
 
@@ -67,14 +67,14 @@ def control(id):
 @login_required
 def list_control():
     """
-    Route untuk webpage list node
+    Route untuk LAMAN list node
     """
     return ControlController().list_control()
 #--------------Control API--------------------
 @main.route('/get_control/<id>', methods=["GET"])
 def get_data_control(id):
     """
-    Route API GET untuk list arduino dari sebuah user <id>
+    Route API GET untuk semua list arduino dari sebuah user <id>
     """
     return ControlController().get_data_control(id)
 
@@ -108,12 +108,15 @@ def api_notif(id):
         return dashboard(id=id)     
 
 #--------------Sensor API-------------------
-@main.route('/input', methods=["POST"])
-def input_data():
+@main.route('/input', methods=["POST","DELETE"])
+def cud_api_data():
     """
-    Route API untuk input data sensor 
+    Route API untuk input data sensor dan Registrasi Node pertama 
     """
-    return SensorController().input_data()
+    if request.method=="DELETE":
+        ControlController().api_data_node("")
+    return SensorController().controller_api_data() 
+    
 
 @main.route('/get/<id>', methods=["GET"])
 def get_data_api(id):
