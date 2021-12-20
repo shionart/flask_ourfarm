@@ -1,4 +1,5 @@
 from flask.globals import request
+from flask import abort, redirect, url_for
 from controller.SensorController import SensorController
 from controller.ControlController import ControlController
 from controller.UserController import UserController
@@ -115,7 +116,8 @@ def cud_api_data():
     """
     if request.method=="DELETE":
         ControlController().api_data_node("")
-    return SensorController().controller_api_data() 
+    SensorController().controller_api_data() 
+    return redirect(url_for('list_control'))
     
 
 @main.route('/get/<id>', methods=["GET"])

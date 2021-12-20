@@ -33,16 +33,20 @@ function generateCard(array){
                                     '<div class="h5 mb-0 font-weight-bold text-success">'+nama+' <i class="fas fa-seedling"></i>'+
                                     '</div>'+
                                 '</div>'+
-                                '<div id="'+id_arduino+'" class=" mb-0 text-info">Update Terakhir : '+lastUpdated+
+                                '<div id="'+id_arduino+'" class=" mb-0 text-gray-500">Update Terakhir : '+lastUpdated+
                                 '</div>'+
                             '</div>'+
-                            '<div class="col-lg-1"></div>'+
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href='+page_dashboard(id_arduino)+' class="btn btn-primary btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Data <i class="fas fa-chart-line"></i></a>'+
+                                '<a href='+page_dashboard(id_arduino)+' class="btn btn-info btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Data <i class="fas fa-chart-line"></i></a>'+
                             '</div>'+
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href='+page_control(id_arduino)+' class="btn btn-primary btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Kontrol <i class="fas fa-faucet"></i></a>'+
+                                '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Kontrol <i class="fas fa-faucet"></i></a>'+
                             '</div>'+
+                            '<div class="col-lg-1 col-md-12 col-sm-12 align-self-center">'+
+                                '<div class="row justify-content-center p-2">'+
+                                '<form action="'+post_delete_node()+'" method="post">'+
+                                '<input name="id_arduino" id="id_arduino" value="'+id_arduino+'" hidden="true"></input>'+
+                                '<button class="btn btn-warning btn-circle" type="submit"> <i class="fas fa-trash"></i></button></div></div>'+
                         '</div>'+
                     '</div>'+
                 '</div>'+
