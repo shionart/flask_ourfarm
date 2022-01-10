@@ -46,7 +46,19 @@
     }
 
     function post_delete_node(){
-      return "{{url_for('cud_api_data')}}";
+      let nameOfFunction = this[event.target.name];
+      let arg1 = event.target.getAttribute('data-arg1');
+    
+      $.ajax({
+          url: "{{url_for('cud_api_data')}}",
+          type: 'DELETE',
+          data: {id_arduino:arg1},
+          global:false
+          // success: function(result) {
+          //     // Do something with the result
+          // }
+      });
+      location.reload();
     }
     
   </script>

@@ -82,7 +82,7 @@ def get_data_control(id):
 @main.route('/api_control/<id>', methods=["GET", "POST"])
 def api_data_node(id):
     """
-    Route API untuk control hanya pada satu node
+    Route API untuk control hanya pada satu node & Registrasi Device
     """
     return ControlController().api_data_node(id)
 
@@ -112,12 +112,12 @@ def api_notif(id):
 @main.route('/input', methods=["POST","DELETE"])
 def cud_api_data():
     """
-    Route API untuk input data sensor dan Registrasi Node pertama 
+    Route API untuk input data sensor  
     """
     if request.method=="DELETE":
         ControlController().api_data_node("")
     SensorController().controller_api_data() 
-    return redirect(url_for('list_control'))
+    return ""#redirect(url_for('list_control'))
     
 
 @main.route('/get/<id>', methods=["GET"])
