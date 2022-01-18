@@ -44,9 +44,11 @@ function generateCard(array){
                             '</div>'+
                             '<div class="col-lg-1 col-md-12 col-sm-12 align-self-center">'+
                                 '<div class="row justify-content-center p-2">'+
-                                '<form action="'+post_delete_node()+'" method="post">'+
-                                '<input name="id_arduino" id="id_arduino" value="'+id_arduino+'" hidden="true"></input>'+
-                                '<button class="btn btn-warning btn-circle" type="submit"> <i class="fas fa-trash"></i></button></div></div>'+
+                                '<button onclick="post_delete_node()" data-arg1="'+id_arduino+'" class="btn btn-warning btn-circle btn-sm"> <i class="fas fa-trash"></i></button></div></div>'+
+                                // '<button onclick="post_delete_node('+id_arduino+')" class="btn btn-warning btn-circle btn-sm"> <i class="fas fa-trash"></i></button></div></div>'+
+                                // '<form action="'+post_delete_node()+'" method="DELETE">'+
+                                // '<input name="id_arduino" id="id_arduino" value="'+id_arduino+'" hidden="true"></input>'+
+                                // '<button class="btn btn-warning btn-circle" type="submit"> <i class="fas fa-trash"></i></button></div></div>'+
                         '</div>'+
                     '</div>'+
                 '</div>'+
@@ -69,6 +71,18 @@ function getControl(){
         setTimeout(getControl,10000);
         if (isi==null||isi[0]==null) {
             console.log('data kosong');
+            var a = 
+            '<div class="col-md-12 animated--fade-in">'+
+              '<h3 class="text-center mt-5">'+
+               '<b>Menunggu perangkat tersambung . . . </b>'+
+              '</h3>'+
+              '<div class="d-flex justify-content-center">'+
+                '<div class="spinner-grow text-success" role="status">'+
+                  '<span class="sr-only">Loading...</span>'+
+                '</div>'+
+              '</div>'+
+            '</div>';
+            $("#listnodes").html(a);
         }
         else{
             $("#listnodes").html(generateCard(isi));
