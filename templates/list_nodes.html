@@ -50,7 +50,7 @@
       let arg1 = event.target.getAttribute('data-arg1');
     
       $.ajax({
-          url: "{{url_for('cud_api_data')}}",
+          url: "{{url_for('delete_api_data')}}",
           type: 'DELETE',
           data: {id_arduino:arg1},
           global:false

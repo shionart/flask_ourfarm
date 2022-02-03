@@ -16,8 +16,8 @@ char ip_address[]="192.168.1.50";
 char nama[]="front";
 char id_arduino[]="48C4D907E4604B10AC65";
 char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
-String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino);
-String raspi_input= "http://"+String(ip_address)+":5000/input";
+String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino); //url daftar device
+String raspi_input= "http://"+String(ip_address)+":5000/input"; //url input data dari sensor
 
 WiFiClientSecure client;
 int led3=2; //cadangan
@@ -292,18 +292,17 @@ void data_sensor(){
     
 //Loop-control-----
     delay(1000);
-    limit++;
-    Serial.println(limit);
-    if(limit==100){
+    if(limit==100 || limit==0){
       data_sensor();
       mode_control(curr_perintah);
       post_sensor();//upload data to raspberry only happen once in 100 loop
-      limit=0;
+      limit=1;
       digitalWrite(buzzer,HIGH);
       delay(200);
       digitalWrite(buzzer,LOW);
     }else{
       mode_control(curr_perintah);
       }
-    
+    Serial.println(limit);
+    limit++;
   }

@@ -13,6 +13,11 @@ function generateCard2(array){
       var soil_moist = array[a]['soil_moist'];
       var time = array[a]['time'];
       var nama = array[a]['nama'];
+      var suhu = array[a]['suhu'];
+      var info = 'Kelembapan tanah berada di '+soil_moist+'%';
+      if (suhu==0) {
+        info ='Sensor suhu mengalami masalah!'
+      } 
       all+='<form method="post" action="'+notif_dashboard(id_arduino)+'" class="inline-notif">'+
         '<button type="submit" class="link-button-notif dropdown-item d-flex align-items-center">'+
         '<div class="mr-3">'+
@@ -22,7 +27,7 @@ function generateCard2(array){
        '</div>'+
        '<div>'+
          '<div class="small text-gray-500" id="">'+time+'</div>'+
-         'Perangkat <b>'+nama+'</b> : Kelembapan tanah berada di '+soil_moist+'%'+
+         'Perangkat <b>'+nama+'</b>: '+info+
        '</div>'+
         '</button></form>';
     //     all +='<a class="dropdown-item d-flex align-items-center" href="'+notif_dashboard(id_arduino)+'">'+

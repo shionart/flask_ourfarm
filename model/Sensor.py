@@ -92,8 +92,10 @@ class Sensor(object):
         conn = connect_db()
         try:
             cur = conn.cursor()
-            cur.execute("DELETE FROM sensor WHERE id_arduino=%s",[self.id_arduino])
+            query = "DELETE FROM sensor WHERE id_arduino=%s "
+            cur.execute(query,(self.id_arduino, ))
             conn.commit()
+            print("delete sensor on device worked : "+query+self.id_arduino)
         except Exception as e:
             conn.rollback()
             print(e)

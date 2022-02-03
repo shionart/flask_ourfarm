@@ -109,15 +109,22 @@ def api_notif(id):
         return dashboard(id=id)     
 
 #--------------Sensor API-------------------
-@main.route('/input', methods=["POST","DELETE"])
+@main.route('/input', methods=["POST"])
 def cud_api_data():
     """
     Route API untuk input data sensor  
     """
-    if request.method=="DELETE":
-        ControlController().api_data_node("")
     SensorController().controller_api_data() 
-    return ""#redirect(url_for('list_control'))
+    return "success on "+request.method#redirect(url_for('list_control'))
+
+@main.route('/deleteDevice', methods=["DELETE"])
+def delete_api_data():
+    """
+    Route API untuk delete data sensor & device
+    """
+    ControlController().api_data_node("")
+    SensorController().controller_api_data() 
+    return "success on "+request.method#redirect(url_for('list_control'))
     
 
 @main.route('/get/<id>', methods=["GET"])

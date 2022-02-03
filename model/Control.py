@@ -1,3 +1,4 @@
+import logging
 from config.db import connect_db
 import requests
 
@@ -93,11 +94,15 @@ class Control(object):
         try:
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute("DELETE FROM control WHERE id_arduino=%s",[self.id_arduino])
+            query = "DELETE FROM control WHERE id_arduino=%s "
+            cur.execute(query,(self.id_arduino, ))
             conn.commit()
+            print("delete device worked : "+query+self.id_arduino)
+            # logging.info("Delete on "+self.id_arduino+" committed")
         except Exception as e:
             conn.rollback()
             print(e)
+            # logging.error(e)
         finally :
             if conn:
                 cur.close()
@@ -239,7 +244,7 @@ class Control(object):
         try:
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute("select a.nama, a.id_arduino, date_format(b.time,'%%a, %%b %%e %%Y %%H:%%i') as time, b.soil_moist, b.id as id_sensor from control a "+
+            cur.execute("select a.nama, a.id_arduino, date_format(b.time,'%%a, %%b %%e %%Y %%H:%%i') as time, b.soil_moist, b.id as id_sensor, b.suhu, b.kelembapan from control a "+
                         "left join ("+
                         "select * from sensor c where c.time in "
                         "(select max(c.time) from sensor c where c.notif=1 group by c.id_arduino)) "+
