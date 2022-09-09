@@ -33,7 +33,7 @@ class Control(object):
         """
         conn = connect_db()
         cur = conn.cursor()
-        cur.execute("SELECT * from control a left join (select c.id_arduino, date_format(max(c.time),'%%a,%%b %%e %%Y %%H:%%i') time from sensor c group by c.id_arduino) b on a.id_arduino=b.id_arduino where a.id_user=%s",[self.id_user])
+        cur.execute("SELECT a.*, b.time from control a left join (select c.id_arduino, date_format(max(c.time),'%%a,%%b %%e %%Y %%H:%%i') time from sensor c group by c.id_arduino) b on a.id_arduino=b.id_arduino where a.id_user=%s",[self.id_user])
         nodes = cur.fetchall()
         return nodes
 
