@@ -175,7 +175,7 @@ class Control(object):
         Request Get Control main web\n
         Mengambil data control terbaru dari main web.
         """
-        url = "https://bwcr.rizaldiariif.com/public/api/control/"+self.id_user+"/garden"
+        url = "https:///bwcr.insightdata.xyz/com/public/api/control/"+self.id_user+"/garden"
         devid = {'deviceId': self.id_arduino}
         ambil = requests.get(url, params=devid, headers={
                              'User-Agent': 'Mozilla/5.0'})
@@ -212,7 +212,7 @@ class Control(object):
         """
         cek =self.read_queue_control()
         
-        url = "https://bwcr.rizaldiariif.com/public/api/control/update/"+self.id_user+"/garden/"+self.id_arduino
+        url = "http://bwcr.insightdata.xyz//public/api/control/update/"+self.id_user+"/garden/"+self.id_arduino
         perintah = {'nilai': self.perintah}
         ambil = requests.get(url, params=perintah, headers={
                              'User-Agent': 'Mozilla/5.0'})

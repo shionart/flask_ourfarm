@@ -110,7 +110,7 @@
     const api_control_url="{{url_for('api_data_node',id=data.id_arduino)}}";
     const api_queue_url="{{url_for('api_queue_control')}}";
     const perintah={{data.perintah}};
-    const sync_control_get="https://bwcr.rizaldiariif.com/public/api/control/update/"+"{{data.id_user}}"+"/garden/"+id_arduino;
+    const sync_control_get="http://bwcr.insightdata.xyz/public/api/control/update/"+"{{data.id_user}}"+"/garden/"+id_arduino;
   </script>
   <script src="{{url_for('static', filename='js/custom/control_node.js')}}"></script>
   

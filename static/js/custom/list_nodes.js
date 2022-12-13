@@ -28,7 +28,7 @@ function generateCard(array){
                             '</div>';
                             } else {
                                 all+='<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href="" class="btn btn-info.disabled btn-lg col-lg-12 col-md-12 col-sm-12" >No Data <i class="fas fa-chart-line"></i></a>'+
+                                '<a class="btn btn-info.disabled btn-lg col-lg-12 col-md-12 col-sm-12" >No Data <i class="fas fa-chart-line"></i></a>'+
                             '</div>';
                             }
                             all+=
