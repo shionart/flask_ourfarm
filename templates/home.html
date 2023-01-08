@@ -6,7 +6,7 @@
   {% block header%}Beranda{% endblock %}
   <div>
   {% block content %}
-    
+   
     <div class="row mt-2 card shadow">
       <h1 class="text-center card-header text-white bg-success">
         <b>Panduan Memulai</b>
@@ -17,12 +17,12 @@
             Hubungkan perangkat ini dengan WiFi
           </li>
           <li>
-            Kunjungi <b><a rel="noopener noreferrer" href="https://bwcr.insightdata.xyz/public/login" target="_blank">bwcr.insightdata.xyz</a></b> untuk melakukan <b>Registrasi</b> 
+            Kunjungi <b><a rel="noopener noreferrer" href="https://bwcr.insightdata.xyz" target="_blank">bwcr.insightdata.xyz</a></b> untuk melakukan <b>Registrasi</b> 
           </li> 
-          <li>Tambah Nodes di menu <b><a rel="noopener noreferrer" href="https://bwcr.insightdata.xyz/public/device" target="_blank">Arduino - Tambah Perangkat</a></b>   dengan keterangan sebagai berikut : <br>
+          <li>Tambah Perangkat jenis <b>"Taman"</b> di menu <b><a rel="noopener noreferrer" href="https://bwcr.insightdata.xyz/device" target="_blank">Arduino - Tambah Perangkat</a></b>   dengan keterangan sebagai berikut : <br>
             <code> 
             <ul> 
-              <li>IP Address : <b><mark>{{ip}}</mark></b> </li>
+              <li>Alamat IP : <b><mark>{{ip}}</mark></b> </li>
               <li>Device Type : <b><mark>Garden</mark></b></li>
               <li>SSID WiFi : <b><mark>"nama WiFi anda yang tersambung dengan perangkat ini"</mark></b></li>
               <li>Password WiFi : <b><mark>"password WiFi anda tersambung dengan perangkat ini"</mark></b></li>
@@ -40,7 +40,16 @@
                 </div>
                 <div class="col-lg-2 pt-1">
                   <button id="change" class="btn btn-outline-success">Ubah User ID</button>
-                  <button id="save" class="btn btn-outline-success" hidden="true">Simpan</button>
+                  <button id="save" class="btn btn-outline-success" hidden="true">Simpan </button>
+                </div>
+                <!-- test -->
+                <div class="toast border-0 bg-transparent shadow-none" role="alert" >
+                  <a href="#" class="btn btn-success btn-circle">
+                    <i class="fas fa-check"></i>
+                </a>
+                  <!-- <div class="toast-body alert-success pt-1">
+                    User ID Tersimpan. 
+                  </div> -->
                 </div>
               </div>
           </li>
@@ -52,7 +61,7 @@
       
     </div>
     <!-- Conten -->
-    
+     
   
     
   {% endblock content %}

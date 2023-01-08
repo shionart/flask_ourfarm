@@ -1,3 +1,6 @@
+$(document).ready(function(){
+  $('.toast').toast();
+});
 $("#change").click(
     function(){
         $("#userID").removeAttr("readonly");
@@ -13,6 +16,7 @@ $("#save").click(
         var key = $("#userID").val().trim();
         $("#userID").val(key);
         postUserid(email,key);
+        $('.toast').toast('show');
 
     }
 );

@@ -27,7 +27,7 @@ function generateCard(array){
             nama="nama perangkat";
         }
         all +=  
-            '<div class="col-xl-6 col-md-6 col-sm-12 mb-4">'+
+            '<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">'+
                 '<div class="card border-left-success shadow py-2">'+
                     '<div class="card-body">'+
                         '<div class="row no-gutters align-items-center">'+
@@ -45,12 +45,12 @@ function generateCard(array){
                             '</div>';
                             } else {
                                 all+='<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a class="btn btn-info.disabled btn-lg col-lg-12 col-md-12 col-sm-12" >No Data <i class="fas fa-chart-line"></i></a>'+
+                                '<a class="btn btn-info.disabled btn-lg col-lg-12 col-md-12 col-sm-12" >Data <i class="fas fa-chart-line"></i></a>'+
                             '</div>';
                             }
                             all+=
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Kontrol <i class="fas fa-faucet"></i></a>'+
+                                '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Pompa <i class="fas fa-faucet"></i></a>'+
                             '</div>'+
                             '<div class="col-lg-1 col-md-12 col-sm-12 align-self-center">'+
                                 '<div class="row justify-content-center p-2">'+
