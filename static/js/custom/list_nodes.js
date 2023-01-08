@@ -1,5 +1,22 @@
 var isi=[];
 
+function post_delete_node(id_arduino){
+    // let nameOfFunction = this[event.target.name];
+    // console.log("target.name + "+nameOfFunction);
+    // let arg1 = event.target.getAttribute('data-arg1');
+    // console.log("js + "+arg1);
+    $.ajax({
+        url: delete_api_url,
+        type: 'DELETE',
+        data: {id_arduino:String(id_arduino)},
+        global:false
+        // success: function(result) {
+        //     // Do something with the result
+        // }
+    });
+    location.reload();
+  }
+
 function generateCard(array){
     var all="";
     for(a in array){
@@ -37,7 +54,7 @@ function generateCard(array){
                             '</div>'+
                             '<div class="col-lg-1 col-md-12 col-sm-12 align-self-center">'+
                                 '<div class="row justify-content-center p-2">'+
-                                '<button onclick="post_delete_node()" data-arg1="'+id_arduino+'" class="btn btn-warning btn-circle btn-sm"> <i class="fas fa-trash"></i></button></div></div>'+
+                                '<button onclick=post_delete_node("'+String(id_arduino)+'")  class="btn btn-warning btn-circle btn-sm"> <i class="fas fa-trash"></i></button></div></div>'+
                                
                         '</div>'+
                     '</div>'+

@@ -17,7 +17,7 @@ class Sensor(object):
         - id_arduino
     -------
     Function :
-        - insert_to_control()
+        - insert_to_sensor()
         - read_sensor()
         - read_yesterday()
         - mean_yesterday(sensors)
@@ -95,7 +95,6 @@ class Sensor(object):
             query = "DELETE FROM sensor WHERE id_arduino=%s "
             cur.execute(query,(self.id_arduino, ))
             conn.commit()
-            print("delete sensor on device worked : "+query+self.id_arduino)
         except Exception as e:
             conn.rollback()
             print(e)

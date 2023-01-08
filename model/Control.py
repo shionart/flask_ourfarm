@@ -95,9 +95,8 @@ class Control(object):
             conn = connect_db()
             cur = conn.cursor()
             query = "DELETE FROM control WHERE id_arduino=%s "
-            cur.execute(query,(self.id_arduino, ))
+            cur.execute("DELETE FROM control WHERE id_arduino=%s",[self.id_arduino])
             conn.commit()
-            print("delete device worked : "+query+self.id_arduino)
             # logging.info("Delete on "+self.id_arduino+" committed")
         except Exception as e:
             conn.rollback()

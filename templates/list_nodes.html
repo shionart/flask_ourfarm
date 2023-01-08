@@ -45,21 +45,7 @@
       return "{{url_for('control',id='')}}"+id;
     }
 
-    function post_delete_node(){
-      let nameOfFunction = this[event.target.name];
-      let arg1 = event.target.getAttribute('data-arg1');
-    
-      $.ajax({
-          url: "{{url_for('delete_api_data')}}",
-          type: 'DELETE',
-          data: {id_arduino:arg1},
-          global:false
-          // success: function(result) {
-          //     // Do something with the result
-          // }
-      });
-      location.reload();
-    }
+    var delete_api_url = "{{url_for('delete_api_data')}}";
     
   </script>
   <!-- Page level plugins -->
