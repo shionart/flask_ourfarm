@@ -9,7 +9,7 @@
         {% block content %}
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">{{data.nama}} - {{data.id_arduino}} |
-            <a href="{{url_for('dashboard', id=data.id_arduino)}}" class="btn btn-success btn-icon-split">
+            <a href="{{url_for('dashboard', arduinoid=data.id_arduino)}}" class="btn btn-success btn-icon-split">
               <span class="icon text-white-50">
                 <i class="fas fa-arrow-right"></i>
               </span>
@@ -107,9 +107,9 @@
          */
     const id_arduino="{{data.id_arduino}}";
     const id_user="{{data.id_user}}";
-    const api_control_url="{{url_for('api_data_node',id=data.id_arduino)}}";
+    const api_control_url="{{url_for('api_control',arduinoid=data.id_arduino)}}";
     const api_queue_url="{{url_for('api_queue_control')}}";
-    const perintah={{data.perintah}};
+    const perintah=parseInt("{{data.perintah}}");
     const sync_control_get="http://bwcr.insightdata.xyz/public/api/control/update/"+"{{data.id_user}}"+"/garden/"+id_arduino;
   </script>
   <script src="{{url_for('static', filename='js/custom/control_node.js')}}"></script>

@@ -23,17 +23,17 @@ class Schedule():
     
     def getListControl(self):
         """
-        Fungsi untuk mengecek secara berkala Control pada tiap Nodes ke Main Web
+        Fungsi untuk mengecek secara berkala Control pada tiap Control ke Main Web
         """
         print("memulai getlistcontrol")
         try:
             a = Control().read_controls() 
-            if a!=None:#cek local ada nodes atau tidak
+            if a!=None:#cek local ada Control atau tidak
                 for control in a:
                     # print("Satuan control")
                     #Membuat obj control tiap baris pada table control
                     c = Control(id_arduino=control['id_arduino'], id_user=control['id_user'])
-                    c.getControl() #Ngambil data terbaru
+                    c.sync_get_control()() #Ngambil data terbaru
             else:
                 print("KOSONG")
         except Exception as e:

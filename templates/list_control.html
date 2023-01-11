@@ -11,7 +11,7 @@
         <div>
         {% block content %}
           
-          <div  id="listnodes" class="row">
+          <div  id="listcontrol" class="row">
             <div class="col-md-12 animated--fade-in">
               <h3 class="text-center mt-5">
                <b>Menunggu perangkat tersambung . . . </b>
@@ -36,13 +36,13 @@
   {% block scripts %}
   <!-- Passing data to JS -->
   <script>
-    var data_control="{{url_for('get_data_control',id='')}}"+"{{session['iduser']}}";
+    var url_list_control="{{url_for('api_list_control',userid='')}}"+"{{session['iduser']}}";
     
-    function page_dashboard(id){
-      return "{{url_for('dashboard',id='')}}"+id;
+    function page_dashboard(arduinoid){
+      return "{{url_for('dashboard',arduinoid='')}}"+arduinoid;
     }
-    function page_control(id){
-      return "{{url_for('control',id='')}}"+id;
+    function page_control(arduinoid){
+      return "{{url_for('page_control',arduinoid='')}}"+arduinoid;
     }
 
     var delete_api_url = "{{url_for('delete_api_data')}}";
@@ -52,5 +52,5 @@
   
   <!-- Page level custom scripts -->
   
-  <script src="{{url_for('static', filename='js/custom/list_nodes.js')}}"></script>
+  <script src="{{url_for('static', filename='js/custom/list_control.js')}}"></script>
   {% endblock scripts %}

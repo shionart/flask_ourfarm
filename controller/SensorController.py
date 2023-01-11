@@ -63,7 +63,7 @@ class SensorController(object):
             return "error {}".format(e)
 
     
-    def get_data_api(self, id):
+    def api_sensor(self, id):
         self.sensor = Sensor(id_arduino=id)
         s = self.sensor
         sensor, curr_data, bar_data = s.read_sensor()

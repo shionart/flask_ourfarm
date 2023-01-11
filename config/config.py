@@ -3,7 +3,6 @@ from flask import Flask
 from flask_cors import CORS
 import socket
 import platform
-import logging
 import os
 
 load_dotenv()
@@ -11,16 +10,9 @@ load_dotenv()
 main = Flask(__name__,template_folder='../templates', static_folder='../static')
 cors = CORS(main)
 
-# scheduler = BackgroundScheduler()
-
-# main.secret_key="081213342244"
 main.secret_key=os.getenv('SECRET_KEY')
-# main.env="development" #buat # adjust as appropriate
 main.env=os.getenv('ENV')
-# main.debug=True
 main.debug=os.getenv('DEBUG')
-# main.config.from_envvar('env')
-# main.config
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
 ops = platform.system()

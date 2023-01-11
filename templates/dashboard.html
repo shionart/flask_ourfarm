@@ -8,7 +8,7 @@
         {% block content %}
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">{{info.nama}} - {{info.id_arduino}} |
-            <a href="{{url_for('control', id=info.id_arduino)}}" class="btn btn-success btn-icon-split">
+            <a href="{{url_for('page_control', arduinoid=info.id_arduino)}}" class="btn btn-success btn-icon-split">
               <span class="icon text-white-50">
                 <i class="fas fa-arrow-right"></i>
               </span>
@@ -293,7 +293,7 @@
 
   <!-- Passing data ke JS -->
   <script>
-    var data_id="{{url_for('get_data_api', id=info.id_arduino)}}" 
+    var data_id="{{url_for('api_sensor', arduinoid=info.id_arduino)}}" 
   </script>
   <!-- Page level plugins -->
   <script src="{{url_for('static', filename='vendor/chart.js/Chart.min.js')}}"></script>

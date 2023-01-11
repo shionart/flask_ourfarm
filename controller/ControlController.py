@@ -37,23 +37,25 @@ class ControlController(object):
         info = c.read_control()
         return render_template('dashboard.html', info=info)
 
-    def control_page(self, id):
+    def page_control(self, id):
         c = self.control
         c.id_arduino =id
         perintah = c.read_control()
         return render_template('control.html', data=perintah)
 
-    def list_control(self):
-        return render_template('list_nodes.html')
+    def page_list_control(self):
+        return render_template('list_control.html')
 
-    def get_data_control(self, id_user):
+    def api_list_control(self, id_user):
+        """
+        mapping hasil query list control per user ke JSON
+        """
         c = self.control
         c.id_user=id_user
-        nodes = c.read_controls()
-        # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
-        return jsonify({'nodes': nodes})
+        list_control = c.read_controls()
+        return jsonify({'list_control': list_control})
 
-    def api_data_node(self, id):
+    def api_control(self, id):
         c = self.control
         c.id_arduino = id
         if(request.method == "GET"):

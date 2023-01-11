@@ -69,7 +69,7 @@
           <span>Beranda</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url_for('list_control')}}">
+        <a class="nav-link" href="{{url_for('page_list_control')}}">
           <i class="fas fa-fw fa-cogs"></i>
           <span>Daftar Perangkat</span></a>
       </li>
@@ -231,7 +231,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="{{url_for('post_raspi')}}" method="post">
+          <form action="{{url_for('register')}}" method="post">
             <input type="hidden" name="email" value="{{session['email']}}">
           <div class="col-sm-12 mb-3 mb-sm-1">
             <label for="password">Password Baru : </label>
@@ -260,9 +260,9 @@
 
   <!-- Custom scripts for all pages-->
   <script>
-    const url_notified ="{{url_for('api_notif',id='')}}"+"{{session['iduser']}}";
+    const url_notified ="{{url_for('api_notif',userid='')}}"+"{{session['iduser']}}";
     function notif_dashboard(id){
-      return "{{url_for('api_notif',id='')}}"+id;
+      return "{{url_for('api_notif',userid='')}}"+id;
     }
   </script>
   <script src="{{url_for('static', filename='js/sb-admin-2.min.js')}}"></script>

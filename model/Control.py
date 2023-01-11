@@ -1,4 +1,3 @@
-import logging
 from config.db import connect_db
 import requests
 
@@ -34,8 +33,8 @@ class Control(object):
         conn = connect_db()
         cur = conn.cursor()
         cur.execute("SELECT a.*, b.time from control a left join (select c.id_arduino, date_format(max(c.time),'%%a,%%b %%e %%Y %%H:%%i') time from sensor c group by c.id_arduino) b on a.id_arduino=b.id_arduino where a.id_user=%s",[self.id_user])
-        nodes = cur.fetchall()
-        return nodes
+        list_control = cur.fetchall()
+        return list_control
 
     def read_control(self):
         conn = connect_db()
@@ -89,7 +88,7 @@ class Control(object):
 
     def delete_control(self):
         """
-        Fungsi menghapus nodes
+        Fungsi menghapus Control
         """
         try:
             conn = connect_db()
@@ -97,19 +96,14 @@ class Control(object):
             query = "DELETE FROM control WHERE id_arduino=%s "
             cur.execute("DELETE FROM control WHERE id_arduino=%s",[self.id_arduino])
             conn.commit()
-            # logging.info("Delete on "+self.id_arduino+" committed")
         except Exception as e:
             conn.rollback()
             print(e)
-            # logging.error(e)
         finally :
             if conn:
                 cur.close()
-                conn.close()
-    
-                
+                conn.close()         
         
-
     def queue_to_control(self):
         """
         untuk stack perubahan control jika response tidak ok
@@ -164,12 +158,12 @@ class Control(object):
         conn = connect_db()
         cur = conn.cursor()
         cur.execute("SELECT * from queue_control where id_arduino=%s",[self.id_arduino])
-        nodes = cur.fetchall()
-        if not nodes:
-            nodes = "KOSONG"
-        return nodes
+        list_control = cur.fetchall()
+        if not list_control:
+            list_control = "KOSONG"
+        return list_control
 
-    def getControl(self):
+    def sync_get_control(self):
         """
         Request Get Control main web\n
         Mengambil data control terbaru dari main web.
@@ -203,7 +197,7 @@ class Control(object):
         else :
             print("main web cannot be reached")
 
-    def postControl(self):
+    def sync_post_control(self):
         """
         Request Post Control to main web\n
         Mengirim data control terbaru dari local ke main web.
@@ -211,7 +205,7 @@ class Control(object):
         """
         cek =self.read_queue_control()
         
-        url = "http://bwcr.insightdata.xyz//public/api/control/update/"+self.id_user+"/garden/"+self.id_arduino
+        url = "http://bwcr.insightdata.xyz/public/api/control/update/"+self.id_user+"/garden/"+self.id_arduino
         perintah = {'nilai': self.perintah}
         ambil = requests.get(url, params=perintah, headers={
                              'User-Agent': 'Mozilla/5.0'})

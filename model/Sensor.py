@@ -53,7 +53,8 @@ class Sensor(object):
     
     def insert_to_sensor(self):
         """
-        Memasukkan data Sensor dari Arduino, jika Arduino belum pernah terdaftar maka melakukan pendaftaran otomatis.
+        Memasukkan data ke table sensor.
+        Memberi flag pada data berdasarkan nilai dari sensor yang masuk, 
         """
         conn = connect_db()
         baca_suhu=self.suhu

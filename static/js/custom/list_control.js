@@ -1,18 +1,11 @@
 var isi=[];
 
 function post_delete_node(id_arduino){
-    // let nameOfFunction = this[event.target.name];
-    // console.log("target.name + "+nameOfFunction);
-    // let arg1 = event.target.getAttribute('data-arg1');
-    // console.log("js + "+arg1);
     $.ajax({
         url: delete_api_url,
         type: 'DELETE',
         data: {id_arduino:String(id_arduino)},
         global:false
-        // success: function(result) {
-        //     // Do something with the result
-        // }
     });
     location.reload();
   }
@@ -50,7 +43,7 @@ function generateCard(array){
                             }
                             all+=
                             '<div class="col-lg-3 col-md-12 col-sm-12 p-2">'+
-                                '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Pompa <i class="fas fa-faucet"></i></a>'+
+                                '<a href='+page_control(id_arduino)+' class="btn btn-info btn-lg col-lg-12 col-md-12 col-sm-12" role="button" aria-pressed="true">Air <i class="fas fa-faucet"></i></a>'+
                             '</div>'+
                             '<div class="col-lg-1 col-md-12 col-sm-12 align-self-center">'+
                                 '<div class="row justify-content-center p-2">'+
@@ -64,10 +57,10 @@ function generateCard(array){
     return all;
 }
 
-function getControl(){
-    $.get(data_control, function( data ) {
-        isi = data['nodes']
-        setTimeout(getControl,10000);
+function getListControl(){
+    $.get(url_list_control, function( data ) {
+        isi = data['list_control']
+        setTimeout(getListControl,10000);
         if (isi==null||isi[0]==null) {
             console.log('data kosong');
             var a = 
@@ -81,12 +74,12 @@ function getControl(){
                 '</div>'+
               '</div>'+
             '</div>';
-            $("#listnodes").html(a);
+            $("#listcontrol").html(a);
         }
         else{
-            $("#listnodes").html(generateCard(isi));
+            $("#listcontrol").html(generateCard(isi));
         }
     });
 }
 
-getControl();
+getListControl();
