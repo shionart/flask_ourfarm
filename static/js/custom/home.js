@@ -1,6 +1,7 @@
 $(document).ready(function(){
   $('.toast').toast();
 });
+var tempVal=$("#userID").val();
 $("#change").click(
     function(){
         $("#userID").removeAttr("readonly");
@@ -10,14 +11,17 @@ $("#change").click(
 );
 $("#save").click(
     function(){
-        $("#userID").attr("readonly", true);
-        $("#save").attr("hidden", true);
-        $("#change").attr("hidden", false);
-        var key = $("#userID").val().trim();
+      $("#userID").attr("readonly", true);
+      $("#save").attr("hidden", true);
+      $("#change").attr("hidden", false);
+      var key = $("#userID").val().trim();
+      if (key!="") {
         $("#userID").val(key);
         postUserid(email,key);
-        $('.toast').toast('show');
-
+        $('.toast').toast('show');  
+      }else{
+        $("#userID").val(tempVal);
+      }
     }
 );
 

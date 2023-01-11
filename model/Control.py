@@ -26,9 +26,9 @@ class Control(object):
             self.status = None
 
 
-    def read_controls(self):
+    def read_list_control(self):
         """
-        Baca udah berapa node yang connect untuk User yg login
+        Read dari tabel Control berdasarkan user
         """
         conn = connect_db()
         cur = conn.cursor()
@@ -37,6 +37,9 @@ class Control(object):
         return list_control
 
     def read_control(self):
+        """
+        Read satu baris data dari tabel Control
+        """
         conn = connect_db()
         cur = conn.cursor()
         cur.execute("SELECT * FROM control WHERE id_arduino=%s",
@@ -46,34 +49,35 @@ class Control(object):
         # if data_perintah!=None:
         return data_perintah
 
-    def read_control_id(self):
+    def is_exist_control(self):
+        """
+        Cek apakah id arduino exist
+        """
         conn = connect_db()
         cur = conn.cursor()
         cur.execute("SELECT id_arduino FROM control WHERE id_arduino=%s", [
             self.id_arduino])
         data_perintah = cur.fetchone()
-        # isi = data_perintah['perintah']
-        return data_perintah
+        if data_perintah==None:
+            return False
+        else:
+            return True
 
-    def insert_to_control(self):
+    def insert_control(self):
         """
-        Jika belum ada node sebelum nya, maka INSERT
-        Bila sudah ada maka UPDATE
+        Insert ke tabel Control jika id_arduino non-exist, Update tabel Control jika id_arduino exist
         """
         conn = connect_db()
         cur = conn.cursor()
         try:
-            # Auto Add Arduino
-            cek_control = self.read_control_id()
-            if cek_control == None:
-                print("Eksekusi insert to control")
-                cur.execute("INSERT INTO control (id_arduino, id_user, nama, perintah, status) VALUES(%s,%s,%s,%s,%s)", [
-                            self.id_arduino, self.id_user, self.nama, "0", "1"])
-                # Auto Add selesai
-            else:
-                print("Update control")
+            if self.is_exist_control():
+                print("Update Control")
                 cur.execute("UPDATE control SET perintah=%s, status=%s WHERE id_arduino=%s", [
                             self.perintah, self.status, self.id_arduino])
+            else:
+                print("insert Control")
+                cur.execute("INSERT INTO control (id_arduino, id_user, nama, perintah, status) VALUES(%s,%s,%s,%s,%s)", [
+                            self.id_arduino, self.id_user, self.nama, "0", "1"])
             conn.commit()
             print("Data control berhasil diupdate!")
         except Exception as error:
@@ -88,12 +92,11 @@ class Control(object):
 
     def delete_control(self):
         """
-        Fungsi menghapus Control
+        Delete dari tabel Control berdasarkan id_arduino
         """
         try:
             conn = connect_db()
             cur = conn.cursor()
-            query = "DELETE FROM control WHERE id_arduino=%s "
             cur.execute("DELETE FROM control WHERE id_arduino=%s",[self.id_arduino])
             conn.commit()
         except Exception as e:
@@ -104,133 +107,7 @@ class Control(object):
                 cur.close()
                 conn.close()         
         
-    def queue_to_control(self):
-        """
-        untuk stack perubahan control jika response tidak ok
-        Obj Control attr : id_arduino, id_user, perintah
-        """
-        conn=connect_db()
-        cur=conn.cursor()
-        try:
-            cur.execute("INSERT INTO queue_control (id_arduino, id_user, perintah) VALUES(%s,%s,%s)", [
-                            self.id_arduino, self.id_user, self.perintah])
-            conn.commit()
-        except Exception as e:
-            conn.rollback()
-            print(e)
-        finally:
-            cur.close()
-            conn.close()
-    
-    def queue_clear(self):
-        """
-        Clear table queue_control
-        """
-        conn=connect_db()
-        cur=conn.cursor()
-        try:
-            cur.execute("DELETE FROM queue_control")
-            conn.commit()
-        except Exception as e :
-            print(e)
-        finally:
-            cur.close()
-            conn.close()
-    def queue_clear_id(self,idqueue):
-        """
-        Clear table queue_control
-        """
-        conn=connect_db()
-        cur=conn.cursor()
-        try:
-            cur.execute("DELETE FROM queue_control where idqueue_control=%s",[idqueue])
-            conn.commit()
-        except Exception as e :
-            print(e)
-        finally:
-            cur.close()
-            conn.close()
-        
-    def read_queue_control(self):
-        """
-        Baca control yg ga ke submit
-        """
-        conn = connect_db()
-        cur = conn.cursor()
-        cur.execute("SELECT * from queue_control where id_arduino=%s",[self.id_arduino])
-        list_control = cur.fetchall()
-        if not list_control:
-            list_control = "KOSONG"
-        return list_control
-
-    def sync_get_control(self):
-        """
-        Request Get Control main web\n
-        Mengambil data control terbaru dari main web.
-        """
-        url = "https:///bwcr.insightdata.xyz/com/public/api/control/"+self.id_user+"/garden"
-        devid = {'deviceId': self.id_arduino}
-        ambil = requests.get(url, params=devid, headers={
-                             'User-Agent': 'Mozilla/5.0'})
-        if ambil.status_code==200 :
-            print(ambil.status_code)
-            data = ambil.json()
-            cek = self.read_control() #ngambil current perintah
-            print("local :"+str(cek['perintah']))
-            print("webpusat:"+str(data['nilai']))
-            # if not cek :
-            #     print("Table Control Kosong!")
-            # else :
-            if (ambil.status_code == 200 and str(cek['perintah']) != data["nilai"]):
-                print("data berubah")
-                try:
-                    conn = connect_db()
-                    cur = conn.cursor()
-                    cur.execute("UPDATE control SET perintah=%s, status=0 WHERE id_arduino=%s", [
-                                data['nilai'], self.id_arduino])
-                    conn.commit()
-                    cur.close()
-                    conn.close()
-                except Exception as e:
-                    conn.rollback()
-                    print(e)
-        else :
-            print("main web cannot be reached")
-
-    def sync_post_control(self):
-        """
-        Request Post Control to main web\n
-        Mengirim data control terbaru dari local ke main web.
-        
-        """
-        cek =self.read_queue_control()
-        
-        url = "http://bwcr.insightdata.xyz/public/api/control/update/"+self.id_user+"/garden/"+self.id_arduino
-        perintah = {'nilai': self.perintah}
-        ambil = requests.get(url, params=perintah, headers={
-                             'User-Agent': 'Mozilla/5.0'})
-        # print(ambil.status_code)
-        data = ambil.json()
-        cek = self.read_queue_control()
-        # print("local :"+str(cek['perintah']))
-        # print("webpusat:"+str(data['nilai']))
-        if (ambil.status_code == 200 and cek!="KOSONG"):
-            print("ada data queue")
-            try:
-                conn = connect_db()
-                cur = conn.cursor()
-                cur.execute("UPDATE control SET perintah=%s, status=0 WHERE id_arduino=%s", [
-                            data['nilai'], self.id_arduino])
-                conn.commit()
-                cur.close()
-                conn.close()
-            except Exception as e:
-                conn.rollback()
-                print(e)
-        else:
-            print("Status code : "+ambil.status_code+"queue : "+cek)
-    
-    def get_notified(self):
+    def read_notified(self):
         """
         Ambil data sensor dari List id_arduino & notif!=0
         """

@@ -1,5 +1,4 @@
 from flask.globals import request
-from flask import abort, redirect, url_for
 from controller.SensorController import SensorController
 from controller.ControlController import ControlController
 from controller.UserController import UserController
@@ -88,7 +87,6 @@ def api_queue_control():
     """
     return ControlController().api_queue_control()
 
-#--------------Notif API-----------------------
 @main.route('/api_notif/<userid>', methods=['GET', 'POST'])
 def api_notif(userid):
     """
@@ -97,10 +95,9 @@ def api_notif(userid):
     if request.method=="GET" :
         return ControlController().get_notif(userid)
     elif request.method=="POST" :
-        SensorController().update_notified(userid)
-        return dashboard(userid=userid)     
+        SensorController().update_notified(request.form['id_arduino'])
+        return dashboard(arduinoid=request.form['id_arduino'])     
 
-#--------------Sensor API-------------------
 @main.route('/input', methods=["POST"])
 def cud_api_data():
     """

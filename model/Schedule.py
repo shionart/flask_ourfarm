@@ -27,13 +27,13 @@ class Schedule():
         """
         print("memulai getlistcontrol")
         try:
-            a = Control().read_controls() 
+            a = Control().read_list_control() 
             if a!=None:#cek local ada Control atau tidak
                 for control in a:
                     # print("Satuan control")
                     #Membuat obj control tiap baris pada table control
                     c = Control(id_arduino=control['id_arduino'], id_user=control['id_user'])
-                    c.sync_get_control()() #Ngambil data terbaru
+                    c.sync_get_control() #Ngambil data terbaru
             else:
                 print("KOSONG")
         except Exception as e:

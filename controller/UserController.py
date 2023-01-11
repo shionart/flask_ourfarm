@@ -42,16 +42,10 @@ class UserController(object):
 
     
     def index(self):
-        # mengambil data dari methode GET
-        # get = request.args.get('get')
-        # if get:
-        #     return render_template('home.html',isi=get)
-        # else :
-        #     return render_template('home',isi="Ini Index Kosongan")
         usr= self.user
         usr.email = session['email']
         raspi = usr.read_user()
-        id_user = raspi['id_user']
+        id_user = raspi['id_user'] if raspi['id_user'] is not None else ""
         return render_template('home.html', ip=ip_address, id_user=id_user)
 
         # return render_template('laman di dalam folder template', variabeldikirim=isi)
@@ -89,8 +83,7 @@ class UserController(object):
     def register(self):
         if request.method == 'GET':
             return render_template('register.html')
-        else :
-                
+        else :     
             if "password" in request.form:
                 try:
                     email = str(request.form['email'])

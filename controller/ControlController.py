@@ -52,7 +52,7 @@ class ControlController(object):
         """
         c = self.control
         c.id_user=id_user
-        list_control = c.read_controls()
+        list_control = c.read_list_control()
         return jsonify({'list_control': list_control})
 
     def api_control(self, id):
@@ -74,7 +74,7 @@ class ControlController(object):
                 id_user = str(request.form["id_user"])
                 if(request.form["status"] != None or request.form["nama"] != None or request.form["perintah"] != None):
                     c = Control(perintah=perintah, id_arduino=id, status=status, nama=nama, id_user=id_user)
-                    c.insert_to_control()
+                    c.insert_control()
                 else:
                     pass  # skip sek
                 return "perintah: {}, status: {}, id: {}, nama:{}".format(perintah, status, id, nama)
@@ -85,31 +85,7 @@ class ControlController(object):
             c.delete_control()
             return "node {} deleted".format(c.id_arduino)
         
-        #TODO : buat routing untuk queue control
-    def api_queue_control(self):
-        """
-        Api untuk table queue
-        """
-        if request.method =="POST":
-            id_arduino=str(request.form["id_arduino"])
-            id_user=str(request.form["id_user"])
-            perintah = int(request.form["perintah"])
-            queue = Control(id_arduino=id_arduino, id_user=id_user, perintah=perintah)
-            queue.queue_to_control()
-            return "Queue control inserted"
-        elif request.method == "GET":
-            queue = Control()
-            read = queue.read_queue_control()
-            return jsonify(read) 
-        elif request.method == "DELETE":
-            idqueue=int(request.form["idqueue_control"])
-            if not idqueue:
-                queue = Control()
-                queue.queue_clear()
-            else:
-                queue = Control()
-                queue.queue_clear_id(idqueue)
-            return "queue control cleared"
+        
 
     def get_notif(self, id):
         """
@@ -117,4 +93,4 @@ class ControlController(object):
         """
         c = self.control
         c.id_user=id
-        return jsonify({"notif": c.get_notified()})
+        return jsonify({"notif": c.read_notified()})

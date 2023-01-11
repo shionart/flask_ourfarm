@@ -29,7 +29,7 @@ class Sensor(object):
         Parameters : id, time, suhu, kelembapan, soil_moist, relay, id_arduino
         -------
         Function :
-            - insert_to_control()
+            - insert_control()
             - read_sensor()
             - read_yesterday()
             - mean_yesterday(sensors)

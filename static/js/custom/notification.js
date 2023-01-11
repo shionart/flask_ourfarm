@@ -19,6 +19,7 @@ function generateCard2(array){
         info ='Sensor suhu mengalami masalah!'
       } 
       all+='<form method="post" action="'+notif_dashboard(id_arduino)+'" class="inline-notif">'+
+      ' <input type="hidden" id="id_arduino" name="id_arduino" value="'+id_arduino+'">'+
         '<button type="submit" class="link-button-notif dropdown-item d-flex align-items-center">'+
         '<div class="mr-3">'+
          '<div class="icon-circle bg-warning">'+
