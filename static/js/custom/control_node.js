@@ -40,6 +40,23 @@ function ubahPerintah(perintah) {
       break;
   }
 }
+
+function ubahDeskripsi(perintah_i) {
+  switch (perintah_i) {
+    case 0:
+      $("#form_default").attr("hidden", false);
+      $("#form_schedule").attr("hidden", true);
+      break;
+    case 1:
+      $("#form_default").attr("hidden", true);
+      $("#form_schedule").attr("hidden", false);
+      break;
+    default:
+      $("#form_default").attr("hidden", true);
+      $("#form_schedule").attr("hidden", true);
+      break;
+  };
+}
 /**
  * Fungsi yg triggered ketika melakukan perubahan perintah
  * Setiap melakukan perubahan perintah dilakukan :
@@ -49,6 +66,7 @@ function ubahPerintah(perintah) {
  * @param {*} perintah 
  */
 function myFunction(perintah_i) {
+  ubahDeskripsi(perintah_i);
   $.post(api_control_url,
     {
       perintah: perintah_i,
@@ -116,5 +134,6 @@ $("#customRadio2").change(function() {myFunction(1)});
 $("#customRadio3").change(function() {myFunction(2)});
 $("#customRadio4").change(function() {myFunction(3)});
 cekStatus();
+ubahDeskripsi(perintah);
     
     

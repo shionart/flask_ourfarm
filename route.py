@@ -2,6 +2,7 @@ from flask.globals import request
 from controller.SensorController import SensorController
 from controller.ControlController import ControlController
 from controller.UserController import UserController
+from controller.SyncController import SyncController
 from config.config import main
 from SessionHandler import login_required
 
@@ -85,7 +86,7 @@ def api_queue_control():
     """
     Route API untuk queue data control
     """
-    return ControlController().api_queue_control()
+    return SyncController().api_queue_control()
 
 @main.route('/api_notif/<userid>', methods=['GET', 'POST'])
 def api_notif(userid):
