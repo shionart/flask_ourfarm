@@ -116,10 +116,16 @@ class Sensor(object):
         cur.close()
         conn.close()
         #TODO masukin yg bukan query ke service
-        sensor = self.get_sensor(data)
-        top_data = self.read_top(sensor)
-        curr_data = sensor[0]
-        return sensor, curr_data, top_data
+        print("cek data")
+        print(type(data))
+        if data :
+            sensor = self.get_sensor(data)
+            top_data = self.read_top(sensor)
+            curr_data = sensor[0]
+            return sensor, curr_data, top_data
+        else :
+            return None, None, None
+
 
     #TODO pindahin ke service
     def get_sensor(self,data):

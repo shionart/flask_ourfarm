@@ -67,9 +67,12 @@ class SensorController(object):
         self.sensor = Sensor(id_arduino=id)
         s = self.sensor
         sensor, curr_data, bar_data = s.read_sensor()
-        yesterday = s.read_yesterday()
-        # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
-        return jsonify({'sensor': sensor, 'curr_data': curr_data, 'bar_data': bar_data, 'yesterday': yesterday})
+        if sensor is not None :
+            yesterday = s.read_yesterday()
+            # Outputnya berupa bundle sensor, data terbaru & kemaren, bardata(Top data)
+            return jsonify({'sensor': sensor, 'curr_data': curr_data, 'bar_data': bar_data, 'yesterday': yesterday})
+        else:
+            return jsonify({'sensor': {}, 'curr_data': {}, 'bar_data': {}, 'yesterday': {}})
 
     # def get_last_updated(self, id):
     #     """
