@@ -84,26 +84,41 @@ class UserController(object):
         if request.method == 'GET':
             return render_template('register.html')
         else :     
-            if "password" in request.form:
-                try:
-                    email = str(request.form['email'])
-                    password = str(request.form['password'])
-                    self.user=User(email=email, password=password)
+            try:
+                for requestan in request.form:
+                    print("isi request :"+requestan)
+                self.user=User(email=str(request.form['email']), 
+                    password=str(request.form['password']), 
+                    id_user=str(request.form['id_user'])
+                    )
+                message = self.cek_auth()
+                print(message)
+                if message!="Akun Tidak ditemukan" :
+                    flash("Email sudah terdaftar!", "alert-warning")
+                    return redirect(url_for('register'))
+                else :
                     self.user.cu_user()
                     flash("Berhasil registrasi, silahkan login!", "alert-success")
                     return redirect(url_for('login'))
-                except Exception as error:
-                    flash("Error:{}".format(error), "alert-warning")
-                    return redirect(url_for('register'))
-            if "id_user" in request.form:
-                try:
-                    email = str(request.form['email'])
-                    id_user = str(request.form['id_user'])
-                    self.user=User(email=email, id_user=id_user)
-                    self.user.cu_user()
-                    return "id_user updated : {}".format(id_user)
-                except Exception as e:
-                    return "error : {}".format(e)
+            except Exception as error:
+                flash("Error:{}".format(error), "alert-danger")
+                return redirect(url_for('register'))
+    
+    def update_user(self): 
+        try:
+            email = str(request.form['email'])
+            id_user = str(request.form['id_user']) if 'id_user' in request.form else None
+            password = str(request.form['password']) if 'password' in request.form else None
+            self.user=User(email=email, password=password, id_user=id_user)
+            self.user.cu_user()
+            if id_user is not None:
+                return "updated, no need to reload"
+            else:
+                flash("Update User berhasil!", "alert-success")
+                return redirect(request.referrer)
+        except Exception as error: 
+            flash("Error:{}".format(error), "alert-danger")
+            return redirect(url_for('index'))
 
 
     

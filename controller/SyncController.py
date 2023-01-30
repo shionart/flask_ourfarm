@@ -32,7 +32,7 @@ class SyncController(object):
             # else :
             if (ambil.status_code == 200 and str(cek['perintah']) != data["nilai"]):
                 print("data berubah")
-                control = Control(id_arduino=s )
+                control = Control(id_arduino=self )
                 control.insert_control()
                 # try:
                 #     conn = connect_db()

@@ -44,12 +44,15 @@ class User(object):
         conn = connect_db()
         cur = conn.cursor()
         try:
-            if self.id_user==None:
-                cur.execute("INSERT INTO user (email,password) VALUES (%s, %s)",[self.email,self.password])
-                print("insert user executed")
-            else :
+            if self.id_user is None:
+                cur.execute("UPDATE user SET password=%s WHERE email=%s",[self.password,self.email])
+                print("update id_user executed")
+            elif self.password is None:
                 cur.execute("UPDATE user SET id_user=%s WHERE email=%s",[self.id_user,self.email])
                 print("update id_user executed")
+            else :
+                cur.execute("INSERT INTO user (email,password,id_user) VALUES (%s, %s, %s)",[self.email,self.password, self.id_user])
+                print("insert user executed")
             conn.commit()
         except Exception as error:
             conn.rollback()

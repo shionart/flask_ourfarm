@@ -40,6 +40,13 @@ def register():
     Route untuk PAGE register 
     """
     return UserController().register()
+    
+@main.route('/updateuser', methods=['POST'])
+def update_user():
+    """
+    Route untuk update User 
+    """
+    return UserController().update_user()
 
 @main.route('/control')
 @login_required
