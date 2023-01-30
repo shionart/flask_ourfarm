@@ -1,0 +1,173 @@
+ * Serving Flask app "config.config" (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 153-878-199
+192.168.137.1 - - [30/Jan/2023 15:47:35] "[37mGET / HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:47:35] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:47:45] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:47:55] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:48:05] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:48:15] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:48:26] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:48:36] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:48:46] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:48:56] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:06] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:16] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:25] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:25] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:25] "[37mGET /static/js/custom/list_control.js HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:25] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:35] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:35] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:45] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:45] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:56] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:49:56] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:06] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:06] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:16] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:16] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:26] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:26] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:36] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:36] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:46] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:46] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:56] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:56] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:50:58] "[37mPOST /api_control/3ac4177694d24e13a937 HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:07] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:07] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:17] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:17] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:19] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:19] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:19] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:21] "[37mGET / HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:21] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:22] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:22] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:22] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:26] "[37mGET / HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:26] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:36] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:45] "[37mPOST /register HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:47] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:54] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:54] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:54] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:59] "[37mGET / HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:51:59] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:09] "[37mPOST /api_control/3ac4177694d24e13a937 HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:09] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:12] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:12] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:12] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:23] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:23] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:34] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:34] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:45] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:45] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:55] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:52:55] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:05] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:05] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:15] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:15] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:25] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:25] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:35] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:35] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:46] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:46] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:48] "[37mGET / HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:48] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:49] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:49] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:49] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:50] "[37mGET / HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:53:50] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:01] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:02] "[37mPOST /register HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:11] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:14] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:15] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:15] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:22] "[37mGET /static/vendor/bootstrap/js/bootstrap.bundle.min.js.map HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:25] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:25] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:35] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:35] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:45] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:45] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:55] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:54:55] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:05] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:05] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:16] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:16] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:26] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:26] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:36] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:36] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:43] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:43] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:43] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:54] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:55:54] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:05] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:05] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:16] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:16] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:27] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:27] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:35] "[37mGET /control HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/vendor/fontawesome-free/css/all.min.css HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/css/sb-admin-2.min.css HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/css/personalized.css HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/vendor/jquery/jquery.min.js HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/vendor/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/vendor/jquery-easing/jquery.easing.min.js HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/js/sb-admin-2.min.js HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/js/custom/notification.js HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/js/custom/list_control.js HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /static/vendor/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:36] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:46] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:46] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:56] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:56:56] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:06] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:06] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:17] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:17] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:27] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:27] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:37] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:37] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:47] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:47] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:57] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:57:57] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
+ * Detected change in '/home/pi/Desktop/flask_ourfarm/model/Sensor.py', reloading
+insert Control
+Data control berhasil diupdate!
+MySql ditutup
+update id_user executed
+MySql ditutup
+Update Control
+Data control berhasil diupdate!
+MySql ditutup
+update id_user executed
+MySql ditutup
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 153-878-199
+192.168.137.1 - - [30/Jan/2023 15:58:12] "[37mGET /api_list_control/None HTTP/1.1[0m" 200 -
+192.168.137.1 - - [30/Jan/2023 15:58:12] "[37mGET /api_notif/None HTTP/1.1[0m" 200 -
