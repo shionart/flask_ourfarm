@@ -36,7 +36,7 @@
   {% block scripts %}
   <!-- Passing data to JS -->
   <script>
-    var url_list_control="{{url_for('api_list_control',userid='')}}"+"{{session['iduser']}}";
+    var url_list_control="{{url_for('api_list_control',userid='')}}"+"{{session['sessionuserid']}}";
     
     function page_dashboard(arduinoid){
       return "{{url_for('dashboard',arduinoid='')}}"+arduinoid;

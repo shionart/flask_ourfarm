@@ -235,7 +235,7 @@
             <input type="hidden" name="email" value="{{session['email']}}">
           <div class="col-sm-12 mb-3 mb-sm-1">
             <label for="password">Password Baru : </label>
-            <input name="password" type="password" class="form-control form-control-user" id="password" autocomplete="new-password" placeholder="Masukkan password baru">
+            <input name="password" type="password" class="form-control form-control-user" id="password" autocomplete="new-password" placeholder="Masukkan password baru" required>
           </div>
           <!-- <div class="col-sm-12 mb-3 mb-sm-1">
             <label for="id_user">User ID : </label>
@@ -260,7 +260,7 @@
 
   <!-- Custom scripts for all pages-->
   <script>
-    const url_notified ="{{url_for('api_notif',userid='')}}"+"{{session['iduser']}}";
+    const url_notified ="{{url_for('api_notif',userid='')}}"+"{{session['sessionuserid']}}";
     function notif_dashboard(id){
       return "{{url_for('api_notif',userid='')}}"+id;
     }

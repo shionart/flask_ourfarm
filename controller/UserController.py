@@ -37,7 +37,7 @@ class UserController(object):
             return "Password Tidak Sesuai"
         else:
             session['email'] = request.form['email']
-            session['iduser'] = str(auth['id_user'])
+            session['sessionuserid'] = str(auth['id_user'])
             return True
 
     
@@ -76,7 +76,7 @@ class UserController(object):
 
     def logout(self):
         session.pop('email', None)
-        session.pop('iduser', None)
+        session.pop('sessionuserid', None)
         flash("Logged Out!", 'alert-success')
         return redirect(url_for('login'))
     
