@@ -2,6 +2,8 @@
 from flask.globals import request
 from flask.json import jsonify
 from model.Sensor import Sensor
+from model.Control import Control
+
 
 
 class SensorController(object):
@@ -43,7 +45,8 @@ class SensorController(object):
             kelembapan = 0.0,
             soil_moist = 0.0,
             relay = 0,
-            id_arduino = 0)
+            id_arduino = 0,
+            notif=0)
         s= self.sensor
     # perintah arduino
         try:
@@ -53,6 +56,15 @@ class SensorController(object):
                 s.soil_moist= float(request.form["sm"])
                 s.relay = int(request.form["relay"])
                 s.id_arduino = str(request.form["id_arduino"])
+                c = Control(id_arduino=s.id_arduino).read_control()
+                if s.kelembapan==0.0 or s.suhu==0.0 :
+                    s.notif=4
+                elif s.soil_moist>c['batas_atas']:
+                    s.notif=2
+                elif s.soil_moist<c['batas_bawah']:#to do parameter benchmark kelembapan dijadiin variable
+                    s.notif=1
+                elif s.relay==1 and c['perintah']==1:
+                    s.notif=3
                 s.insert_to_sensor()
                 return "suhu : {}, kelembapan : {}, soil moisture : {}, relay : {}, id : {}".format(s.suhu, s.kelembapan, s.soil_moist, s.relay, s.id_arduino)
             elif request.method=="DELETE" :

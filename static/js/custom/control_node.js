@@ -10,7 +10,7 @@ function ubahFooter(perintah,status) {
       $("#perintah").html("Default (Otomatis)");
       break;
     case 1:
-      $("#perintah").html("jeda");
+      $("#perintah").html("Interval");
       break;
     case 2:
       $("#perintah").html("Stay On");

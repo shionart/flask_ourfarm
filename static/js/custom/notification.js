@@ -14,10 +14,26 @@ function generateCard2(array){
       var time = array[a]['time'];
       var nama = array[a]['nama'];
       var suhu = array[a]['suhu'];
-      var info = 'Kelembapan tanah berada di '+soil_moist+'%';
-      if (suhu==0) {
-        info ='Sensor suhu mengalami masalah!'
-      } 
+      var notif = array[a]['notif'];
+      var info = "";
+
+      switch (notif) {
+        case 1:
+          info ='Kelembapan tanah rendah: '+soil_moist+'%'
+          break;
+        case 2:
+          info ='Kelembapan tanah tinggi: '+soil_moist+'%'
+          break;
+        case 3:
+          info ='Melakukan penyiraman Interval...'
+          break;
+        case 4:
+          info ='Sensor DHT mengalami masalah!'
+          break;
+        default:
+          ""
+          break;
+      }
       all+='<form method="post" action="'+notif_dashboard(id_arduino)+'" class="inline-notif">'+
       ' <input type="hidden" id="id_arduino" name="id_arduino" value="'+id_arduino+'">'+
         '<button type="submit" class="link-button-notif dropdown-item d-flex align-items-center">'+

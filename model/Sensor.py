@@ -42,6 +42,7 @@ class Sensor(object):
             self.soil_moist = kwargs.pop("soil_moist", None)
             self.relay = kwargs.pop("relay", None)
             self.id_arduino = kwargs.pop("id_arduino", None)
+            self.notif = kwargs.pop("notif", None)
         else:
             self.id_sensor = None
             self.time = None
@@ -50,6 +51,7 @@ class Sensor(object):
             self.soil_moist = None
             self.relay = None
             self.id_arduino = None
+            self.notif = None
     
     def insert_to_sensor(self):
         """
@@ -64,11 +66,8 @@ class Sensor(object):
                 self.suhu=0
                 self.kelembapan=0
             cursor = conn.cursor()
-            if self.soil_moist<40:#to do parameter benchmark kelembapan dijadiin variable
-                query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino, notif) VALUES (%s, %s, %s, %s, %s, 1)"
-            else:
-                query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino) VALUES (%s, %s, %s, %s, %s)"
-            isituple = (self.suhu, self.kelembapan, self.soil_moist, self.relay, self.id_arduino)
+            query = "INSERT INTO sensor (suhu, kelembapan, soil_moist, relay, id_arduino, notif) VALUES (%s, %s, %s, %s, %s, %s)"
+            isituple = (self.suhu, self.kelembapan, self.soil_moist, self.relay, self.id_arduino, self.notif)
             try:
                 print("Eksekusi insert to table")
                 cursor.execute(query,isituple)
@@ -253,7 +252,7 @@ class Sensor(object):
         try:
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute("UPDATE sensor SET notif=0 WHERE id_arduino=%s and time<=now() and notif=1", [self.id_arduino])
+            cur.execute("UPDATE sensor SET notif=0 WHERE id_arduino=%s and time<=now() and notif!=0", [self.id_arduino])
             conn.commit()
             cur.close()
             conn.close()
