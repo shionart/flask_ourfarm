@@ -10,7 +10,7 @@ function ubahFooter(perintah,status) {
       $("#perintah").html("Default (Otomatis)");
       break;
     case 1:
-      $("#perintah").html("Scheduled");
+      $("#perintah").html("jeda");
       break;
     case 2:
       $("#perintah").html("Stay On");
@@ -25,16 +25,40 @@ function ubahFooter(perintah,status) {
 function ubahPerintah(perintah) {
   switch (perintah) {
     case 0:
-      document.getElementById("customRadio1").checked = true;
+      document.getElementById("perintah1").checked = true;
       break;
     case 1:
-        document.getElementById("customRadio2").checked = true;
+        document.getElementById("perintah2").checked = true;
         break;
     case 2:
-        document.getElementById("customRadio3").checked = true;
+        document.getElementById("perintah3").checked = true;
         break;
     case 3:
-      document.getElementById("customRadio4").checked = true;
+      document.getElementById("perintah4").checked = true;
+      break;
+    default:
+      break;
+  }
+}
+function ubahjeda(jeda) {
+  switch (jeda) {
+    case 2:
+      $('select option[value="2"]').attr("selected",true);
+      break;
+    case 4:
+      $('select option[value="4"]').attr("selected",true);
+      break;
+    case 6:
+      $('select option[value="6"]').attr("selected",true);
+      break;
+    case 8:
+      $('select option[value="8"]').attr("selected",true);
+      break;
+    case 12:
+      $('select option[value="12"]').attr("selected",true);
+      break;
+    case 24:
+      $('select option[value="24"]').attr("selected",true);
       break;
     default:
       break;
@@ -45,16 +69,25 @@ function ubahDeskripsi(perintah_i) {
   switch (perintah_i) {
     case 0:
       $("#form_default").attr("hidden", false);
-      $("#form_schedule").attr("hidden", true);
+      // $("#batas_atas").removeAttr('disabled');
+      // $("#batas_bawah").removeAttr('disabled');
+      $("#form_jeda").attr("hidden", true);
+      // $("#select_jeda").attr('disabled','disabled');
       break;
     case 1:
       $("#form_default").attr("hidden", true);
-      $("#form_schedule").attr("hidden", false);
+      // $("#batas_atas").attr('disabled','disabled');
+      // $("#batas_bawah").attr('disabled','disabled');
+      $("#form_jeda").attr("hidden", false);
+      // $("#select_jeda").removeAttr('disabled');
       break;
     default:
-      $("#form_default").attr("hidden", true);
-      $("#form_schedule").attr("hidden", true);
-      break;
+        $("#form_default").attr("hidden", true);
+        // $("#batas_atas").attr('disabled','disabled');
+        // $("#batas_bawah").attr('disabled','disabled');
+        $("#form_jeda").attr("hidden", true);
+        // $("#select_jeda").attr('disabled','disabled');
+    break;
   };
 }
 /**
@@ -75,11 +108,12 @@ function myFunction(perintah_i) {
       id_user:""
     }
   );
-  try {//sync ke api bayu
+  try {//post perintah ke api bayu
     $.get(sync_control_get, {nilai:perintah_i}).fail(function() {
       post_failure(perintah_i);
       console.log("post failure");
     });
+    console.log("fetching from website pusat")
   } catch (error) {
     console.log("Error :"+error);
   }
@@ -121,6 +155,7 @@ function post_failure(perintah_i){
   );
 }
 function cekStatus() {
+  
   $.get(api_control_url, function (data) {
     setTimeout(cekStatus,1000);
     // let isi = data['status'];
@@ -128,12 +163,13 @@ function cekStatus() {
     ubahFooter(data['perintah'],data['status']);
   });  
 }
+$("#perintah1").change(function() {ubahDeskripsi(0)});
+$("#perintah2").change(function() {ubahDeskripsi(1)});
+$("#perintah3").change(function() {ubahDeskripsi(2)});
+$("#perintah4").change(function() {ubahDeskripsi(3)});
 ubahPerintah(perintah);
-$("#customRadio1").change(function() {myFunction(0)});
-$("#customRadio2").change(function() {myFunction(1)});
-$("#customRadio3").change(function() {myFunction(2)});
-$("#customRadio4").change(function() {myFunction(3)});
-cekStatus();
+ubahjeda(jeda);
 ubahDeskripsi(perintah);
+cekStatus();
     
     

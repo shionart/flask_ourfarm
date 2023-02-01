@@ -8,7 +8,7 @@
         <div>
         {% block content %}
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">{{data.nama}} - {{data.id_arduino}} |
+          <h1 class="h3 mb-4 text-gray-800"> {{data.nama}} - {{data.id_arduino}} |
             <a href="{{url_for('dashboard', arduinoid=data.id_arduino)}}" class="btn btn-success btn-icon-split">
               <span class="icon text-white-50">
                 <i class="fas fa-arrow-right"></i>
@@ -23,84 +23,79 @@
               <div class="card-header">
                 <div class=" text-center">
                   <i class="fas fa-leaf"></i>
-                  <h4 class="text-gray-900">Control Arduino id-{{data.id_arduino}}</h4>
-                  <h5 class="text-gray-900 mb-1">{{data.nama}}</h5>
+                  <!-- <h4 class="text-gray-900">Control Arduino id-{{data.id_arduino}}</h4>
+                  <h5 class="text-gray-900 mb-1">{{data.nama}}</h5> -->
                 </div> 
               </div>
               <div class="card-body">
+                <form id="form_control" action="api_control_url" method="POST">
+                  <input type="hidden" name="nama" value="{{data.nama}}" readonly />
+                  <input type="hidden" name="id_user" value="{{data.id_user}}" readonly />
+                  <input type="hidden" name="status" value="0" readonly />
                 <div class="row">
-                  <div class="col-lg-6 col-sm-6 pl-5">
-                    <form action="" method="post">
-                      <label class="text-gray-800" for="pumpControl">Pump Control Mode</label>
-                      <div id="pumpControl">
-                        <div class="custom-control custom-radio">
-                          <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                          <label class="custom-control-label text-gray-700" for="customRadio1">Default (Otomatis)</label>
+                    <div class="col-lg-6 col-sm-6 pl-5">
+                        <label class="text-gray-800" for="pumpControl">Pump Control Mode</label>
+                        <div id="pumpControl">
+                          <div class="custom-control custom-radio">
+                            <input type="radio" id="perintah1" name="perintah" class="custom-control-input" value="0">
+                            <label class="custom-control-label text-gray-700" for="perintah1">Default (Otomatis)</label>
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input type="radio" id="perintah2" name="perintah" class="custom-control-input" value="1">
+                            <label class="custom-control-label text-gray-700" for="perintah2">jeda</label>
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input type="radio" id="perintah3" name="perintah" class="custom-control-input" value="2">
+                            <label class="custom-control-label text-gray-700" for="perintah3">Stay On</label>
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input type="radio" id="perintah4" name="perintah" class="custom-control-input" value="3">
+                            <label class="custom-control-label text-gray-700" for="perintah4">Stay Off</label>
+                          </div>
                         </div>
-                        <div class="custom-control custom-radio">
-                          <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                          <label class="custom-control-label text-gray-700" for="customRadio2">Scheduled</label>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 pr-5">
+                      <div id="form_default">
+                        <!-- <label class="text-gray-800" for="input_kelembapan">Kelembapan Tanah %</label> -->
+                        <div id="input_kelembapan" class="form-inline">
+                            <label class="my-1 mr-1 text-gray-700" for="batas_atas">
+                              Batas Atas
+                            </label>
+                            <input id="batas_atas" class="my-1 mr-2 form-control text-gray-700" type="number" min="0" max="100" name="batas_atas" id="batas_atas" placeholder="-" value="{{data.batas_atas}}"> 
+                            <label class="my-1 mr-1 text-gray-700" for="batas_bawah">
+                              Batas Bawah
+                            </label>
+                            <input id="batas_bawah" class="my-1 mr-2 form-control text-gray-700" type="number" min="0" max="100" name="batas_bawah" id="batas_bawah" placeholder="-" value="{{data.batas_bawah}}" >
                         </div>
-                        <div class="custom-control custom-radio">
-                          <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                          <label class="custom-control-label text-gray-700" for="customRadio3">Stay On</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                          <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-                          <label class="custom-control-label text-gray-700" for="customRadio4">Stay Off</label>
-                        </div>
+                        <ul class="text-gray-600 text-xs">
+                          <li>Contoh : Batas Atas 50% dan Batas Bawah 40%. Maka penyiraman akan 
+                            dilakukan ketika kelembapan tanah ada di <= 40% dan berhenti ketika mencapai >=50%</li>
+                        </ul>
                       </div>
-                      </form>
+                      <div id="form_jeda">
+                        <!-- <label class="text-gray-800" for="input_jeda">jeda</label> -->
+                        <div id="input_jeda" class="form-inline">
+                          <!-- <div class="form-group col-6"> -->
+                            <label class="my-1 mr-1 text-gray-700" for="select_jeda">Jarak antar penyiraman</label>
+                            <select class="form-control" name="jeda" id="select_jeda">
+                              <option value="1">1 jam</option>
+                              <option value="2">2 jam</option>
+                              <option value="3">3 jam</option>
+                              <option value="4">4 jam</option>
+                              <option value="6">6 jam</option>
+                              <option value="8">8 jam</option>
+                              <option value="12">12 jam</option>
+                              <option value="24">24 jam</option>
+                            </select>
+                          </div>
+                        <ul class="text-gray-600 text-xs">
+                          <li>Contoh : 2 Jam, berarti penyiraman akan dilakukan setiap 2 Jam sekali. Setiap penyiraman dilakukan selama 3 detik</li>
+                        </ul>
+                      </div>
+                      <button type="submit" class="my-1 mr-1 btn btn-primary">Simpan</button>
+                    </div>
                   </div>
-                  <div class="col-lg-6 col-sm-6 pr-5">
-                    <form id="form_default" action="" method="post" hidden>
-                      <label class="text-gray-800" for="input_kelembapan">Kelembapan Tanah %</label>
-                      <div id="input_kelembapan" class="form-inline">
-                        <!-- <div class="form-group col-6"> -->
-                          <label class="my-1 mr-1 text-gray-700" for="batas_atas">
-                            Batas Atas
-                          </label>
-                          <input class="my-1 mr-2 form-control text-gray-700" type="number" min="0" max="100" name="batas_atas" id="batas_atas" placeholder="-" value=""> 
-                        <!-- </div> -->
-                        <!-- <div class="form-group col-6"> -->
-                          <label class="my-1 mr-1 text-gray-700" for="batas_bawah">
-                            Batas Bawah
-                          </label>
-                          <input class="my-1 mr-2 form-control text-gray-700" type="number" min="0" max="100" name="batas_bawah" id="batas_bawah" placeholder="-" value="" >
-                        <!-- </div> -->
-                      <!-- <div class="form-group col "> -->
-                          <button type="submit" class="my-1 mr-1 btn btn-primary">Simpan</button>
-                      <!-- </div> -->
-                      </div>
-                      <ul class="text-gray-600 text-xs">
-                        <!-- <li>Tentukan Batas Atas kelembapan tanah agar pompa otomatis berhenti menyiram ketika nilai kelembapan tanah mencapai Batas Atas atau di atasnya.</li>
-                        <li>Tentukan Batas Bawah kelembapan tanah agar pompa otomatis mulai menyiram ketika nilai kelembapan tanah mencapai Batas Bawah atau di bawahnya.</li> -->
-                        <li>Contoh : Batas Atas 60% dan Batas Bawah 20%. Maka penyiraman akan dilakukan ketika kelembapan tanah ada di <= 20% dan berhenti ketika mencapai >=60%</li>
-                      </ul>
-                    </form>
-                    <form id="form_schedule" action="" method="post" hidden>
-                      <label class="text-gray-800" for="input_kelembapan">Schedule</label>
-                      <div id="input_kelembapan" class="form-inline">
-                        <!-- <div class="form-group col-6"> -->
-                          <label class="my-1 mr-1 text-gray-700" for="batas_atas">Batas Atas</label>
-                          <input class="my-1 mr-2 form-control text-gray-700" type="number" min="0" max="100" name="batas_atas" id="batas_atas" placeholder="-" value=""> 
-                        <!-- </div> -->
-                        <!-- <div class="form-group col-6"> -->
-                          <label class="my-1 mr-1 text-gray-700" for="batas_bawah">Batas Bawah</label>
-                          <input class="my-1 mr-2 form-control text-gray-700" type="number" min="0" max="100" name="batas_bawah" id="batas_bawah" placeholder="-" value="" >
-                        <!-- </div> -->
-                      <!-- <div class="form-group col "> -->
-                          <button type="submit" class="my-1 mr-1 btn btn-primary">Simpan</button>
-                      <!-- </div> -->
-                      </div>
-                      <ul class="text-gray-600 text-xs">
-                        <!-- <li>Tentukan Batas Atas kelembapan tanah agar pompa otomatis berhenti menyiram ketika nilai kelembapan tanah mencapai Batas Atas atau di atasnya.</li>
-                        <li>Tentukan Batas Bawah kelembapan tanah agar pompa otomatis mulai menyiram ketika nilai kelembapan tanah mencapai Batas Bawah atau di bawahnya.</li> -->
-                        <li>Contoh : Batas Atas 60% dan Batas Bawah 20%. Maka penyiraman akan dilakukan ketika kelembapan tanah ada di <= 20% dan berhenti ketika mencapai >=60%</li>
-                      </ul>
-                    </form>
-                  </div>
-                </div>
+                </form>
               </div>
 
               <div class="card-footer">
@@ -139,8 +134,10 @@
     const id_arduino="{{data.id_arduino}}";
     const id_user="{{data.id_user}}";
     const api_control_url="{{url_for('api_control',arduinoid=data.id_arduino)}}";
+    document.getElementById("form_control").action = api_control_url;
     const api_queue_url="{{url_for('api_queue_control')}}";
     const perintah=parseInt("{{data.perintah}}");
+    const jeda=parseInt("{{data.jeda}}");
     const sync_control_get="http://bwcr.insightdata.xyz/public/api/control/update/"+"{{data.id_user}}"+"/garden/"+id_arduino;
   </script>
   <script src="{{url_for('static', filename='js/custom/control_node.js')}}"></script>

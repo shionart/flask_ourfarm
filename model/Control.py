@@ -10,7 +10,7 @@ class Control(object):
     def __init__(self, **kwargs):
         """
         Inisiasi Objek Control
-        Parameter : id_arduino, id_user, nama, perintah, status
+        Parameter : id_arduino, id_user, nama, perintah, status, batas_atas, batas_bawah, jeda
         """
         if len(kwargs) > 0:
             self.id_arduino = kwargs.pop("id_arduino", None)
@@ -18,12 +18,18 @@ class Control(object):
             self.nama = kwargs.pop("nama", None)
             self.perintah = kwargs.pop("perintah", None)
             self.status = kwargs.pop("status", None)
+            self.batas_atas = kwargs.pop("batas_atas", None)
+            self.batas_bawah = kwargs.pop("batas_bawah", None)
+            self.jeda = kwargs.pop("jeda", None)
         else:
             self.id_arduino = None
             self.id_user = None
             self.nama = None
             self.perintah = None
             self.status = None
+            self.batas_atas = None
+            self.batas_bawah = None
+            self.jeda = None
 
 
     def read_list_control(self):
@@ -63,7 +69,7 @@ class Control(object):
         else:
             return True
 
-    def insert_control(self):
+    def cu_control(self):
         """
         Insert ke tabel Control jika id_arduino non-exist, Update tabel Control jika id_arduino exist
         """
@@ -72,8 +78,14 @@ class Control(object):
         try:
             if self.is_exist_control():
                 print("Update Control")
-                cur.execute("UPDATE control SET perintah=%s, status=%s WHERE id_arduino=%s", [
-                            self.perintah, self.status, self.id_arduino])
+                if self.batas_atas!=None:
+                    cur.execute("UPDATE control SET perintah=%s, jeda=%s, batas_atas=%s, batas_bawah=%s, status=%s where id_arduino=%s", 
+                                [self.perintah, self.jeda,  
+                                self.batas_atas, self.batas_bawah, self.status, 
+                                self.id_arduino])
+                else :
+                    cur.execute("UPDATE control SET perintah=%s, status=%s WHERE id_arduino=%s", [
+                                self.perintah, self.status, self.id_arduino])
             else:
                 print("insert Control")
                 cur.execute("INSERT INTO control (id_arduino, id_user, nama, perintah, status) VALUES(%s,%s,%s,%s,%s)", [

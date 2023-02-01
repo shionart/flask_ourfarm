@@ -29,7 +29,7 @@ class Sensor(object):
         Parameters : id, time, suhu, kelembapan, soil_moist, relay, id_arduino
         -------
         Function :
-            - insert_control()
+            - cu_control()
             - read_sensor()
             - read_yesterday()
             - mean_yesterday(sensors)
@@ -115,9 +115,6 @@ class Sensor(object):
         data = cur.fetchall()
         cur.close()
         conn.close()
-        #TODO masukin yg bukan query ke service
-        print("cek data")
-        print(type(data))
         if data :
             sensor = self.get_sensor(data)
             top_data = self.read_top(sensor)

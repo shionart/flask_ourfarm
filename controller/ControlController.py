@@ -1,6 +1,4 @@
-from flask.globals import request
-from flask.json import jsonify
-from flask.templating import render_template
+from flask import render_template, request,  redirect, jsonify
 from model.Control import Control
 
 class ControlController(object):
@@ -30,7 +28,6 @@ class ControlController(object):
         else:
             self.control = Control()
 
-    
     def dashboard(self, id):
         c = self.control
         c.id_arduino =id
@@ -68,16 +65,20 @@ class ControlController(object):
                 'status':'0'})
         elif (request.method == "POST"):
             try:
-                perintah = str(request.form["perintah"])
-                status = str(request.form["status"])
-                nama = str(request.form["nama"])
-                id_user = str(request.form["id_user"])
-                if(request.form["status"] != None or request.form["nama"] != None or request.form["perintah"] != None):
-                    c = Control(perintah=perintah, id_arduino=id, status=status, nama=nama, id_user=id_user)
-                    c.insert_control()
+                if "batas_atas" in request.form :
+                    c.batas_atas = str(request.form["batas_atas"])
+                    c.batas_bawah = str(request.form["batas_bawah"])
+                    c.jeda = str(request.form["jeda"]) 
+                c.perintah=str(request.form["perintah"])  
+                c.status=str(request.form["status"]) 
+                c.nama=str(request.form["nama"]) 
+                c.id_user=str(request.form["id_user"])
+                c.cu_control()
+                if request.referrer != None:
+                    return redirect(request.referrer)
                 else:
-                    pass  # skip sek
-                return "perintah: {}, status: {}, id: {}, nama:{}".format(perintah, status, id, nama)
+                    return "perintah: {}, status: {}, id: {}, nama:{}".format(c.perintah, c.status, c.id_arduino, c.nama)
+                # return "test"
             except Exception as e:
                 return "error route {}".format(e)
         elif request.method=="DELETE":

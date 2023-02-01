@@ -33,7 +33,7 @@ class SyncController(object):
             if (ambil.status_code == 200 and str(cek['perintah']) != data["nilai"]):
                 print("data berubah")
                 control = Control(id_arduino=self )
-                control.insert_control()
+                control.cu_control()
                 # try:
                 #     conn = connect_db()
                 #     cur = conn.cursor()
