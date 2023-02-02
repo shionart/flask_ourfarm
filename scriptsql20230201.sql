@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `db_sister` /*!40100 DEFAULT CHARACTER SET utf8mb4COLLATE utf8_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `db_sister` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_sister`;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
