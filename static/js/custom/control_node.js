@@ -95,7 +95,7 @@ function ubahDeskripsi(perintah_i) {
  * Setiap melakukan perubahan perintah dilakukan :
  * POST data ke API local (update data Control),
  * GET data ke API web pusat (update data control):
- * jika failed data masuk ke queue table
+ * jika failed flag queue tidak diupdate
  * @param {*} perintah 
  */
 function myFunction(perintah_i) {
@@ -117,43 +117,8 @@ function myFunction(perintah_i) {
   } catch (error) {
     console.log("Error :"+error);
   }
-    /**
-     $.get(api_queue_url, function (data) {
-       for (let index = 0; index < data.length; index++) {
-         const element = data[index];
-         // console.log(element["perintah"]);
-         $.get(sync_control_get,
-           {
-             nilai:element["perintah"]
-           }
-         ); //Di sini tiap dia ubah malah hapus data
-       }
-     });//.done(delete_queue(element["idqueue_control"]))di sini connect ga konnect tetep aja ngapus karena yg diek request api_queue_url nya bukan sync_control_get
-     //post to web pusat perintah yg diubah
-     * 
-     */
 }
 
-function delete_queue(idqueue) {
-  $.ajax({
-    url: api_queue_url,
-    type: 'DELETE',
-    data : {idqueue_control: idqueue},
-    success: function() {
-        console.log("Queue Terhapus");
-    }
-});
-}
-
-function post_failure(perintah_i){
-  $.post(api_queue_url,
-    {
-      id_arduino:id_arduino,
-      id_user:id_user,
-      perintah:perintah_i
-    }
-  );
-}
 function cekStatus() {
   
   $.get(api_control_url, function (data) {

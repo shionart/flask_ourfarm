@@ -88,12 +88,7 @@ def api_control(arduinoid):
     """
     return ControlController().api_control(arduinoid)
 
-@main.route('/api_queue_control', methods=['GET','POST','DELETE'])
-def api_queue_control():
-    """
-    Route API untuk queue data control
-    """
-    return SyncController().api_queue_control()
+
 
 @main.route('/api_notif/<userid>', methods=['GET', 'POST'])
 def api_notif(userid):

@@ -135,7 +135,6 @@
     const id_user="{{data.id_user}}";
     const api_control_url="{{url_for('api_control',arduinoid=data.id_arduino)}}";
     document.getElementById("form_control").action = api_control_url;
-    const api_queue_url="{{url_for('api_queue_control')}}";
     const perintah=parseInt("{{data.perintah}}");
     const jeda=parseInt("{{data.jeda}}");
     const sync_control_get="http://bwcr.insightdata.xyz/public/api/control/update/"+"{{data.id_user}}"+"/garden/"+id_arduino;
