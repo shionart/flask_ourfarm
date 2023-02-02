@@ -9,7 +9,7 @@ USE `db_sister`;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4*/;
+/*!50503 SET NAMES utf8/;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `db_sister`;
 
 DROP TABLE IF EXISTS `control`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4*/;
+/*!50503 SET character_set_client = utf8/;
 CREATE TABLE `control` (
   `id_arduino` varchar(150) NOT NULL,
   `nama` text,
@@ -43,7 +43,7 @@ CREATE TABLE `control` (
 
 DROP TABLE IF EXISTS `queue_control`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4*/;
+/*!50503 SET character_set_client = utf8/;
 CREATE TABLE `queue_control` (
   `idqueue_control` int NOT NULL AUTO_INCREMENT,
   `id_arduino` varchar(150) DEFAULT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `queue_control` (
 
 DROP TABLE IF EXISTS `realtime_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4*/;
+/*!50503 SET character_set_client = utf8/;
 CREATE TABLE `realtime_data` (
   `id` int NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -77,7 +77,7 @@ CREATE TABLE `realtime_data` (
 
 DROP TABLE IF EXISTS `sensor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4*/;
+/*!50503 SET character_set_client = utf8/;
 CREATE TABLE `sensor` (
   `id` int NOT NULL AUTO_INCREMENT,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -98,7 +98,7 @@ CREATE TABLE `sensor` (
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4*/;
+/*!50503 SET character_set_client = utf8/;
 CREATE TABLE `user` (
   `email` varchar(50) NOT NULL,
   `password` varchar(100) DEFAULT NULL,
