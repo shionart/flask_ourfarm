@@ -10,9 +10,9 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 //CONNECT WIFI, ganti wifi anda di sini
-char ssid[] = "kamar_aal";     // your network SSID (name)  
-char password[] = "ASuryani"; // your network key
-char ip_address[]="192.168.1.50";
+char ssid[] = "samlekom";     // your network SSID (name)  
+char password[] = "dragonica025"; // your network key
+char ip_address[]="192.168.137.103";
 char nama[]="front";
 char id_arduino[]="6f39b26f5345407b94f8";
 char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
