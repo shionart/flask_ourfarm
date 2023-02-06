@@ -259,3 +259,28 @@ class Sensor(object):
         except Exception as e:
             conn.rollback()
             print(e)
+
+    def read_queued(self):
+        """
+        Read queued data sensor
+        """
+        conn=connect_db()
+        cur = conn.cursor()
+        cur.execute("select a.*, b.id_user from sensor a right join control b on a.id_arduino = b.id_arduino where a.queue=1 and a.id_arduino=%s order by a.time ASC", [self.id_arduino])
+        c = cur.fetchall()
+        return c
+    
+    def update_queued(self):
+        """
+        Update queue jadi queued per id_arduino
+        """
+        try:
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute("update sensor set queue=0 where id=%s", [self.id_sensor])
+            conn.commit()
+            cur.close()
+            conn.close()
+        except Exception as e:
+            conn.rollback()
+            print(e)

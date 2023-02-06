@@ -1,6 +1,7 @@
 
 from flask.globals import request
 from flask.json import jsonify
+from controller.SyncController import SyncController
 from model.Sensor import Sensor, math
 from model.Control import Control
 
@@ -57,8 +58,8 @@ class SensorController(object):
                 s.relay = int(request.form["relay"])
                 s.id_arduino = str(request.form["id_arduino"])
                 c = Control(id_arduino=s.id_arduino).read_control()
-                print(s.kelembapan)
-                print(s.suhu)
+                # Ini dikommen dulu karena 1-2 detik hanya untuk sent request nya
+                # SyncController().upload_data_sensor(s.id_arduino)
                 if math.isnan(s.kelembapan) or math.isnan(s.suhu) :
                     s.notif=4
                 elif s.soil_moist>c['batas_atas']:
