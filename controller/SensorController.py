@@ -1,7 +1,7 @@
 
 from flask.globals import request
 from flask.json import jsonify
-from model.Sensor import Sensor
+from model.Sensor import Sensor, math
 from model.Control import Control
 
 
@@ -57,7 +57,9 @@ class SensorController(object):
                 s.relay = int(request.form["relay"])
                 s.id_arduino = str(request.form["id_arduino"])
                 c = Control(id_arduino=s.id_arduino).read_control()
-                if s.kelembapan==0.0 or s.suhu==0.0 :
+                print(s.kelembapan)
+                print(s.suhu)
+                if math.isnan(s.kelembapan) or math.isnan(s.suhu) :
                     s.notif=4
                 elif s.soil_moist>c['batas_atas']:
                     s.notif=2

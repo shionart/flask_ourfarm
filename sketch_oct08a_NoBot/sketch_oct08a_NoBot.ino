@@ -1,126 +1,140 @@
-#include <ESP8266WiFi.h>
+//http://arduino.esp8266.com/stable/package_esp8266com_index.json - versi di bawah 3
+#include <ESP8266WiFi.h> 
 #include <WiFiClientSecure.h>
-#include <DHT.h>
+#include <ESP8266WebServer.h>
+#include <ESP8266HTTPClient.h>
+
+//DHT sensor library - adafruit
+#include <DHT.h> 
 #define DHTPIN 4
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
-#include <ESP8266WebServer.h>
-#include <ESP8266HTTPClient.h>
-#include <ArduinoJson.h>
+
+//Arduinojson library - benchon
+#include <ArduinoJson.h> 
 
 
-//CONNECT WIFI, ganti wifi anda di sini
-char ssid[] = "samlekom";     // your network SSID (name)  
-char password[] = "dragonica025"; // your network key
+/**
+CONNECT WIFI, ganti wifi anda di sini
+ ssid - nama wifi, bisa dari web pusat
+ password - password wifi, bisa dari web pusat
+ ip_address - ip address dari raspy/web apps local, bisa dari web pusat
+ nama - nama nodes/arduino, bisa dari web pusat
+ id_arduino - id unik arduino, bisa dari web pusat
+*/
+char ssid[] = "samlekom";
+char password[] = "dragonica025";
 char ip_address[]="192.168.137.103";
 char nama[]="front";
 char id_arduino[]="6f39b26f5345407b94f8";
 char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
-String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino); //url daftar device
-String raspi_input= "http://"+String(ip_address)+":5000/input"; //url input data dari sensor
+//url daftar device, sync control
+String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino); 
+//url input data  sensor
+String raspi_input= "http://"+String(ip_address)+":5000/input"; 
 
 WiFiClientSecure client;
-int led3=2; //cadangan
-int led1=14; //PIN LED INDIKATOR WIFI
-int stat = 0; //
-int led2=15; //PIN RELAY LED controlled by ldr
-int relay=5; //PIN RELAY PUMP
-int buzzer=12; //PIN BUZZER
-float h=0; //VAR humidity di udara
-float t=0; //VAR temperature di udara
-int sm=0; // PIN ANALOG SOIL MOISTURE
-int Relay = 0; //VAR RELAY 0 mati, 1 nyala
-int limit=0; //VAR COUNTER
-int ldr = 13; //PIN LDR output
-int ldrvalue=0;
-
-int smval=0;
-int val=0;
+int led3=2;       //cadangan
+int led1=14;      //PIN LED INDIKATOR WIFI
+int led2=15;      //PIN RELAY LED controlled by ldr
+int relay=5;      //PIN RELAY PUMP
+int buzzer=12;    //PIN BUZZER
+int sm=0;         //PIN ANALOG SOIL MOISTURE
+int ldr = 13;     //PIN LDR output
+float h=0;        //VAR humidity di udara
+float t=0;        //VAR temperature di udara
+int Relay = 0;    //VAR RELAY 0 mati, 1 nyala
+int limit=0;      //VAR COUNTER
+int stat = 0;     //
+int ldrvalue=0;   //VAR LDR
+int smval=0;      //VAR SM
+int val=0;        //VAR relay kayanya sih
 bool Start = false;
-String perintah; //Var untuk perintah dari rasp
-String status_perintah="1"; //status perintah eksekusi
-String curr_perintah="0"; //perintah yg dijalankan arduino
-int status_connect=1;
-
+String perintah;            //VAR untuk perintah dari rasp
+String status_perintah="1"; //status perintah eksekusi, 1 berarti executed
+String curr_perintah="0";   //perintah yg dijalankan arduino, mode ada 0 1 2 3
+int status_connect=1;       //terkoneksi
+boolean handler = false;    //VAR handler gagal fetch/post
   
-  int readSM(){
-    smval = analogRead(sm);
-    Serial.println(smval);
-    return smval;
-  }
+int readSM(){
+  smval = analogRead(sm);
+  Serial.println(smval);
+  return smval;
+}
 
-  //Relay control for timing 
-  void relay1(int rly){
-    if(rly==1){
-    digitalWrite(relay,LOW);
-    delay(2000);
-    digitalWrite(relay,HIGH);
-    }
-    else if(rly==0){ 
-    digitalWrite(relay,HIGH); 
-    }
-    Relay=rly;
+//Relay control for timing 
+void relay1(int rly){
+  if(rly==1){
+  digitalWrite(relay,LOW);
+  delay(2000);
+  digitalWrite(relay,HIGH);
   }
+  else if(rly==0){ 
+  digitalWrite(relay,HIGH); 
+  }
+  Relay=rly;
+}
 
-  void relay2(int rly){
-    if(rly==1){
-    digitalWrite(relay,LOW);
-    }
-    else if(rly==0) {
-    digitalWrite(relay,HIGH); 
-    }
-    Relay=rly;
+void relay2(int rly){
+  if(rly==1){
+  digitalWrite(relay,LOW);
   }
+  else if(rly==0) {
+  digitalWrite(relay,HIGH); 
+  }
+  Relay=rly;
+}
 
-  //GET control
-  void get_control(){
-    HTTPClient http;
-    http.useHTTP10(true);
-    http.begin(control_page);
-    http.addHeader("Content-Type", "application/json");
-    http.GET();
-    //Test
-    //String json=http.getString();
-    //Serial.println(json);
-    //Parsing
-    //StaticJsonDocument<256> doc;
-    DynamicJsonDocument doc(2048); 
-    deserializeJson(doc, http.getStream());   
-    //Read result parsing
-    perintah=doc["perintah"].as<String>();
-    status_perintah=doc["status"].as<String>();
-    http.end();
-  }
+//GET control
+void get_control(){
+  HTTPClient http;
+  http.useHTTP10(true);
+  http.begin(control_page);
+  http.addHeader("Content-Type", "application/json");
+  http.GET();
+  DynamicJsonDocument doc(2048); 
+  deserializeJson(doc, http.getStream());   
+//Read result parsing
+  perintah=doc["perintah"].as<String>();
+  status_perintah=doc["status"].as<String>();
+  http.end();
+}
 
-  //upload data to raspberry server local
-  void post_sensor(){
-    HTTPClient http;    //Declare object of class HTTPClient
-    //Post Data
-    String postData;
-    postData = "suhu=" + String(t) + "&lembap=" + String(h) + "&sm=" + String(val) + "&relay=" + String(Relay)+ "&id_arduino="+String(id_arduino);
-    http.begin(raspi_input);              //Specify request destination
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
-    int httpCode = http.POST(postData);   //Send the request
-    String payload = http.getString();    //Get the response payload
-    Serial.println(httpCode);   //Print HTTP return code
-    Serial.println(payload);    //Print request response payload
-    http.end();  //Close connection
-    Serial.println("Post selesai");
-    Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val)+"|"+String(smval)+ ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
-  }
+//upload data to raspberry server local
+void post_sensor(){
+  HTTPClient http;                        //Declare object of class HTTPClient
+  String postData;
+  postData = "suhu=" + String(t) + "&lembap=" 
+    + String(h) + "&sm=" + String(val) + "&relay=" 
+    + String(Relay)+ "&id_arduino="+String(id_arduino);
+  http.begin(raspi_input);                //Specify request destination
+  http.addHeader("Content-Type", 
+    "application/x-www-form-urlencoded"); //Specify content-type header
+  int httpCode = http.POST(postData);     //Send the request
+  String payload = http.getString();      //Get the response payload
+  Serial.println(httpCode);               //Print HTTP return code
+  Serial.println(payload);                //Print request response payload
+  http.end();                             //Close connection
+  Serial.println("Post selesai");
+  Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val)+"|"
+    +String(smval)+ ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
+}
   
 void post_control(){
     HTTPClient http;    //Declare object of class HTTPClient
     //Post Data
     String postData;
-    postData = "id_user="+String(id_user)+"&perintah=" + curr_perintah + "&status=" + status_perintah+ "&nama=" + String(nama);
-    http.begin(control_page);              //Specify request destination
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
-    int httpCode = http.POST(postData);   //Send the request
-    String payload = http.getString();    //Get the response payload
-    Serial.println(httpCode);   //Print HTTP return code
-    Serial.println(payload);    //Print request response payload
-    http.end();  //Close connection
+    postData = "id_user="+String(id_user)+"&perintah=" 
+      + curr_perintah + "&status=" 
+      + status_perintah+ "&nama=" + String(nama);
+    http.begin(control_page);               //Specify request destination
+    http.addHeader("Content-Type", 
+      "application/x-www-form-urlencoded"); //Specify content-type header
+    int httpCode = http.POST(postData);     //Send the request
+    String payload = http.getString();      //Get the response payload
+    Serial.println(httpCode);               //Print HTTP return code
+    Serial.println(payload);                //Print request response payload
+    http.end();                             //Close connection
     Serial.println("Post control selesai");
   }
 
@@ -174,26 +188,26 @@ void mode_control(String a){
     }
     
     Serial.println("Mode 0");
-  }else if(a=="1"){//mode terjadwal, sesuai timestamp pagi&sore nyiram
+  }else if(a=="1"){           //mode terjadwal, sesuai timestamp pagi&sore nyiram
     Serial.println("Mode 1");
-  }else if(a=="2"){//mode menyala
+  }else if(a=="2"){           //mode menyala
     relay2(1);
     Serial.println("Mode 2");
-  }else if(a=="3"){//mode mati
+  }else if(a=="3"){           //mode mati
     relay2(0);
     Serial.println("Mode 3");
   }
 }
-boolean handler = false;
+
 void cek_control(){
   /*
    * bila belum ada node, return error, tapi di sini perintah jadi 0???
   */
-  if(perintah=="null" || handler){//tidak ada koneksi
+  if(perintah=="null" || handler){  //tidak ada koneksi
     perintah="0";
     status_perintah="1";
     handler=true;
-    if(limit % 10 ==0){ //lakukan pengecekan koneksi setiap 10 loop
+    if(limit % 10 ==0){             //lakukan pengecekan koneksi setiap 10 loop
       handler=false;}
   }else{
     get_control();  
@@ -230,8 +244,8 @@ void lampu(){
 //fetch data from sensor
 void data_sensor(){
    smval = readSM();
-    //val= map(smval,1023,165,0,100); // sm biasa
-    val = smval/10; //sm robotdyn
+    //val= map(smval,1023,165,0,100);   // sm biasa
+    val = smval/10;                     //sm robotdyn
     if(val<0)val=0;
     else if (val>100)val=100;
     h = dht.readHumidity();
@@ -243,8 +257,7 @@ void data_sensor(){
     Serial.begin(9600);
     digitalWrite(relay, HIGH);
     dht.begin();
-    // Set WiFi to station mode and disconnect from an AP if it was Previously
-    // connected
+  // Set WiFi to station mode and disconnect from an AP if it was Previously connected
     WiFi.mode(WIFI_STA);
     WiFi.disconnect();
     delay(10);
@@ -257,7 +270,7 @@ void data_sensor(){
     Serial.println(ssid);
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
-      Serial.print(".");//if not connected printing .........
+      Serial.print(".");               //if not connected printing .........
       digitalWrite(led1,HIGH);
       delay(50);
     }
@@ -295,7 +308,7 @@ void data_sensor(){
     if(limit==100 || limit==0){
       data_sensor();
       mode_control(curr_perintah);
-      post_sensor();//upload data to raspberry only happen once in 100 loop
+      post_sensor();                //upload data to raspberry only happen once in 100 loop
       limit=1;
       digitalWrite(buzzer,HIGH);
       delay(200);
