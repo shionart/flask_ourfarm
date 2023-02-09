@@ -17,7 +17,7 @@ def stringed_sensor(a):
 async def read_sensor():
     conn = connect(host ='localhost', port =3306 , user= 'root' , passwd='dragonica025', db='db_sister', cursorclass=cursors.DictCursor)
     cur = conn.cursor()
-    cur.execute("select a.*, b.id_user from sensor a right join control b on a.id_arduino = b.id_arduino where a.queue=1 order by a.time ASC")
+    cur.execute("select a.*, b.id_user from sensor a right join control b on a.id_arduino = b.id_arduino where a.queue=1 order by a.time ASC limit 50")
     c = cur.fetchall()
     cur.close()
     conn.close()
@@ -61,7 +61,8 @@ async def sync_sensor():
     if hasil_query is not None:
         print("Post data sensor Dimulai")
         for data in hasil_query:
-            list_task.append(post_sensor(data))
+            task = asyncio.create_task(post_sensor(data))
+            list_task.append(task)
         await asyncio.gather(*list_task)
         await update_sensor_queued()
         print("Post data sensor selesai")
