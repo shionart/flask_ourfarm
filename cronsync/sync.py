@@ -27,7 +27,7 @@ async def post_sensor(data):
     """
     docstring
     """
-    url = "https://bwcr.insightdata.xyz/api/add/"+str(data['id_user'])+"hapusunu/garden/"+str(data['id_arduino'])
+    url = "https://bwcr.insightdata.xyz/api/add/"+str(data['id_user'])+"/garden/"+str(data['id_arduino'])
     perintah = {'lembap': data['kelembapan'],
         'sm':data['soil_moist'],
         'suhu':data['suhu'],
