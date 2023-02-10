@@ -33,6 +33,7 @@ async def post_sensor(data):
         'suhu':data['suhu'],
         'relay':data['relay']
     }
+    print("inisiasi post data sensor id :"+str(data['id']))
     ambil = requests.get(url, params=perintah, headers={
                             'User-Agent': 'Mozilla/5.0'})
     print(ambil.url)
@@ -43,14 +44,17 @@ async def post_sensor(data):
         sensor_not_sent.append(str(data['id']))
 
 async def update_sensor_queued():
-    conn = connect(host ='localhost', port =3306 , user= 'root' , passwd='dragonica025', db='db_sister', cursorclass=cursors.DictCursor)
-    cur = conn.cursor()
-    cur.execute("update sensor set queue=0 where id not in ({})".format(stringed_sensor(sensor_not_sent)) )
-    cur.execute("select a.*, b.id_user from sensor a right join control b on a.id_arduino = b.id_arduino where a.queue=1 order by a.time ASC")
-    conn.commit()       
-    cur.close()
-    conn.close()
-    pass
+    try:
+        print("inisiasi update table queued")
+        conn = connect(host ='localhost', port =3306 , user= 'root' , passwd='dragonica025', db='db_sister', cursorclass=cursors.DictCursor)
+        cur = conn.cursor()
+        cur.execute("update sensor set queue=0 where id not in ({})".format(stringed_sensor(sensor_not_sent)) )
+        conn.commit()       
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(e)
+    print("update selesai")
 
 async def sync_sensor():
     """
@@ -58,9 +62,10 @@ async def sync_sensor():
     """
     list_task=[]
     hasil_query = await read_sensor()
-    if hasil_query is not None:
+    if len(hasil_query) >0:
         print("Post data sensor Dimulai")
         for data in hasil_query:
+            print("Membuat task sensor :"+str(data['id']))
             task = asyncio.create_task(post_sensor(data))
             list_task.append(task)
         await asyncio.gather(*list_task)
