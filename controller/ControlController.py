@@ -1,5 +1,4 @@
 from flask import render_template, request,  redirect, jsonify
-from controller.SyncController import SyncController
 from model.Control import Control
 
 class ControlController(object):
@@ -75,8 +74,6 @@ class ControlController(object):
                 c.nama=str(request.form["nama"]) 
                 c.id_user=str(request.form["id_user"])
                 c.cu_control()
-                # Post aja, yg refresh getnya pake APscheduler/cronjob
-                # SyncController().sync_get_control()
                 if request.referrer != None:
                     return redirect(request.referrer)
                 else:

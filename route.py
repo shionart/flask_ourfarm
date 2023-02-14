@@ -2,7 +2,6 @@ from flask.globals import request
 from controller.SensorController import SensorController
 from controller.ControlController import ControlController
 from controller.UserController import UserController
-from controller.SyncController import SyncController
 from config.config import main
 from SessionHandler import login_required
 
