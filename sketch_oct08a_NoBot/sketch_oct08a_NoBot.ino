@@ -24,7 +24,7 @@ CONNECT WIFI, ganti wifi anda di sini
 */
 char ssid[] = "samlekom";
 char password[] = "dragonica025";
-char ip_address[]="192.168.137.103";
+char ip_address[]="192.168.137.147";
 char nama[]="front";
 char id_arduino[]="6f39b26f5345407b94f8";
 char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
@@ -50,12 +50,15 @@ int ldrvalue=0;   //VAR LDR
 int smval=0;      //VAR SM
 int val=0;        //VAR relay kayanya sih
 bool Start = false;
-String perintah;            //VAR untuk perintah dari rasp
 String status_perintah="1"; //status perintah eksekusi, 1 berarti executed
 String curr_perintah="0";   //perintah yg dijalankan arduino, mode ada 0 1 2 3
+int batas_bawah=40;
+int batas_atas=50;
+int jeda=12;
 int status_connect=1;       //terkoneksi
 boolean handler = false;    //VAR handler gagal fetch/post
-  
+unsigned long previousMillis = 0;
+unsigned long sejam = 3600000;
 int readSM(){
   smval = analogRead(sm);
   Serial.println(smval);
@@ -91,12 +94,29 @@ void get_control(){
   http.useHTTP10(true);
   http.begin(control_page);
   http.addHeader("Content-Type", "application/json");
-  http.GET();
-  DynamicJsonDocument doc(2048); 
-  deserializeJson(doc, http.getStream());   
-//Read result parsing
-  perintah=doc["perintah"].as<String>();
-  status_perintah=doc["status"].as<String>();
+  int status_code = http.GET();
+  Serial.println("get control status code :"+String(status_code) );
+  if (status_code ==200){
+    DynamicJsonDocument doc(2048); 
+    deserializeJson(doc, http.getStream());   
+  //Read result parsing
+    if(doc["perintah"].as<String>()!="5"){
+      Serial.println("Refreshing control");
+      curr_perintah=doc["perintah"].as<String>();
+      batas_bawah=doc["batas_bawah"].as<int>();
+      batas_atas=doc["batas_atas"].as<int>();
+      jeda=doc["jeda"].as<int>();
+    }
+    if(doc["status"].as<String>()=="0"){
+      Serial.println("Baca perintah baru!");
+      post_control();
+      Serial.println("Perintah tersimpan");
+    }  
+  }
+  else{
+    Serial.println("Get control gagal");
+    handler=true; 
+  }
   http.end();
 }
 
@@ -160,9 +180,9 @@ void post_control(){
 
 void mode_control(String a){
   if(a=="0"){ //Mode default, otomatis menyiram bila lembap tanah < 40%
-    digitalWrite(relay,HIGH); 
+    digitalWrite(relay,HIGH); //TODO ini cek defaultnya apa, kalo bisa kondisi dicolok ya mati.
     if (limit==100){
-       if (val < 40.00) {
+       if (smval < batas_bawah) {
           digitalWrite(buzzer,HIGH);
           delay(500);
           digitalWrite(buzzer,LOW);
@@ -174,7 +194,7 @@ void mode_control(String a){
           if (stat == 1){
             stat = 0;
           }
-      }else if(val >= 50.00 && stat == 0) {
+      }else if(smval >= batas_atas && stat == 0) {
           digitalWrite(buzzer,HIGH);
           delay(50);
           digitalWrite(buzzer,LOW);
@@ -190,6 +210,13 @@ void mode_control(String a){
     Serial.println("Mode 0");
   }else if(a=="1"){           //mode terjadwal, sesuai timestamp pagi&sore nyiram
     Serial.println("Mode 1");
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= (jeda*sejam)) {
+      previousMillis=currentMillis;
+      Serial.println("Masuk waktu interval, melakukan penyiraman....");
+      relay1(1);
+    }
+    
   }else if(a=="2"){           //mode menyala
     relay2(1);
     Serial.println("Mode 2");
@@ -200,39 +227,22 @@ void mode_control(String a){
 }
 
 void cek_control(){
-  /*
-   * bila belum ada node, return error, tapi di sini perintah jadi 0???
-  */
-  if(perintah=="null" || handler){  //tidak ada koneksi
-    perintah="0";
-    status_perintah="1";
+  if(handler){                      //tidak ada koneksi
+    Serial.println("tidak ada koneksi, akan retry setiap 5x loop");
     handler=true;
     if(limit % 10 ==0){             //lakukan pengecekan koneksi setiap 10 loop
-      handler=false;}
+      handler=false;
+    }
   }else{
     get_control();  
-    Serial.println("perintah :"+perintah);
-    Serial.println("status :"+status_perintah);
-    Serial.println("curr_perintah:"+curr_perintah);
-    if(perintah=="5"){
-        perintah="0";
-        post_control();
-    } 
-    if(status_perintah=="0" || perintah!= curr_perintah){
-      Serial.println("Baca perintah baru!");
-      curr_perintah=perintah;
-      status_perintah="1";
-      post_control();
-      Serial.println("Perintah tersimpan");
-      //Eksekusi perintah    
-    }
+    Serial.println("curr_perintah: "+curr_perintah+ "| batas_bawah: "+batas_bawah
+    +"| batas_atas: "+batas_atas+"| jeda: "+jeda);
   }
 }
 
-//ldr control led
-void lampu(){
+void lampu(){                   //ldr control led
   ldrvalue = digitalRead(ldr);
-    Serial.println(ldrvalue);
+    Serial.println("ldr value : "+ldrvalue);
   if(ldrvalue==0){
     digitalWrite(led2, LOW);
     }
@@ -241,8 +251,7 @@ void lampu(){
     }
   }
 
-//fetch data from sensor
-void data_sensor(){
+void data_sensor(){                     //fetch data from sensor
    smval = readSM();
     //val= map(smval,1023,165,0,100);   // sm biasa
     val = smval/10;                     //sm robotdyn
@@ -257,8 +266,7 @@ void data_sensor(){
     Serial.begin(9600);
     digitalWrite(relay, HIGH);
     dht.begin();
-  // Set WiFi to station mode and disconnect from an AP if it was Previously connected
-    WiFi.mode(WIFI_STA);
+    WiFi.mode(WIFI_STA);              // Set WiFi to station mode and disconnect from an AP if it was Previously connected
     WiFi.disconnect();
     delay(10);
     pinMode(buzzer,OUTPUT);
@@ -292,8 +300,7 @@ void data_sensor(){
         return;
     }
     lampu();
-//Periksa perintah baru atau tidak------
-    cek_control();
+    cek_control();              //Periksa perintah baru atau tidak------   
 //Baca sensor------
 //    smval = readSM();
 //    val= map(smval,1023,165,0,100);
@@ -301,14 +308,11 @@ void data_sensor(){
 //    else if (val>100)val=100;
     Serial.println( "Lembap Udara "+String(dht.readHumidity())+
     " Suhu "+String(dht.readTemperature()));
-//Aksi pompa-----
-    
-//Loop-control-----
     delay(1000);
     if(limit==100 || limit==0){
       data_sensor();
       mode_control(curr_perintah);
-      post_sensor();                //upload data to raspberry only happen once in 100 loop
+      post_sensor();            //upload data to raspberry only happen once in 100 loop
       limit=1;
       digitalWrite(buzzer,HIGH);
       delay(200);
