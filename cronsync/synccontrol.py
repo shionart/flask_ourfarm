@@ -17,9 +17,15 @@ async def get_control(data):
     """
     docstring
     """
-    url = "https://bwcr.insightdata.xyz/api/control/"+str(data['id_user'])+"/garden"
-    param = {'deviceId': str(data['id_arduino'])
-    }
+    url=""
+    param={}
+    if data['queue']==1 or data['queue']=='1':
+        url="https://bwcr.insightdata.xyz/api/control/update/"+str(data['id_user'])+"/garden/"+str(data['id_arduino'])
+        param={'nilai':data['perintah']}
+    else :
+        url = "https://bwcr.insightdata.xyz/api/control/"+str(data['id_user'])+"/garden"
+        param = {'deviceId': str(data['id_arduino'])
+        }
     print("inisiasi get data control id :"+str(data['id_arduino']))
     ambil = requests.get(url, params=param, headers={
                             'User-Agent': 'Mozilla/5.0'})
@@ -28,23 +34,27 @@ async def get_control(data):
         print("Successfully get control data"+str(data['id_arduino']))
         print(ambil.json())
         hasil_json = ambil.json()
-        pusat_timestamp = datetime.strptime(hasil_json['timestamp'], '%d-%m-%y %H:%M:%S')
-        print(str(pusat_timestamp)+"  "+str(data['timestamp']))
-        if pusat_timestamp > data['timestamp']:
-            print("Perbarui perintah")
-            await update_control(hasil_json['nilai'], data['id_arduino'])
-        else:
-            print("diemin bae")
+        if data['queue']==0 or data['queue']=='0':
+            pusat_timestamp = datetime.strptime(hasil_json['timestamp'], '%d-%m-%y %H:%M:%S')
+            print(str(pusat_timestamp)+"  "+str(data['timestamp']))
+            if pusat_timestamp > data['timestamp'] :
+                print("Perbarui perintah")
+                await update_control(hasil_json['nilai'], data['id_arduino'],0)
+            else:
+                print("diemin bae")
+        else : 
+            print("kirim perintah")
+            await update_control(data['perintah'], data['id_arduino'],0)
     else:
         print("Failed get control data"+str(data['id_arduino'])+" status code"+str(ambil.status_code))
         # return ""
 
-async def update_control(perintah, id_arduino):
+async def update_control(perintah, id_arduino, queue):
     try:
         print("inisiasi update table control")
         conn = connect(host ='localhost', port =3306 , user= 'root' , passwd='dragonica025', db='db_sister', cursorclass=cursors.DictCursor)
         cur = conn.cursor()
-        cur.execute("update control set perintah=%s where id_arduino=%s", [perintah, id_arduino] )
+        cur.execute("update control set perintah=%s, queue=%s where id_arduino=%s", [perintah, queue, id_arduino] )
         conn.commit()       
         cur.close()
         conn.close()

@@ -79,7 +79,7 @@ class Control(object):
             if self.is_exist_control():
                 print("Update Control")
                 if self.batas_atas!=None:
-                    cur.execute("UPDATE control SET perintah=%s, jeda=%s, batas_atas=%s, batas_bawah=%s, status=%s where id_arduino=%s", 
+                    cur.execute("UPDATE control SET perintah=%s, jeda=%s, batas_atas=%s, batas_bawah=%s, status=%s, queue=1 where id_arduino=%s", 
                                 [self.perintah, self.jeda,  
                                 self.batas_atas, self.batas_bawah, self.status, 
                                 self.id_arduino])
