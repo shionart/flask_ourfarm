@@ -49,6 +49,8 @@ int stat = 0;     //
 int ldrvalue=0;   //VAR LDR
 int smval=0;      //VAR SM
 int val=0;        //VAR relay kayanya sih
+float temph=0;
+float tempt=0;
 bool Start = false;
 String status_perintah="1"; //status perintah eksekusi, 1 berarti executed
 String curr_perintah="0";   //perintah yg dijalankan arduino, mode ada 0 1 2 3
@@ -265,8 +267,8 @@ void data_sensor(){                     //fetch data from sensor
     Serial.print(smval);
     if(smval<0)smval=0;
     else if (smval>100)smval=100;
-    h = dht.readHumidity();
-    t = dht.readTemperature();
+    if(!isnan(temph)) h=temph;
+    if(!isnan(tempt)) t=tempt;
   }
 
 //-------------------SETUP MULAI------------------
@@ -319,8 +321,12 @@ void data_sensor(){                     //fetch data from sensor
 //    val= map(smval,1023,165,0,100);
 //    if(val<0)val=0;
 //    else if (val>100)val=100;
-    Serial.println( "Lembap Udara "+String(dht.readHumidity())+
-    " Suhu "+String(dht.readTemperature()));
+    temph=dht.readHumidity();
+    tempt=dht.readTemperature();
+    Serial.println( "Lembap Udara "+String(temph)+
+    " Suhu "+String(tempt));
+    if(!isnan(temph)) h=temph;
+    if(!isnan(tempt)) t=tempt;
     delay(1000);
     if(limit==100 || limit==0){
       data_sensor();
@@ -330,6 +336,8 @@ void data_sensor(){                     //fetch data from sensor
       digitalWrite(buzzer,HIGH);
       delay(200);
       digitalWrite(buzzer,LOW);
+      h=0;
+      t=0;
     }else{
       mode_control(curr_perintah);
       }
