@@ -59,8 +59,10 @@ int status_connect=1;       //terkoneksi
 boolean handler = false;    //VAR handler gagal fetch/post
 unsigned long previousMillis = 0;
 unsigned long sejam = 3600000;
+unsigned long semenit = 60000;
 int readSM(){
   smval = analogRead(sm);
+  Serial.println("Nilai mentah sm : ");
   Serial.println(smval);
   return smval;
 }
@@ -125,7 +127,7 @@ void post_sensor(){
   HTTPClient http;                        //Declare object of class HTTPClient
   String postData;
   postData = "suhu=" + String(t) + "&lembap=" 
-    + String(h) + "&sm=" + String(val) + "&relay=" 
+    + String(h) + "&sm=" + String(smval) + "&relay=" 
     + String(Relay)+ "&id_arduino="+String(id_arduino);
   http.begin(raspi_input);                //Specify request destination
   http.addHeader("Content-Type", 
@@ -136,8 +138,8 @@ void post_sensor(){
   Serial.println(payload);                //Print request response payload
   http.end();                             //Close connection
   Serial.println("Post selesai");
-  Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+ String(val)+"|"
-    +String(smval)+ ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
+  Serial.println("Suhu: " + String(t) +", Kelembapan: " + String(h) +", SM: "+String(smval)
+    + ", relay: "+ String(Relay)+ ", id: "+ String(id_arduino)); 
 }
   
 void post_control(){
@@ -183,6 +185,7 @@ void mode_control(String a){
     digitalWrite(relay,HIGH); //TODO ini cek defaultnya apa, kalo bisa kondisi dicolok ya mati.
     if (limit==100){
        if (smval < batas_bawah) {
+          Serial.println("sudah lewat batas batah, menyalakan pompa...");
           digitalWrite(buzzer,HIGH);
           delay(500);
           digitalWrite(buzzer,LOW);
@@ -195,6 +198,7 @@ void mode_control(String a){
             stat = 0;
           }
       }else if(smval >= batas_atas && stat == 0) {
+          Serial.println("sudah lewat batas atas, mematikan pompa...");
           digitalWrite(buzzer,HIGH);
           delay(50);
           digitalWrite(buzzer,LOW);
@@ -214,6 +218,7 @@ void mode_control(String a){
     if (currentMillis - previousMillis >= (jeda*sejam)) {
       previousMillis=currentMillis;
       Serial.println("Masuk waktu interval, melakukan penyiraman....");
+      Serial.println(previousMillis);
       relay1(1);
     }
     
@@ -241,8 +246,9 @@ void cek_control(){
 }
 
 void lampu(){                   //ldr control led
-  ldrvalue = digitalRead(ldr);
-    Serial.println("ldr value : "+ldrvalue);
+    ldrvalue = digitalRead(ldr);
+    Serial.println("ldr value : ");
+    Serial.println(ldrvalue);
   if(ldrvalue==0){
     digitalWrite(led2, LOW);
     }
@@ -254,9 +260,11 @@ void lampu(){                   //ldr control led
 void data_sensor(){                     //fetch data from sensor
    smval = readSM();
     //val= map(smval,1023,165,0,100);   // sm biasa
-    val = smval/10;                     //sm robotdyn
-    if(val<0)val=0;
-    else if (val>100)val=100;
+    smval = smval/10;                     //sm robotdyn
+    Serial.println("smval setelah dibagi 10 : ");
+    Serial.print(smval);
+    if(smval<0)smval=0;
+    else if (smval>100)smval=100;
     h = dht.readHumidity();
     t = dht.readTemperature();
   }
@@ -269,6 +277,7 @@ void data_sensor(){                     //fetch data from sensor
     WiFi.mode(WIFI_STA);              // Set WiFi to station mode and disconnect from an AP if it was Previously connected
     WiFi.disconnect();
     delay(10);
+    pinMode(LED_BUILTIN, OUTPUT);
     pinMode(buzzer,OUTPUT);
     pinMode(relay,OUTPUT);
     pinMode(led1,OUTPUT);
@@ -279,7 +288,11 @@ void data_sensor(){                     //fetch data from sensor
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
       Serial.print(".");               //if not connected printing .........
-      digitalWrite(led1,HIGH);
+      digitalWrite(LED_BUILTIN,LOW);
+      digitalWrite(buzzer,HIGH);
+      delay(50);
+      digitalWrite(buzzer,LOW);
+      digitalWrite(LED_BUILTIN,HIGH);
       delay(50);
     }
     Serial.println("");
@@ -311,7 +324,7 @@ void data_sensor(){                     //fetch data from sensor
     delay(1000);
     if(limit==100 || limit==0){
       data_sensor();
-      mode_control(curr_perintah);
+      mode_control(curr_perintah);//lakukan perintah dulu di sini biar ngasih tau status relay nya sebelum dipost
       post_sensor();            //upload data to raspberry only happen once in 100 loop
       limit=1;
       digitalWrite(buzzer,HIGH);

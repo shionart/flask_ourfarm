@@ -2,7 +2,7 @@ from MySQLdb import cursors, connect
 import requests
 import asyncio
 
-sensor_not_sent = []
+sensor_sent = []
 
 
 def stringed_sensor(a):
@@ -39,16 +39,16 @@ async def post_sensor(data):
     print(ambil.url)
     if (ambil.status_code == 200):
         print("Successfully posting sensor data"+str(data['id']))
+        sensor_sent.append(str(data['id']))
     else:
         print("Failed posting sensor data"+str(data['id'])+" status code"+str(ambil.status_code))
-        sensor_not_sent.append(str(data['id']))
 
 async def update_sensor_queued():
     try:
         print("inisiasi update table queued")
         conn = connect(host ='localhost', port =3306 , user= 'root' , passwd='dragonica025', db='db_sister', cursorclass=cursors.DictCursor)
         cur = conn.cursor()
-        cur.execute("update sensor set queue=0 where id not in ({})".format(stringed_sensor(sensor_not_sent)) )
+        cur.execute("update sensor set queue=0 where id in ({})".format(stringed_sensor(sensor_sent)) )
         conn.commit()       
         cur.close()
         conn.close()
