@@ -34,8 +34,8 @@ String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_
 String raspi_input= "http://"+String(ip_address)+":5000/input"; 
 
 WiFiClientSecure client;
-int led3=2;       //cadangan
-int led1=14;      //PIN LED INDIKATOR WIFI
+int led3=2;       //cadangan ga dipake
+int led1=14;      //PIN LED INDIKATOR WIFI jadinya pake built in led
 int led2=15;      //PIN RELAY LED controlled by ldr
 int relay=5;      //PIN RELAY PUMP
 int buzzer=12;    //PIN BUZZER
@@ -187,7 +187,7 @@ void mode_control(String a){
     digitalWrite(relay,HIGH); //TODO ini cek defaultnya apa, kalo bisa kondisi dicolok ya mati.
     if (limit==100){
        if (smval < batas_bawah) {
-          Serial.println("sudah lewat batas batah, menyalakan pompa...");
+          Serial.println("sudah lewat batas bawah, menyalakan pompa...");
           digitalWrite(buzzer,HIGH);
           delay(500);
           digitalWrite(buzzer,LOW);
@@ -261,7 +261,7 @@ void lampu(){                   //ldr control led
 
 void data_sensor(){                     //fetch data from sensor
    smval = readSM();
-    //val= map(smval,1023,165,0,100);   // sm biasa
+    //val= map(smval,520,260,0,100);   // sm capacitive sensor
     smval = smval/10;                     //sm robotdyn
     Serial.println("smval setelah dibagi 10 : ");
     Serial.print(smval);
