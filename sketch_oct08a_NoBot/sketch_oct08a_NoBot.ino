@@ -73,7 +73,11 @@ int readSM(){
 void relay1(int rly){
   if(rly==1){
   digitalWrite(relay,LOW);
-  delay(2000);
+  delay(3000);
+  digitalWrite(relay,HIGH);
+  }else if(rly==2){
+  digitalWrite(relay,LOW);
+  delay(1000);
   digitalWrite(relay,HIGH);
   }
   else if(rly==0){ 
@@ -199,7 +203,19 @@ void mode_control(String a){
           if (stat == 1){
             stat = 0;
           }
-      }else if(smval >= batas_atas && stat == 0) {
+      }
+      else if (smval > batas_bawah && smval <= batas_atas && stat==0) {
+          Serial.println("sudah lewat batas bawah, menyalakan pompa...");
+          digitalWrite(buzzer,HIGH);
+          delay(500);
+          digitalWrite(buzzer,LOW);
+          delay(500);
+          digitalWrite(buzzer,HIGH);
+          delay(500);
+          digitalWrite(buzzer,LOW);
+          relay1(1);
+      }
+      else if(smval >= batas_atas && stat == 0) {
           Serial.println("sudah lewat batas atas, mematikan pompa...");
           digitalWrite(buzzer,HIGH);
           delay(50);
