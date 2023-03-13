@@ -213,7 +213,7 @@ void mode_control(String a){
           digitalWrite(buzzer,HIGH);
           delay(500);
           digitalWrite(buzzer,LOW);
-          relay1(1);
+          relay1(2);
       }
       else if(smval >= batas_atas && stat == 0) {
           Serial.println("sudah lewat batas atas, mematikan pompa...");
@@ -307,9 +307,7 @@ void data_sensor(){                     //fetch data from sensor
     while (WiFi.status() != WL_CONNECTED) {
       Serial.print(".");               //if not connected printing .........
       digitalWrite(LED_BUILTIN,LOW);
-      digitalWrite(buzzer,HIGH);
       delay(50);
-      digitalWrite(buzzer,LOW);
       digitalWrite(LED_BUILTIN,HIGH);
       delay(50);
     }
@@ -317,7 +315,7 @@ void data_sensor(){                     //fetch data from sensor
     Serial.println("WiFi connected");
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
-    digitalWrite(led1,LOW);
+//    digitalWrite(led1,LOW);
     client.setInsecure();
     
   }
@@ -325,8 +323,11 @@ void data_sensor(){                     //fetch data from sensor
 //----------------LOOP MULAI-----------------
   void loop(){
     if(WiFi.status()!= WL_CONNECTED){
-        delay(1);
-        digitalWrite(led1,HIGH);
+        Serial.print(".");               //if not connected printing .........
+        digitalWrite(LED_BUILTIN,LOW);
+        delay(50);
+        digitalWrite(LED_BUILTIN,HIGH);
+        delay(50);
         WiFi.begin(ssid, password);
         return;
     }
