@@ -126,7 +126,7 @@ class Control(object):
         try:
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute("select a.nama, a.id_arduino, date_format(b.time,'%%a, %%b %%e %%Y %%H:%%i') as time, b.soil_moist, b.id as id_sensor, b.suhu, b.kelembapan, b.notif "+
+            cur.execute("select a.nama, a.id_arduino, date_format(b.time,'%%a, %%b %%e %%Y %%H:%%i') as time, b.soil_moist, b.id as id_sensor, b.notif "+
                         "from control a right join "+ 
                         "(select c.* from sensor c right join (select max(d.time) as timemax from sensor d where d.notif!=0 group by d.id_arduino) e on c.time=e.timemax) b "+
                         "on a.id_arduino=b.id_arduino where a.id_user=%s order by b.time DESC",[self.id_user])
