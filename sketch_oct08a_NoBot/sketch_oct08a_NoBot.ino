@@ -25,8 +25,8 @@ CONNECT WIFI, ganti wifi anda di sini
 char ssid[] = "samlekom";
 char password[] = "dragonica025";
 char ip_address[]="192.168.137.147";
-char nama[]="front";
-char id_arduino[]="6f39b26f5345407b94f8";
+char nama[]="woodenbox";
+char id_arduino[]="bee77c5dcd3b43dcbded";
 char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
 //url daftar device, sync control
 String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino); 
@@ -309,8 +309,12 @@ void data_sensor(){                     //fetch data from sensor
       digitalWrite(LED_BUILTIN,LOW);
       delay(50);
       digitalWrite(LED_BUILTIN,HIGH);
-      delay(50);
+      delay(50);    
+//      digitalWrite(buzzer,HIGH);
+//      delay(50);
+//      digitalWrite(buzzer,LOW);
     }
+
     Serial.println("");
     Serial.println("WiFi connected");
     Serial.print("IP address: ");
@@ -355,6 +359,7 @@ void data_sensor(){                     //fetch data from sensor
       digitalWrite(buzzer,LOW);
       h=0;
       t=0;
+      Relay=0;
     }else{
       mode_control(curr_perintah);
       }
