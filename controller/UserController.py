@@ -92,10 +92,10 @@ class UserController(object):
                     id_user=str(request.form['id_user'])
                     )
                 message = self.cek_auth()
+                session.pop('email', None)
+                session.pop('sessionuserid', None)
                 print(message)
                 if message!="Akun Tidak ditemukan" :
-                    session.pop('email', None)
-                    session.pop('sessionuserid', None)
                     flash("Email sudah terdaftar!", "alert-warning")
                     return redirect(url_for('register'))
                 else :
