@@ -25,8 +25,8 @@ CONNECT WIFI, ganti wifi anda di sini
 char ssid[] = "samlekom";
 char password[] = "dragonica025";
 char ip_address[]="192.168.137.147";
-char nama[]="woodenbox";
-char id_arduino[]="bee77c5dcd3b43dcbded";
+char nama[]="akrilik";
+char id_arduino[]="c95165e15da44aebb035";
 char id_user[]="fpC1dDVM36WpxPkD56pMEOSM8zI2";
 //url daftar device, sync control
 String control_page="http://"+String(ip_address)+":5000/api_control/"+String(id_arduino); 
@@ -78,6 +78,11 @@ void relay1(int rly){
   }else if(rly==2){
   digitalWrite(relay,LOW);
   delay(1000);
+  digitalWrite(relay,HIGH);
+  }
+  else if(rly==3){
+  digitalWrite(relay,LOW);
+  delay(2000);
   digitalWrite(relay,HIGH);
   }
   else if(rly==0){ 
@@ -213,7 +218,13 @@ void mode_control(String a){
           digitalWrite(buzzer,HIGH);
           delay(500);
           digitalWrite(buzzer,LOW);
-          relay1(2);
+          if(batas_atas-smval<=5 && batas_atas-batas_bawah>=5){
+            relay1(2);  
+          }
+          else{
+           relay1(3); 
+          } 
+          
       }
       else if(smval >= batas_atas && stat == 0) {
           Serial.println("sudah lewat batas atas, mematikan pompa...");
@@ -333,6 +344,7 @@ void data_sensor(){                     //fetch data from sensor
         digitalWrite(LED_BUILTIN,HIGH);
         delay(50);
         WiFi.begin(ssid, password);
+        delay(5000);
         return;
     }
     lampu();
