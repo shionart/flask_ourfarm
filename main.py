@@ -9,6 +9,8 @@ import atexit
 # Shut down the scheduler when exiting the app
 # atexit.register(lambda: scheduler.shutdown())
 
+# TEST TAMBAH TASFJIASDFASJDKFASDJK F
+# AHFIAFDJAKSFKASFD
 # App Configuration Server
 # my_loader = jinja2.ChoiceLoader([
 #         app.jinja_loader,
